@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskLink - Report Dispute</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23220f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d2c18",
+                        "text-main": "#1c1c0d",
+                        "text-secondary": "#9e9d47",
+                        "border-light": "#e9e8ce",
+                        "border-dark": "#44432d"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-gray-100 font-display min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md px-4 py-3 flex items-center justify-between border-b border-transparent dark:border-border-dark transition-colors duration-200">
+<button aria-label="Go back" class="p-2 -ml-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all text-text-main dark:text-white">
+<span class="material-symbols-outlined block">arrow_back_ios_new</span>
+</button>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] text-text-main dark:text-white flex-1 text-center pr-8">Report an Issue</h2>
+</header>
+<main class="flex-1 flex flex-col w-full max-w-md mx-auto pb-32">
+<!-- Task Summary Card -->
+<div class="px-4 py-6">
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-4 shadow-sm flex gap-4 items-start transition-colors">
+<div class="shrink-0 bg-center bg-no-repeat bg-cover rounded-lg w-[70px] h-[70px] shadow-inner" data-alt="Close up of wooden furniture parts on the floor ready for assembly" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApH0ayYFsWxOw7gFbcZh1RrJh0LB_uZcLkqS2wyC7kHmHfy_ZXF692Tr33bm5pQ7Z_pK2chXJJ1U1jmeh2POo4Y_jCfKfB_41qxq96qoj_bgksRr96imD3u49lsaQQUR5R04zgI2XTMRB4Bs4zyyX_03cLFZNqxVrcCnrT6d-8Wbz1DuJ4pq22KG7_jurHiXthdhtUd24XfEU-u-FOHrVX7cUN9uLZQ0vGiPVMc9gZCJcDqeYoVYvJqRiISQGx92owkwuHHVIJ7al5");'></div>
+<div class="flex flex-1 flex-col justify-center gap-1">
+<div class="flex justify-between items-start">
+<p class="text-text-main dark:text-white text-base font-semibold leading-tight">Assemble IKEA Desk</p>
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                            Completed
+                        </span>
+</div>
+<p class="text-text-secondary dark:text-gray-400 text-sm font-normal">Tasker: John D.</p>
+<p class="text-text-secondary dark:text-gray-400 text-xs font-normal">Order ID: #44921 • Sep 12, 2023</p>
+</div>
+</div>
+</div>
+<!-- Form Section -->
+<div class="px-4 space-y-6">
+<!-- Reason Dropdown -->
+<div class="flex flex-col gap-2">
+<label class="text-text-main dark:text-gray-200 text-base font-semibold" for="reason">Reason for Dispute</label>
+<div class="relative">
+<select class="w-full appearance-none rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-text-main dark:text-white h-14 px-4 pr-10 text-base focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" id="reason">
+<option disabled="" selected="" value="">Select a reason...</option>
+<option value="no-show">Tasker did not show up</option>
+<option value="quality">Poor quality of work</option>
+<option value="incomplete">Task incomplete</option>
+<option value="damage">Property damage</option>
+<option value="safety">Safety concern</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-text-secondary dark:text-gray-400">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Description Text Area -->
+<div class="flex flex-col gap-2">
+<label class="text-text-main dark:text-gray-200 text-base font-semibold" for="details">Additional Details</label>
+<textarea class="w-full rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-text-main dark:text-white min-h-[160px] p-4 text-base focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary resize-none placeholder:text-text-secondary/60 dark:placeholder:text-gray-500 transition-all" id="details" placeholder="Please describe the issue in detail. Include times, interactions, and specific concerns..."></textarea>
+<p class="text-right text-xs text-text-secondary dark:text-gray-500">0/500 characters</p>
+</div>
+<!-- Evidence / Photos -->
+<div class="flex flex-col gap-2">
+<label class="text-text-main dark:text-gray-200 text-base font-semibold flex justify-between items-center">
+                    Evidence (Optional)
+                    <span class="text-xs font-normal text-text-secondary dark:text-gray-400">Max 5 photos</span>
+</label>
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<!-- Upload Button -->
+<button class="shrink-0 size-24 rounded-xl border-2 border-dashed border-border-light dark:border-border-dark bg-background-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 flex flex-col items-center justify-center gap-1 text-text-secondary dark:text-gray-400 transition-colors">
+<span class="material-symbols-outlined">add_a_photo</span>
+<span class="text-xs font-medium">Add Photo</span>
+</button>
+<!-- Pre-filled Image Example 1 -->
+<div class="relative shrink-0 group">
+<div class="size-24 bg-center bg-no-repeat bg-cover rounded-xl border border-border-light dark:border-border-dark" data-alt="Crookedly assembled drawer showing misalignment" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD0OTXc2bi0HqLvCZ_VZiuXHykDkFMea-cqXCljcZQcrUGnng6BBKeA21NNeGDg4hZzSdt52n2wqgaXeS4qDCRfcQmKuxOmBsbnJejxPnIla2JI46RJrWPvfQl2XdqKiGJWGGMQm9Dbk-LwRLji3EE5hS4Y5xz19_7VAmvpsmsqi1olLoxTQYwS55xxB-UU5Z4faXgTx0EyX-VRDVKFE3YGDycUVB_0qMSj9UeYHAlC-eYxYUf0BGStjJSawCHmg6NfpfvbswQDmJpl");'>
+</div>
+<button class="absolute -top-2 -right-2 bg-white dark:bg-surface-dark text-red-500 rounded-full shadow-md size-6 flex items-center justify-center border border-gray-100 dark:border-gray-700">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Section -->
+<div class="fixed bottom-[72px] left-0 w-full px-4 pt-4 pb-4 bg-gradient-to-t from-background-light via-background-light/90 to-transparent dark:from-background-dark dark:via-background-dark/90 pointer-events-none flex justify-center">
+<button class="pointer-events-auto w-full max-w-md bg-primary hover:bg-[#eae605] text-text-main font-bold text-lg h-14 rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
+<span>Submit Dispute</span>
+<span class="material-symbols-outlined text-xl">send</span>
+</button>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-border-light dark:border-border-dark pb-safe-area">
+<div class="max-w-md mx-auto flex justify-between items-center px-6 h-[72px]">
+<a class="flex flex-col items-center justify-center gap-1 text-text-secondary dark:text-gray-400 hover:text-text-main dark:hover:text-primary w-12" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-text-main dark:text-primary w-12" href="#">
+<span class="material-symbols-outlined fill-1">assignment</span>
+<span class="text-[10px] font-medium">My Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-text-secondary dark:text-gray-400 hover:text-text-main dark:hover:text-primary w-12" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-[10px] font-medium">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-text-secondary dark:text-gray-400 hover:text-text-main dark:hover:text-primary w-12" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-[10px] font-medium">Wallet</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-text-secondary dark:text-gray-400 hover:text-text-main dark:hover:text-primary w-12" href="#">
+<div class="size-6 rounded-full overflow-hidden bg-gray-200">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAavXyiOQ9TQLxklkAc68usiWS8No_1TBAro-MtwAVwXfkmp_xj6JkK0PmMvaQbtbDAM5YjpFKZrqenMnP-TR8DrsD8D6IHzLvNs4WN2hUROKoByJOM80dLhCky26ZFNQmaFuEHviI8R_i48cDwD9aUClK9env4N-PUfLrNuL41ybchKDTpjlaIPw3DepJbnRtQrZzdBUImoS_bVaeuyiq0mmcc25vgbSEDBrjbviVJkPN_4UVdQM_9CARzifb3MdDTG8No_bekF1oo"/>
+</div>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</div>
+</nav>
+<style>
+        /* iOS Safe Area Support */
+        .pb-safe-area {
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+        }
+    </style>
+</body></html>

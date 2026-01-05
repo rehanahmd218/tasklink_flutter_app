@@ -1,0 +1,130 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../../../../utils/constants/colors.dart';
+import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/controllers/auth/verification_controller.dart';
+import 'widgets/verification_keypad.dart';
+import 'widgets/verification_otp_display.dart';
+
+class VerificationScreen extends StatelessWidget {
+  const VerificationScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.put(VerificationController());
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Scaffold(
+      backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: Icon(Icons.arrow_back, color: isDark ? Colors.white : TColors.textPrimary)
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Verify Phone Number',
+                      style: GoogleFonts.inter(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? TColors.darkTextPrimary : TColors.textPrimary,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text.rich(
+                      TextSpan(
+                        text: 'Enter the code we sent to \n',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          color: isDark ? TColors.darkTextSecondary : TColors.textSecondary,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: '+1 (555) 000-0000',
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w600,
+                              color: isDark ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    
+                    // OTP Display
+                    VerificationOtpDisplay(controller: controller),
+                    
+                    const SizedBox(height: 32),
+                    
+                    // Timer
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.timer_outlined, size: 18, color: TColors.textSecondary),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Resend code in ',
+                              style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w500, color: TColors.textSecondary),
+                            ),
+                            Obx(() => Text(
+                              controller.timerText.value,
+                              style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: TColors.primary), // Using primary (yellow) as per design (or maybe text-primary depending on contrast, design says text-primary but with class text-primary which IS yellow)
+                            )),
+                          ],
+                        ),
+                         const SizedBox(height: 4),
+                         Obx(() => TextButton(
+                           onPressed: controller.isResendEnabled.value ? () => controller.startTimer() : null,
+                           child: Text(
+                             'Resend Code',
+                             style: GoogleFonts.inter(
+                               fontSize: 14,
+                               fontWeight: FontWeight.w600,
+                               color: controller.isResendEnabled.value 
+                                   ? (isDark ? Colors.white : TColors.textPrimary) 
+                                   : TColors.textSecondary,
+                             ),
+                           ),
+                         )),
+                      ],
+                    ),
+
+                    const SizedBox(height: 32),
+                    
+                    // Verify Button
+                    PrimaryButton(
+                      onPressed: () {},
+                      text: 'Verify',
+                      icon: Icons.check_circle_outline,
+                      height: 48,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          
+          // Custom Keypad
+          VerificationKeypad(controller: controller),
+        ],
+      ),
+    );
+  }
+
+}

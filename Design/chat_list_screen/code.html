@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskLink - Chat List</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23220f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Material Icon Sizing */
+        .material-symbols-outlined {
+            font-size: 24px;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-white antialiased transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark pb-24 overflow-hidden">
+<!-- Header Section -->
+<header class="sticky top-0 z-10 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm px-4 pt-6 pb-2">
+<div class="flex items-center justify-between mb-4">
+<h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Chats</h1>
+<button class="flex items-center justify-center size-10 rounded-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+</div>
+<!-- Search Bar -->
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-gray-400">search</span>
+</div>
+<input class="block w-full rounded-xl border-none bg-white dark:bg-gray-800 py-3 pl-10 pr-3 text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary focus:ring-inset sm:text-sm sm:leading-6 shadow-sm" placeholder="Search messages..." type="text"/>
+</div>
+</header>
+<!-- Filter Tabs -->
+<div class="px-4 py-2">
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full bg-primary px-5 transition-colors">
+<span class="text-black text-sm font-semibold">All</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 px-5 transition-colors">
+<span class="text-gray-600 dark:text-gray-300 text-sm font-medium">Taskers</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 px-5 transition-colors">
+<span class="text-gray-600 dark:text-gray-300 text-sm font-medium">Posters</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 px-5 transition-colors">
+<span class="text-gray-600 dark:text-gray-300 text-sm font-medium">Archived</span>
+</button>
+</div>
+</div>
+<!-- Chat List -->
+<main class="flex-1 px-4 space-y-2 mt-2">
+<!-- Chat Item 1 (Unread) -->
+<div class="group flex items-center gap-4 bg-white dark:bg-gray-800 p-3 rounded-2xl shadow-sm hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors cursor-pointer relative">
+<!-- Avatar with Online Status -->
+<div class="relative shrink-0">
+<img alt="Alex D." class="size-14 rounded-full object-cover border border-gray-100 dark:border-gray-700" data-alt="Portrait of Alex D. a Tasker" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq4N9jRLhkOiNgZ4WMGxskWpU7-Vjm0xU3erezqBkqX7dVbDR7J4eQcEBWG_MOBX6OqdgSOPj9_eiOXxoeHOkk8mc_Uli7I-CMhDKAUm9ymNDWEJR9pxsLoHnwYV9ae6NoP1wdD306lZw3OjmhpX_-Pf2D8yn_SWp6UgLSQQtIcHsXE4AJLfVcmp6C-KdTWvAslVE5GvNPspmSvB09uNZU0jNWf-1VDJhvM0UNZ2QC3AFSBjBxz4T-3mkSjn2lOeEaHH3SVX8VQwEa"/>
+<span class="absolute bottom-0 right-0 block size-3.5 rounded-full bg-green-500 ring-2 ring-white dark:ring-gray-800"></span>
+</div>
+<!-- Content -->
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="text-base font-bold text-gray-900 dark:text-white truncate">Alex D. (Tasker)</h3>
+<span class="text-xs font-medium text-primary dark:text-primary shrink-0 ml-2">10:45 AM</span>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-sm text-gray-900 dark:text-gray-200 truncate font-medium pr-4">I'm on my way to the location now...</p>
+<!-- Unread Badge -->
+<div class="flex items-center justify-center size-5 rounded-full bg-primary shrink-0">
+<span class="text-[10px] font-bold text-black">2</span>
+</div>
+</div>
+<div class="flex items-center gap-1 mt-1.5">
+<span class="material-symbols-outlined text-gray-400 text-[14px]">local_shipping</span>
+<span class="text-xs text-gray-400 truncate">Moving Help • Scheduled Today</span>
+</div>
+</div>
+</div>
+<!-- Chat Item 2 (Read) -->
+<div class="group flex items-center gap-4 bg-white dark:bg-gray-800 p-3 rounded-2xl shadow-sm hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors cursor-pointer">
+<div class="relative shrink-0">
+<img alt="Sarah J." class="size-14 rounded-full object-cover border border-gray-100 dark:border-gray-700" data-alt="Portrait of Sarah J. a Poster" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBgKPTAm99o5cB027FGU3HKq54CVBGTh_6TZ33cP2hJJYt0pdyKLd7oscCiMaUcI6fTpUU4mZgeltvjMl-XHkkXmQ8sH_j-r5uHuyttJ6Iy3HevzNhnuc7cCCRb19kvqKSB6k83YC6rEY1C7S-BdtTJNn-PbRw7USKupd5zdLEvMbXX_lSws03P9sUKoherS8xXTZ7ANNyqFhiuqhuKhoz5Lh_Vycr3LxkV-cIYCjuL9JKT1XBQRpCYtUieSA8NRzE7gPVn0IZf_5s"/>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="text-base font-bold text-gray-900 dark:text-white truncate">Sarah J. (Poster)</h3>
+<span class="text-xs text-gray-400 shrink-0 ml-2">Yesterday</span>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-sm text-gray-500 dark:text-gray-400 truncate pr-4">Can you confirm the price for the lawn mowing?</p>
+</div>
+<div class="flex items-center gap-1 mt-1.5">
+<span class="material-symbols-outlined text-gray-400 text-[14px]">yard</span>
+<span class="text-xs text-gray-400 truncate">Lawn Mowing</span>
+</div>
+</div>
+</div>
+<!-- Chat Item 3 (Read) -->
+<div class="group flex items-center gap-4 bg-white dark:bg-gray-800 p-3 rounded-2xl shadow-sm hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors cursor-pointer">
+<div class="relative shrink-0">
+<img alt="Mike R." class="size-14 rounded-full object-cover border border-gray-100 dark:border-gray-700" data-alt="Portrait of Mike R. a Tasker" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgTNpHLinwJsv5TZW5wDgwcObRSBrdAEPBs89WAQ4y5DuMNYbmGGEc5csFPEoIfGXKfApnPS-VoYcWT1xQJetj1lLxb6SpmFQVfmNnvyjx73u7p3x8aLu5rLPBcqYQhCnf_wPlnxxkFSlvvprv23MG1XtKcCEP8QP3lNQW7B0FwkDahwWlldrQsWUZx2TBXyNgZJ1SqhLziJ8L1dkPVU0AlD8u6NG3dFtRj6Y6FqajjjZRbMfZqv9S8Dpwjj4XYPiEAofqSmgX4URm"/>
+<span class="absolute bottom-0 right-0 block size-3.5 rounded-full bg-gray-400 ring-2 ring-white dark:ring-gray-800"></span>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="text-base font-bold text-gray-900 dark:text-white truncate">Mike R. (Tasker)</h3>
+<span class="text-xs text-gray-400 shrink-0 ml-2">Mon</span>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-sm text-gray-500 dark:text-gray-400 truncate pr-4">The shelf assembly is complete!</p>
+<span class="material-symbols-outlined text-[16px] text-gray-400">done_all</span>
+</div>
+<div class="flex items-center gap-1 mt-1.5">
+<span class="material-symbols-outlined text-gray-400 text-[14px]">build</span>
+<span class="text-xs text-gray-400 truncate">Furniture Assembly</span>
+</div>
+</div>
+</div>
+<!-- Chat Item 4 (Unread) -->
+<div class="group flex items-center gap-4 bg-white dark:bg-gray-800 p-3 rounded-2xl shadow-sm hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors cursor-pointer">
+<div class="relative shrink-0">
+<div class="size-14 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white text-lg font-bold border border-gray-100 dark:border-gray-700" data-alt="Gradient avatar placeholder for Jessica">
+                        JL
+                    </div>
+<span class="absolute bottom-0 right-0 block size-3.5 rounded-full bg-green-500 ring-2 ring-white dark:ring-gray-800"></span>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="text-base font-bold text-gray-900 dark:text-white truncate">Jessica L. (Poster)</h3>
+<span class="text-xs font-medium text-primary dark:text-primary shrink-0 ml-2">Sun</span>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-sm text-gray-900 dark:text-gray-200 truncate font-medium pr-4">Is 2 PM okay for pickup?</p>
+<!-- Unread Badge -->
+<div class="flex items-center justify-center size-5 rounded-full bg-primary shrink-0">
+<span class="text-[10px] font-bold text-black">1</span>
+</div>
+</div>
+<div class="flex items-center gap-1 mt-1.5">
+<span class="material-symbols-outlined text-gray-400 text-[14px]">shopping_bag</span>
+<span class="text-xs text-gray-400 truncate">Grocery Delivery</span>
+</div>
+</div>
+</div>
+<!-- Chat Item 5 (Read) -->
+<div class="group flex items-center gap-4 bg-white dark:bg-gray-800 p-3 rounded-2xl shadow-sm hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors cursor-pointer">
+<div class="relative shrink-0">
+<img alt="David K." class="size-14 rounded-full object-cover border border-gray-100 dark:border-gray-700" data-alt="Portrait of David K. a Tasker" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcMt0Vi5f9zXgf2c1S_CZsmEjphKm7xSD8ZuN6WuQyHl7LLfdD1ksPZ9Q5kim8NVOyjd3f9ElUSRL5IsLxC39uDOFzuToFmBe3zDVbciUPxKXY43YRQyXyljViOy0BrBTVrqJLwmKme9UlgWLPR4uPjiXgVW9vTay252mGULZfvE4ZFMWNnkP9I7G6w9KmrHqSEbK8Tw3h4wmDnoeQhK3aiAGRzGUs2oqqVYc8ah5awNG7jkVGSDI3lOOYtj8xRbRRGjds6TGhNhXF"/>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="text-base font-bold text-gray-900 dark:text-white truncate">David K. (Tasker)</h3>
+<span class="text-xs text-gray-400 shrink-0 ml-2">Sep 12</span>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-sm text-gray-500 dark:text-gray-400 truncate pr-4">Thanks for the great review!</p>
+</div>
+<div class="flex items-center gap-1 mt-1.5">
+<span class="material-symbols-outlined text-gray-400 text-[14px]">format_paint</span>
+<span class="text-xs text-gray-400 truncate">Wall Painting</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 z-20 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 pb-safe">
+<div class="max-w-md mx-auto flex items-center justify-between px-2 h-[60px] sm:h-[70px]">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">list_alt</span>
+<span class="text-[10px] font-medium">My Tasks</span>
+</a>
+<!-- Active Chat Tab -->
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-black dark:text-white group relative" href="#">
+<div class="absolute -top-1 w-12 h-0.5 bg-primary rounded-full"></div>
+<div class="bg-primary/20 dark:bg-primary/30 rounded-full px-4 py-1">
+<span class="material-symbols-outlined filled text-black dark:text-white">chat_bubble</span>
+</div>
+<span class="text-[10px] font-bold text-black dark:text-white">Chat</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">account_balance_wallet</span>
+<span class="text-[10px] font-medium">Wallet</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</div>
+<!-- Safe Area Spacer for iOS Home Bar -->
+<div class="h-6 w-full bg-white dark:bg-gray-900"></div>
+</nav>
+</div>
+</body></html>

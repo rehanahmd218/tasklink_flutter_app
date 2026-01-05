@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskLink - Empty State</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "primary-dark": "#d4d005", // Slightly darker for text legibility
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23220f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2c2b18",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom styles for iOS-like feel */
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .safe-area-top {
+            padding-top: env(safe-area-inset-top);
+        }
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-200">
+<!-- Main Container -->
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<!-- Header / Nav (Simulated for context) -->
+<header class="flex-none px-4 py-3 safe-area-top flex justify-between items-center z-10">
+<div class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-light dark:bg-surface-dark shadow-sm">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-200">arrow_back</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight">Nearby Tasks</h1>
+<div class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-light dark:bg-surface-dark shadow-sm">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-200">filter_list</span>
+</div>
+</header>
+<!-- Empty State Content -->
+<main class="flex-1 flex flex-col items-center justify-center px-6 pb-20 safe-area-bottom">
+<div class="w-full max-w-sm flex flex-col items-center gap-8 animate-fade-in-up">
+<!-- Illustration Area -->
+<div class="relative w-full aspect-square max-w-[280px] mx-auto">
+<!-- Abstract geometric background decoration -->
+<div class="absolute inset-0 bg-primary/20 dark:bg-primary/10 rounded-full blur-3xl scale-90"></div>
+<!-- Main Image -->
+<div class="relative w-full h-full bg-contain bg-center bg-no-repeat z-10" data-alt="Abstract illustration of a map with a location pin" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAt9o_uFqIR35gyDCw91GNNqKSG1L4yvHyoQKHtX39mFrhqPzrJO6QPbXmlcJd_YkRmygoVZF7Jn5Nug9wFlge7VEYfDYLn9nubKi2U-IHnixKWcSwkLyJoE0eaGIpKG9vAuBiV4RFlrRQSeNdHAwvAQvphdJXD34zpMwRvtf_HrE5y-a89c2j3nMEX3GYv7A2U1gM3cbUsr65jfGrYrKN-Ie1qBpJX3vnjr8iFZRpkkFdq_kG7okbn08Rp7cZmUNz5XvBEMMqEYqJo");'>
+</div>
+</div>
+<!-- Text Content -->
+<div class="flex flex-col items-center gap-3 text-center">
+<h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                        No tasks found nearby
+                    </h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-[280px]">
+                        We couldn't find any tasks in your current location. Try adjusting your filters or search radius.
+                    </p>
+</div>
+<!-- Action Button -->
+<button class="group w-full max-w-[200px] h-12 flex items-center justify-center gap-2 rounded-xl border-2 border-primary bg-transparent hover:bg-primary/10 active:bg-primary/20 transition-all duration-200">
+<span class="material-symbols-outlined text-slate-900 dark:text-white text-[20px] transition-transform group-hover:rotate-180">refresh</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white">Refresh</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation (Simulated for context) -->
+<nav class="flex-none bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800 safe-area-bottom pb-2 pt-2 px-6 flex justify-between items-center z-20">
+<button class="flex flex-col items-center gap-1 p-2 text-primary">
+<span class="material-symbols-outlined filled">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-[10px] font-medium">My Tasks</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-[10px] font-medium">Chat</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-[10px] font-medium">Wallet</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</nav>
+</div>
+</body></html>

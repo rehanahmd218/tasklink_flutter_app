@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dispute Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23220f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2c2b14", // Slightly lighter than background-dark
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#1c1c0d] dark:text-[#e9e8ce] transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-10 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-black/5 dark:border-white/10 p-4 pb-2">
+<div class="flex items-center justify-between">
+<button class="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-[#1c1c0d] dark:text-white" style="font-size: 24px;">arrow_back_ios_new</span>
+</button>
+<h2 class="text-[#1c1c0d] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">
+                    Dispute Details
+                </h2>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col p-4 gap-6 pb-24">
+<!-- Status Banner: Under Review -->
+<!-- Using primary yellow with opacity for the background to keep it readable but branded -->
+<div class="rounded-xl bg-primary/20 dark:bg-primary/10 border border-primary/30 p-5 flex items-start gap-4">
+<div class="size-10 rounded-full bg-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-black" style="font-size: 24px;">hourglass_top</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-[#1c1c0d] dark:text-white text-lg font-bold leading-tight">Under Review</h3>
+<p class="text-[#4b4b24] dark:text-[#dcdca8] text-sm font-normal leading-normal">
+                        Our team is currently investigating the evidence provided by both parties. This process usually takes 24-48 hours.
+                    </p>
+</div>
+</div>
+<!-- Task Context Card -->
+<section>
+<h3 class="text-[#1c1c0d] dark:text-white text-sm font-bold uppercase tracking-wider mb-3 px-1 opacity-60">Related Task</h3>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm p-3 flex gap-4 items-center">
+<div class="h-20 w-20 shrink-0 rounded-lg bg-center bg-cover bg-no-repeat bg-gray-200" data-alt="Lawn mowing equipment on grass" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQA3Jo628X8f9qFoioGJPBkEfWDLI0V3km1Elp0Mel7TClP18BKxE9Pm41ueOPaAw_UMz1xjhthjka-KB0xumbJXYcxOtmw_1pAn0FVPn6rU54JL_l2qJf3qNRaC1KHUSzdOQ-zeRoQ8dRzl43HpMebT-62fjcwZ7UyXaQQRg44BRk9z2Fc2U1cFyVQcb7mJBeHwzleFp7Ikg0Qq9LjGfrfLrPFY3keKiRo2cfwv_AbEkY7YlvgEEAdBHae_TVhWInYy-ix0nRaXgY");'></div>
+<div class="flex flex-col flex-1 justify-center">
+<div class="flex justify-between items-start">
+<h4 class="text-[#1c1c0d] dark:text-white text-base font-bold leading-tight line-clamp-1">Lawn Mowing - Front &amp; Back</h4>
+<span class="text-[#1c1c0d] dark:text-white font-bold">$50.00</span>
+</div>
+<p class="text-[#9e9d47] dark:text-[#cfce97] text-sm mt-1">Oct 24, 2023 • 2:00 PM</p>
+<div class="flex items-center gap-1 mt-2">
+<span class="text-xs text-gray-500 dark:text-gray-400">Tasker:</span>
+<div class="flex items-center gap-1">
+<div class="w-4 h-4 rounded-full bg-gray-300 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Tasker profile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFZbDv8E4pyqHTRFSw-fl5pRE2f40nLBM0plPGyn3ieI5BxdcQPiOettheZrDro-pAKaKUkqNdogiXkAOCLSqYXssw1JGJGHob0Ef7NsjFC3Nj4cRbAC_xuUEDMruF3CGPGMWrk6ijH-WPu0ezMlspGfHB1TBZ319qXhPDvu-MyJIjs1_iU5GNv2UGid62e3lplKaIsDyhzmmBddhemtR363osjtO-nccxG_rwlbckFhAL89Wmdo7u1qsRMk2Gsl95EV9Hpxt-4Aze"/>
+</div>
+<span class="text-xs font-medium text-[#1c1c0d] dark:text-white">Alex M.</span>
+</div>
+</div>
+</div>
+<button class="text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Dispute Metadata -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm overflow-hidden">
+<div class="px-4 py-3 border-b border-gray-100 dark:border-white/5">
+<h3 class="text-[#1c1c0d] dark:text-white text-base font-bold">Dispute Information</h3>
+</div>
+<div class="p-4 grid grid-cols-[30%_1fr] gap-y-5 gap-x-4">
+<!-- Dispute ID -->
+<div class="contents">
+<p class="text-[#9e9d47] dark:text-[#a8a760] text-sm font-medium">ID</p>
+<div class="flex items-center gap-2">
+<p class="text-[#1c1c0d] dark:text-white text-sm font-medium">#82910</p>
+<span class="material-symbols-outlined text-gray-400 text-xs cursor-pointer" style="font-size: 14px;">content_copy</span>
+</div>
+</div>
+<!-- Date Raised -->
+<div class="contents">
+<p class="text-[#9e9d47] dark:text-[#a8a760] text-sm font-medium">Date Raised</p>
+<p class="text-[#1c1c0d] dark:text-white text-sm font-medium">Oct 25, 2023</p>
+</div>
+<!-- Reason -->
+<div class="contents">
+<p class="text-[#9e9d47] dark:text-[#a8a760] text-sm font-medium">Reason</p>
+<div class="flex items-center gap-1">
+<span class="px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-xs font-semibold">No Show</span>
+</div>
+</div>
+<!-- Category -->
+<div class="contents">
+<p class="text-[#9e9d47] dark:text-[#a8a760] text-sm font-medium">Requested</p>
+<p class="text-[#1c1c0d] dark:text-white text-sm font-medium">Full Refund</p>
+</div>
+</div>
+</section>
+<!-- Description Section -->
+<section class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm p-4">
+<h3 class="text-[#1c1c0d] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-3">Your Description</h3>
+<div class="bg-background-light dark:bg-black/20 p-3 rounded-lg border border-transparent dark:border-white/5">
+<p class="text-[#1c1c0d] dark:text-gray-300 text-base font-normal leading-relaxed">
+                        I waited for 2 hours at the property, but the tasker never arrived. I tried calling them three times and sent multiple messages through the app, but they stopped replying after 1:45 PM. I needed the lawn mowed before the guests arrived at 5 PM.
+                    </p>
+</div>
+<!-- Attachments Preview (Visual extra) -->
+<div class="mt-4">
+<p class="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide">Evidence Uploaded</p>
+<div class="flex gap-2 overflow-x-auto pb-2">
+<div class="h-20 w-20 shrink-0 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+<span class="material-symbols-outlined text-gray-400">chat_bubble</span>
+</div>
+<div class="h-20 w-20 shrink-0 rounded-lg bg-cover bg-center" data-alt="Screenshot of chat logs" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAzucNrIS2_iXGkQHQ_XHkM_IQy6V2kHcLIZprpx38B_QtDcT7a-SZpH-JD24cuP3zeQ0A8wHJHDz0fT9hYMX5qqfUHrM-0HIzvCX3X39vy6pYFnnlY8PiwCIw6xkHAD34PMOwLBYQLBNY80WqHj5utY9Tstgcc2h5CGlqsm1-jf3oEglCqzzWrNb8LW58hxULG7bhGZrWmpdMKxjtNkpc6Aob1po5y09Cu1pd8JHPV62tFqQOtO2tKE5k-99S4uy7wrhUf3we-bqgp');"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Sticky Footer Action -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-gray-100 dark:border-white/10 p-4 pb-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<div class="flex flex-col gap-3 max-w-md mx-auto">
+<button class="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined text-[#1c1c0d]" style="font-size: 20px;">mail</span>
+<span class="text-[#1c1c0d] text-base font-bold tracking-tight">Contact Support</span>
+</button>
+<button class="flex w-full items-center justify-center gap-2 rounded-xl bg-transparent px-6 py-2">
+<span class="text-gray-500 dark:text-gray-400 text-sm font-medium hover:text-[#1c1c0d] dark:hover:text-white transition-colors">Cancel Dispute</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

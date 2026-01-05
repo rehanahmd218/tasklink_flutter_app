@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Tasks - TaskLink</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "primary-dark": "#d9d505",
+                        "background-light": "#ffffff",
+                        "background-dark": "#18181b",
+                        "surface-light": "#fcfcf8",
+                        "surface-dark": "#27272a",
+                        "text-main": "#1c1c0d",
+                        "text-main-dark": "#fafafa",
+                        "text-muted": "#6b6b5f",
+                        "text-muted-dark": "#a1a1aa",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-text-main-dark min-h-screen flex flex-col antialiased selection:bg-primary selection:text-black">
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center justify-between px-4 py-3">
+<h1 class="text-xl font-bold tracking-tight">My Tasks</h1>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-text-main dark:text-text-main-dark">search</span>
+</button>
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors relative">
+<span class="material-symbols-outlined text-text-main dark:text-text-main-dark">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white dark:border-background-dark"></span>
+</button>
+</div>
+</div>
+<div class="px-2 pb-0 pt-1">
+<div class="flex items-center gap-1 overflow-x-auto no-scrollbar">
+<button class="flex-1 pb-3 text-sm font-semibold border-b-2 border-primary text-black dark:text-white px-4 whitespace-nowrap">
+                    In Progress
+                </button>
+<button class="flex-1 pb-3 text-sm font-medium border-b-2 border-transparent text-text-muted dark:text-text-muted-dark hover:text-black dark:hover:text-white px-4 whitespace-nowrap">
+                    Applied (3)
+                </button>
+<button class="flex-1 pb-3 text-sm font-medium border-b-2 border-transparent text-text-muted dark:text-text-muted-dark hover:text-black dark:hover:text-white px-4 whitespace-nowrap">
+                    History
+                </button>
+</div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto pb-24 px-4 pt-4">
+<div class="space-y-4">
+<div class="bg-surface-light dark:bg-surface-dark border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+<div class="p-4">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<div class="inline-flex items-center px-2.5 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-bold uppercase tracking-wide">
+                                Assigned
+                            </div>
+<span class="text-xs text-text-muted dark:text-text-muted-dark">Due Today, 5pm</span>
+</div>
+<span class="font-bold text-lg">$85</span>
+</div>
+<h3 class="font-bold text-lg mb-1 leading-tight">Install Ceiling Fan</h3>
+<p class="text-sm text-text-muted dark:text-text-muted-dark mb-4 line-clamp-1">Need help replacing an old light fixture with a new ceiling fan in...</p>
+<div class="flex items-center gap-3 mb-4">
+<div class="h-8 w-8 rounded-full bg-gray-200 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwfujNa5Ax0b7V6cl-eZB_6nlq5Wa1D_aVVqdrYUfOGarCPINFh4au-nlV2MCZyWGD4h8rs1gUYK7uJbtWHCV9YJezGXKG2sr9LhmagRhrvHqXoZUH2vwYW9HqoN7lIXCoak8pOaeV9oruEn1MJ151h-lzQCUzUD4drF6L4XUC1lihZDqLaAgrAMcrYaWENpoyYS30zlBstzaJRvfbP0viFbZu15okkLseIVoYrzfvD2AHd-5YckKlgQR5eOTss0zMd3Yig3SIRVci');"></div>
+<div class="text-sm">
+<p class="font-medium text-text-main dark:text-text-main-dark">Poster: Michael B.</p>
+<p class="text-xs text-text-muted dark:text-text-muted-dark">3.2 miles • SoHo, NY</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-2.5 px-4 bg-primary text-black font-bold text-sm rounded-xl hover:bg-primary-dark transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+                            Chat
+                        </button>
+<button class="flex items-center justify-center gap-2 py-2.5 px-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-text-main dark:text-white font-semibold text-sm rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            Details
+                        </button>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-gray-100 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+<div class="p-4">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<div class="inline-flex items-center px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold uppercase tracking-wide">
+                                In Progress
+                            </div>
+<span class="text-xs text-text-muted dark:text-text-muted-dark">Started 1h ago</span>
+</div>
+<span class="font-bold text-lg">$120</span>
+</div>
+<h3 class="font-bold text-lg mb-1 leading-tight">Move Heavy Sofa to 3rd Floor</h3>
+<p class="text-sm text-text-muted dark:text-text-muted-dark mb-4 line-clamp-1">Large sectional needs to be moved up narrow stairs. Two people...</p>
+<div class="flex items-center gap-3 mb-4">
+<div class="h-8 w-8 rounded-full bg-gray-200 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCtor0x8S7WFR8IUyUNOYuKU1dq9ykBnwGvRoOF8EKmakp55O9ARlg0eihnS7H4nxVPzergUneA7KXTGB_OvlV38N2ZuSHxODzA7BXG0CofLDSE5BUZzO_KE20BSUAPeoE_aXOLayPcBg0p0J7XT3pkaSicGn8R1aopjN-wz5hvv0GPS2cqKPdTXYPg9stnZlzM-2W9Ry5Q8iuA1TJqLbDbirdmlikj0cahNEh6-VPMOPwHZXTCZh8SYzXcKKtdoUk0S7dqtLJNACex');"></div>
+<div class="text-sm">
+<p class="font-medium text-text-main dark:text-text-main-dark">Poster: Sarah K.</p>
+<p class="text-xs text-text-muted dark:text-text-muted-dark">0.8 miles • Tribeca, NY</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-2.5 px-4 bg-primary text-black font-bold text-sm rounded-xl hover:bg-primary-dark transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+                            Chat
+                        </button>
+<button class="flex items-center justify-center gap-2 py-2.5 px-4 bg-black text-white dark:bg-white dark:text-black font-bold text-sm rounded-xl hover:opacity-90 transition-colors">
+                            Complete
+                        </button>
+</div>
+</div>
+</div>
+<div class="pt-6 pb-2">
+<h2 class="text-sm font-bold text-text-muted dark:text-text-muted-dark uppercase tracking-wider px-1 mb-3">Recently Applied</h2>
+<div class="bg-surface-light dark:bg-surface-dark border border-gray-100 dark:border-gray-800 rounded-xl p-4 mb-3 opacity-90">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-semibold text-base mb-1">Assemble IKEA Wardrobe</h4>
+<p class="text-xs text-text-muted dark:text-text-muted-dark mb-2">Posted 3h ago • Brooklyn</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-text-muted dark:text-text-muted-dark">Your Bid</p>
+<p class="font-bold text-base">$65</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+<span class="text-xs font-medium text-yellow-600 dark:text-yellow-400">Waiting for response</span>
+</div>
+<button class="text-xs font-medium text-text-muted hover:text-primary transition-colors">View Details</button>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-gray-100 dark:border-gray-800 rounded-xl p-4 opacity-90">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-semibold text-base mb-1">Dog Walking - 1 Hour</h4>
+<p class="text-xs text-text-muted dark:text-text-muted-dark mb-2">Posted 5h ago • Central Park</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-text-muted dark:text-text-muted-dark">Your Bid</p>
+<p class="font-bold text-base">$30</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+<span class="text-xs font-medium text-yellow-600 dark:text-yellow-400">Waiting for response</span>
+</div>
+<button class="text-xs font-medium text-text-muted hover:text-primary transition-colors">View Details</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<nav class="fixed bottom-0 w-full bg-background-light dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 pb-safe pt-2 px-2 z-50 pb-5">
+<div class="flex justify-around items-center">
+<button class="flex flex-col items-center p-2 text-text-muted dark:text-text-muted-dark hover:text-text-main dark:hover:text-white transition-colors group">
+<span class="material-symbols-outlined text-[24px] mb-1 group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center p-2 text-primary-dark dark:text-primary transition-colors group">
+<span class="material-symbols-outlined text-[24px] mb-1 group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="text-[10px] font-bold">My Tasks</span>
+</button>
+<button class="flex flex-col items-center p-2 text-text-muted dark:text-text-muted-dark hover:text-text-main dark:hover:text-white transition-colors group relative">
+<span class="material-symbols-outlined text-[24px] mb-1 group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 0;">chat</span>
+<span class="text-[10px] font-medium">Chat</span>
+<span class="absolute top-2 right-4 w-2 h-2 bg-primary rounded-full border border-white dark:border-background-dark"></span>
+</button>
+<button class="flex flex-col items-center p-2 text-text-muted dark:text-text-muted-dark hover:text-text-main dark:hover:text-white transition-colors group">
+<span class="material-symbols-outlined text-[24px] mb-1 group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 0;">account_balance_wallet</span>
+<span class="text-[10px] font-medium">Wallet</span>
+</button>
+<button class="flex flex-col items-center p-2 text-text-muted dark:text-text-muted-dark hover:text-text-main dark:hover:text-white transition-colors group">
+<span class="material-symbols-outlined text-[24px] mb-1 group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</nav>
+
+</body></html>

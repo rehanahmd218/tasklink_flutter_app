@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskLink - In-Progress Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f9f506",
+              "background-light": "#f8f8f5",
+              "background-dark": "#181815",
+              "surface-light": "#ffffff",
+              "surface-dark": "#23220f",
+              "text-main-light": "#1c1c0d",
+              "text-main-dark": "#ededec",
+              "text-sub-light": "#6b7280",
+              "text-sub-dark": "#9ca3af",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* Custom scrollbar for horizontal scrolling */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main-light dark:text-text-main-dark h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="flex-none bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 p-4 pb-2">
+<div class="flex items-center justify-between">
+<button class="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-text-main-light dark:text-text-main-dark">
+<span class="material-symbols-outlined" style="font-size: 24px;">arrow_back_ios_new</span>
+</button>
+<h2 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center truncate px-2">Assemble IKEA Desk</h2>
+<div class="flex items-center justify-end">
+<p class="text-yellow-600 dark:text-primary text-base font-bold leading-normal tracking-wide shrink-0">$45.00</p>
+</div>
+</div>
+</header>
+<!-- Main Content Scroll Area -->
+<main class="flex-1 overflow-y-auto overflow-x-hidden pb-24">
+<!-- Status Stepper -->
+<div class="bg-surface-light dark:bg-surface-dark px-6 py-6 border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center justify-between relative">
+<!-- Connecting Line -->
+<div class="absolute left-0 top-1/2 w-full h-1 bg-gray-200 dark:bg-gray-700 -z-10 -translate-y-1/2"></div>
+<!-- Step 1: Assigned (Completed) -->
+<div class="flex flex-col items-center gap-2 bg-surface-light dark:bg-surface-dark px-2 z-10">
+<div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center border-2 border-primary shadow-sm">
+<span class="material-symbols-outlined text-black text-sm font-bold">check</span>
+</div>
+<span class="text-xs font-medium text-text-sub-light dark:text-text-sub-dark">Assigned</span>
+</div>
+<!-- Step 2: In Progress (Active) -->
+<div class="flex flex-col items-center gap-2 bg-surface-light dark:bg-surface-dark px-2 z-10">
+<div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center ring-4 ring-yellow-100 dark:ring-yellow-900/30">
+<span class="material-symbols-outlined text-black text-sm font-bold">sync</span>
+</div>
+<span class="text-xs font-bold text-text-main-light dark:text-text-main-dark">In Progress</span>
+</div>
+<!-- Step 3: Completed (Pending) -->
+<div class="flex flex-col items-center gap-2 bg-surface-light dark:bg-surface-dark px-2 z-10">
+<div class="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center border-2 border-gray-300 dark:border-gray-600">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-sm">flag</span>
+</div>
+<span class="text-xs font-medium text-gray-400 dark:text-gray-500">Completed</span>
+</div>
+</div>
+<div class="mt-6 p-4 rounded-xl bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-100 dark:border-yellow-900/30 flex items-start gap-3">
+<span class="material-symbols-outlined text-yellow-700 dark:text-yellow-400 mt-0.5">info</span>
+<div>
+<h3 class="font-bold text-sm text-yellow-900 dark:text-yellow-200">Task Started</h3>
+<p class="text-sm text-yellow-800 dark:text-yellow-300 mt-1">Tasker started work at 10:30 AM. Please stay available for any questions.</p>
+</div>
+</div>
+</div>
+<!-- Chat Action -->
+<div class="px-4 py-4">
+<button class="w-full flex items-center justify-center gap-3 bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 p-4 rounded-xl shadow-sm active:scale-[0.98] transition-transform">
+<div class="relative">
+<div class="h-10 w-10 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+<img alt="Portrait of Alex the tasker" class="h-full w-full object-cover" data-alt="Close up portrait of a smiling man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgnmAeVKo3FW9nNT5uYg9OPCPcxGbF9Qbarfjxx0BPLbyHw4sn7aucQyRY2Bbvzou0t3Azku0P4IoWimTX2KEWd2yUowX0w1lMat0gyC_Oq3pyNHLVWfzuO-EniNwYL6Shf2h1wOO7WriVRJBq7fGI1DCgWJWEsl2tePkDTjY4eX4ABCQ_Rquj7Ri9_X3zt1atpHgHIECI87NVWQoxVUNKxclNUZixqNIW2KoiRd0u53TqGv-u-gBdEw-6-wEANcpolddxHXVifmp5"/>
+</div>
+<div class="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-white dark:border-surface-dark rounded-full"></div>
+</div>
+<div class="flex-1 text-left">
+<h4 class="font-bold text-sm">Chat with Alex</h4>
+<p class="text-xs text-text-sub-light dark:text-text-sub-dark truncate">Hey, I just arrived at the location.</p>
+</div>
+<div class="h-10 w-10 flex items-center justify-center rounded-full bg-primary/20 text-yellow-800 dark:text-yellow-200">
+<span class="material-symbols-outlined">chat_bubble</span>
+</div>
+</button>
+</div>
+<!-- Media Gallery -->
+<div class="px-4 pt-2">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-base font-bold text-text-main-light dark:text-text-main-dark">Task Evidence</h3>
+<button class="text-sm font-semibold text-yellow-700 dark:text-yellow-400">See All</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- Photo 1 -->
+<div class="relative aspect-square rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 group">
+<img alt="Unassembled furniture parts on the floor" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" data-alt="Unassembled wooden furniture parts laid out on a floor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN8Wndc4xEtl9rWbTF_vs_jQaXri1T6-0U2CqPtokt6N-zmfAo-h9F_VbpQ_fnjL-y_suqbJeivDNLfkNRfDoBhwAIH_-mTcVEAeP-1FWjqe4YBguO0XMFV_jA_2xFsSuwHOHr5E-JsMn8PwZjsyUMf7q6m7VvkwZoSxETW6pmbIGxvK7ye794GO_pYQKvxyvvcShV-8AGYuOOmwVNAJZtO1lDx8wGYLVCd17kFeLiX83p26S5gXwEJsjqeQ4D_rEk22-_NvhkGiyY"/>
+<div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/60 to-transparent">
+<p class="text-white text-xs font-medium">Before</p>
+</div>
+</div>
+<!-- Add Photo Button -->
+<button class="flex flex-col items-center justify-center aspect-square rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/5 transition-all group">
+<div class="h-10 w-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-colors mb-2">
+<span class="material-symbols-outlined text-gray-500 dark:text-gray-400 group-hover:text-black">add_a_photo</span>
+</div>
+<span class="text-xs font-bold text-text-sub-light dark:text-text-sub-dark group-hover:text-text-main-light dark:group-hover:text-text-main-dark">Add Photo</span>
+</button>
+</div>
+<!-- Helper Text -->
+<p class="text-xs text-text-sub-light dark:text-text-sub-dark mt-3 px-1 text-center">
+                Photos help document the work and ensure quality. Both you and the Tasker can upload images.
+            </p>
+</div>
+<div class="h-6"></div>
+</main>
+<!-- Bottom Actions (Sticky Footer) -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 p-4 pb-8 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50">
+<div class="flex flex-col gap-3 max-w-md mx-auto">
+<!-- Primary Action Button -->
+<button class="w-full h-12 bg-primary hover:bg-yellow-300 active:bg-yellow-400 text-black font-bold text-base rounded-lg shadow-md transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">check_circle</span>
+                Mark as Completed
+            </button>
+<!-- Secondary Action -->
+<button class="w-full text-sm font-medium text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 py-2 transition-colors flex items-center justify-center gap-1 opacity-80 hover:opacity-100">
+<span class="material-symbols-outlined text-sm">report_problem</span>
+                Report an Issue
+            </button>
+</div>
+</footer>
+<!-- Bottom Nav Placeholder (Visual Context only - based on description) -->
+<div class="hidden">
+<!-- This area represents where the app's global nav would be, but we are designing the screen content primarily. 
+             The fixed footer above acts as the primary interaction point for this specific flow. -->
+</div>
+</body></html>

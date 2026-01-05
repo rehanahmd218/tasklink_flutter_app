@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskLink - Find Work</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23220f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2c2b15", // slightly lighter than bg-dark
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-gray-100 antialiased overflow-hidden h-screen flex flex-col">
+<!-- Sticky Header Section -->
+<header class="flex-none bg-surface-light dark:bg-surface-dark pb-2 shadow-sm z-20 rounded-b-3xl">
+<!-- Top Bar: Location -->
+<div class="pt-12 pb-2 px-4 flex items-center justify-between">
+<div class="flex flex-col">
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium ml-1">Current Location</p>
+<button class="flex items-center gap-1 group">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<h1 class="text-lg font-bold text-gray-900 dark:text-white leading-tight">Downtown, NY</h1>
+<span class="material-symbols-outlined text-gray-400 group-hover:text-gray-600 transition-colors">expand_more</span>
+</button>
+</div>
+<button class="relative p-2 rounded-full bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-gray-700 dark:text-gray-200">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white dark:border-gray-800"></span>
+</button>
+</div>
+<!-- Search Bar -->
+<div class="px-4 mt-2">
+<div class="flex w-full items-center rounded-2xl bg-gray-100 dark:bg-background-dark h-12 px-4 gap-3 border border-transparent focus-within:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-gray-400">search</span>
+<input class="flex-1 bg-transparent border-none p-0 text-base focus:ring-0 placeholder:text-gray-400 text-gray-900 dark:text-white" placeholder="Search for cleaning, moving..." type="text"/>
+<button class="p-1 rounded-full bg-white dark:bg-gray-700 shadow-sm">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300 text-sm p-1">tune</span>
+</button>
+</div>
+</div>
+<!-- Toggle & Filters Row -->
+<div class="mt-4 px-4 flex flex-col gap-4">
+<!-- Map/List Toggle -->
+<div class="flex p-1 bg-gray-100 dark:bg-background-dark rounded-xl w-full">
+<label class="flex-1 cursor-pointer">
+<input class="sr-only peer" name="view_mode" type="radio" value="map"/>
+<div class="flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium text-gray-500 transition-all peer-checked:bg-white dark:peer-checked:bg-gray-700 peer-checked:text-gray-900 dark:peer-checked:text-white peer-checked:shadow-sm">
+<span class="material-symbols-outlined text-lg">map</span>
+                        Map
+                    </div>
+</label>
+<label class="flex-1 cursor-pointer">
+<input checked="" class="sr-only peer" name="view_mode" type="radio" value="list"/>
+<div class="flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium text-gray-500 transition-all peer-checked:bg-white dark:peer-checked:bg-gray-700 peer-checked:text-gray-900 dark:peer-checked:text-white peer-checked:shadow-sm">
+<span class="material-symbols-outlined text-lg">format_list_bulleted</span>
+                        List
+                    </div>
+</label>
+</div>
+<!-- Horizontal Chips -->
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<button class="shrink-0 h-9 px-4 rounded-full bg-primary text-black font-semibold text-sm shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">apps</span>
+                    All
+                </button>
+<button class="shrink-0 h-9 px-4 rounded-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-lg">box</span>
+                    Moving
+                </button>
+<button class="shrink-0 h-9 px-4 rounded-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-lg">cleaning_services</span>
+                    Cleaning
+                </button>
+<button class="shrink-0 h-9 px-4 rounded-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-lg">potted_plant</span>
+                    Gardening
+                </button>
+<button class="shrink-0 h-9 px-4 rounded-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-lg">build</span>
+                    Assembly
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content: Scrollable List -->
+<main class="flex-1 overflow-y-auto px-4 pt-4 pb-24">
+<!-- List Header -->
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-base font-bold text-gray-900 dark:text-white">32 Tasks nearby</h2>
+<button class="text-sm font-medium text-gray-500 flex items-center gap-1">
+                Sort by: Distance <span class="material-symbols-outlined text-base">expand_more</span>
+</button>
+</div>
+<!-- Task Cards Stack -->
+<div class="flex flex-col gap-4">
+<!-- Card 1 -->
+<div class="group relative bg-surface-light dark:bg-surface-dark rounded-2xl p-4 shadow-soft hover:shadow-md transition-shadow cursor-pointer border border-transparent dark:border-gray-800">
+<div class="flex items-start gap-4">
+<!-- Icon -->
+<div class="shrink-0 size-12 rounded-xl bg-primary/20 dark:bg-primary/10 flex items-center justify-center text-gray-900 dark:text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">box</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-base font-bold text-gray-900 dark:text-white truncate pr-2">Help moving a sofa</h3>
+<div class="bg-primary text-black text-sm font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                                $45
+                            </div>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-2 truncate">Moving • Small furniture</p>
+<div class="flex items-center gap-3 text-xs text-gray-400 font-medium">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">near_me</span>
+                                0.8 mi
+                            </div>
+<div class="w-1 h-1 rounded-full bg-gray-300"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">schedule</span>
+                                Posted 2h ago
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative bg-surface-light dark:bg-surface-dark rounded-2xl p-4 shadow-soft hover:shadow-md transition-shadow cursor-pointer border border-transparent dark:border-gray-800">
+<div class="flex items-start gap-4">
+<!-- Icon -->
+<div class="shrink-0 size-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cleaning_services</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-base font-bold text-gray-900 dark:text-white truncate pr-2">Deep Clean 1BR Apt</h3>
+<div class="bg-primary text-black text-sm font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                                $120
+                            </div>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-2 truncate">Cleaning • Full apartment</p>
+<div class="flex items-center gap-3 text-xs text-gray-400 font-medium">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">near_me</span>
+                                3.2 mi
+                            </div>
+<div class="w-1 h-1 rounded-full bg-gray-300"></div>
+<div class="flex items-center gap-1 text-red-500">
+<span class="material-symbols-outlined text-base">timer</span>
+                                Expires in 1h
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative bg-surface-light dark:bg-surface-dark rounded-2xl p-4 shadow-soft hover:shadow-md transition-shadow cursor-pointer border border-transparent dark:border-gray-800">
+<div class="flex items-start gap-4">
+<!-- Icon -->
+<div class="shrink-0 size-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-base font-bold text-gray-900 dark:text-white truncate pr-2">Lawn Mowing &amp; Trimming</h3>
+<div class="bg-primary text-black text-sm font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                                $65
+                            </div>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-2 truncate">Gardening • Medium yard</p>
+<div class="flex items-center gap-3 text-xs text-gray-400 font-medium">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">near_me</span>
+                                1.5 mi
+                            </div>
+<div class="w-1 h-1 rounded-full bg-gray-300"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">schedule</span>
+                                Posted 4h ago
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group relative bg-surface-light dark:bg-surface-dark rounded-2xl p-4 shadow-soft hover:shadow-md transition-shadow cursor-pointer border border-transparent dark:border-gray-800">
+<div class="flex items-start gap-4">
+<!-- Icon -->
+<div class="shrink-0 size-12 rounded-xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">build</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-base font-bold text-gray-900 dark:text-white truncate pr-2">IKEA Desk Assembly</h3>
+<div class="bg-primary text-black text-sm font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                                $30
+                            </div>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-2 truncate">Assembly • Indoor</p>
+<div class="flex items-center gap-3 text-xs text-gray-400 font-medium">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">near_me</span>
+                                0.2 mi
+                            </div>
+<div class="w-1 h-1 rounded-full bg-gray-300"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">schedule</span>
+                                Posted 10m ago
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="group relative bg-surface-light dark:bg-surface-dark rounded-2xl p-4 shadow-soft hover:shadow-md transition-shadow cursor-pointer border border-transparent dark:border-gray-800">
+<div class="flex items-start gap-4">
+<!-- Icon -->
+<div class="shrink-0 size-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pets</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-base font-bold text-gray-900 dark:text-white truncate pr-2">Dog Walking (2 Dogs)</h3>
+<div class="bg-primary text-black text-sm font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                                $25
+                            </div>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-2 truncate">Pet Care • 30 mins</p>
+<div class="flex items-center gap-3 text-xs text-gray-400 font-medium">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">near_me</span>
+                                0.5 mi
+                            </div>
+<div class="w-1 h-1 rounded-full bg-gray-300"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">schedule</span>
+                                Posted 1h ago
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Spacer -->
+<div class="h-8"></div>
+</main>
+<!-- Floating Action Button (Filter) -->
+<div class="absolute bottom-24 right-4 z-30">
+<button class="bg-black dark:bg-white text-primary dark:text-black rounded-full w-14 h-14 shadow-lg flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-2xl">tune</span>
+</button>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="flex-none bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 pb-6 pt-3 px-6 z-40">
+<div class="flex justify-between items-center">
+<!-- Home (Active) -->
+<button class="flex flex-col items-center gap-1 text-black dark:text-primary">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<!-- My Tasks -->
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-symbols-outlined text-2xl">task</span>
+<span class="text-[10px] font-medium">My Tasks</span>
+</button>
+<!-- Chat -->
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 relative">
+<span class="material-symbols-outlined text-2xl">chat_bubble</span>
+<span class="text-[10px] font-medium">Chat</span>
+<span class="absolute top-0 right-1 w-2.5 h-2.5 bg-primary border-2 border-white dark:border-surface-dark rounded-full"></span>
+</button>
+<!-- Wallet -->
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+<span class="text-[10px] font-medium">Wallet</span>
+</button>
+<!-- Profile -->
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</nav>
+<!-- Abstract Gradient for Empty Space/Loading if needed (Hidden but ready) -->
+<div class="hidden bg-gradient-to-br from-primary/10 to-transparent w-full h-full absolute top-0 left-0 -z-10" data-alt="Soft yellow gradient background"></div>
+</body></html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bid Management Screen</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#faf605",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23220f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d2c15",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hide for cleaner UI if needed */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#1c1c0d] dark:text-gray-100 transition-colors duration-200">
+<!-- Main Container -->
+<div class="relative flex h-full min-h-screen w-full flex-col group/design-root overflow-x-hidden pb-[90px]"> <!-- Added padding-bottom for navigation -->
+<!-- Top App Bar -->
+<div class="sticky top-0 z-10 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm p-4 pb-2 justify-between border-b border-gray-100 dark:border-white/5">
+<div class="text-[#1c1c0d] dark:text-white flex size-12 shrink-0 items-center cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 rounded-full justify-center transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-[#1c1c0d] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Manage Bid</h2>
+</div>
+<!-- Spacer -->
+<div class="h-2"></div>
+<!-- Task Link Item (Clickable to Task Details) -->
+<div class="px-4">
+<div class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-3 rounded-xl shadow-sm border border-gray-100 dark:border-white/5 cursor-pointer hover:shadow-md transition-shadow">
+<div class="shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16" data-alt="Green lawn with gardening tools" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAr3fJTn31zIPtg9-Tv0QHdbWvknBuARuDIjSA5t5EFgvHq1sUl7D8hfxJjYCwJTGl7DjKXozw1HsXxn1mae5APm3GUtjCmpMDGmOZnFpXlwzEV1gJA7ANhfm4fzxhNq2_cMPrwAWTcg1JH9q1GuNFaSU-OnMMohDyi89ZyiHLMnntVoYptWi7BP2WA__zWMaDvOTbhAJfhUzt_93rSAByT0MWzbfVldfspKBW7MgUbRqogGeYMor8Em4fdWCnWyWgE35LarultZGkR");'>
+</div>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<p class="text-[#1c1c0d] dark:text-white text-base font-semibold leading-normal line-clamp-1">Lawn Mowing &amp; Garden Cleanup</p>
+<p class="text-[#9e9d47] dark:text-[#d4d375] text-sm font-normal leading-normal line-clamp-1">View task details</p>
+</div>
+<div class="shrink-0 text-[#1c1c0d] dark:text-white">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Bid Status & Amount Section -->
+<div class="flex flex-col items-center justify-center pt-8 pb-4">
+<!-- Chips -->
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#eefcc2] dark:bg-[#3d421b] border border-[#d6f089] dark:border-[#5a6128] px-4 mb-3">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-600 dark:bg-green-400"></span>
+</span>
+<p class="text-[#3b5204] dark:text-[#d6f089] text-xs font-bold uppercase tracking-wide leading-normal">Active Bid</p>
+</div>
+<!-- Headline Text -->
+<h1 class="text-[#1c1c0d] dark:text-white tracking-tight text-5xl font-bold leading-tight text-center">$85.00</h1>
+<!-- Meta Text -->
+<p class="text-[#6b6a4a] dark:text-[#a8a786] text-sm font-medium leading-normal pt-2 text-center">Submitted on Oct 24, 10:30 AM</p>
+</div>
+<!-- Spacer -->
+<div class="h-4"></div>
+<!-- Pitch Section -->
+<div class="px-4">
+<h3 class="text-[#1c1c0d] dark:text-white text-base font-bold mb-3 px-1">Your Pitch</h3>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm">
+<p class="text-[#454432] dark:text-[#dcdbc4] text-base font-normal leading-relaxed">
+                    Hi! I have my own professional lawn mowing equipment and leaf blowers. I can complete this task by Saturday afternoon. I have 5 years of experience in garden maintenance and I'll make sure to bag all the clippings for disposal. Looking forward to helping you out!
+                </p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3 px-4 mt-8 mb-4">
+<!-- Primary Action -->
+<button class="flex items-center justify-center w-full h-12 bg-primary hover:bg-[#e6e204] active:scale-[0.99] transition-all rounded-full shadow-sm">
+<span class="material-symbols-outlined text-black mr-2 text-[20px]">edit</span>
+<span class="text-black text-base font-bold">Edit Bid</span>
+</button>
+<!-- Secondary Action -->
+<button class="flex items-center justify-center w-full h-12 bg-surface-light dark:bg-surface-dark border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-white/5 active:scale-[0.99] transition-all rounded-full">
+<span class="material-symbols-outlined text-[#1c1c0d] dark:text-white mr-2 text-[20px]">chat_bubble</span>
+<span class="text-[#1c1c0d] dark:text-white text-base font-bold">Contact Poster</span>
+</button>
+<!-- Destructive Action -->
+<button class="flex items-center justify-center w-full h-10 mt-2 rounded-lg opacity-80 hover:opacity-100 transition-opacity group">
+<span class="text-red-600 dark:text-red-400 text-sm font-semibold group-hover:underline">Withdraw Bid</span>
+</button>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 left-0 right-0 bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-white/10 px-6 py-2 pb-5 z-50">
+<div class="flex justify-between items-center max-w-md mx-auto">
+<!-- Nav Item: Home -->
+<button class="flex flex-col items-center gap-1 p-2 group">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-[#1c1c0d] dark:group-hover:text-white transition-colors">home</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-[#1c1c0d] dark:group-hover:text-white transition-colors">Home</span>
+</button>
+<!-- Nav Item: My Tasks (Active) -->
+<button class="flex flex-col items-center gap-1 p-2 group relative">
+<div class="absolute -top-2 w-8 h-1 bg-primary rounded-b-md"></div>
+<span class="material-symbols-outlined text-[#1c1c0d] dark:text-primary fill-1">assignment</span>
+<span class="text-[10px] font-bold text-[#1c1c0d] dark:text-primary">My Tasks</span>
+</button>
+<!-- Nav Item: Chat -->
+<button class="flex flex-col items-center gap-1 p-2 group">
+<div class="relative">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-[#1c1c0d] dark:group-hover:text-white transition-colors">chat</span>
+<span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
+</div>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-[#1c1c0d] dark:group-hover:text-white transition-colors">Chat</span>
+</button>
+<!-- Nav Item: Wallet -->
+<button class="flex flex-col items-center gap-1 p-2 group">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-[#1c1c0d] dark:group-hover:text-white transition-colors">account_balance_wallet</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-[#1c1c0d] dark:group-hover:text-white transition-colors">Wallet</span>
+</button>
+<!-- Nav Item: Profile -->
+<button class="flex flex-col items-center gap-1 p-2 group">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-[#1c1c0d] dark:group-hover:text-white transition-colors">person</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-[#1c1c0d] dark:group-hover:text-white transition-colors">Profile</span>
+</button>
+</div>
+</div>
+</body></html>

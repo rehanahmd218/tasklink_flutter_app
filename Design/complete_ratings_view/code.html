@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskLink - Complete Ratings View</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "primary-content": "#1c1c0d",
+                        "background-light": "#fcfcf8",
+                        "background-dim": "#f4f4e6",
+                        "background-dark": "#1c1c0d",
+                        "text-main": "#1c1c0d",
+                        "text-secondary": "#9e9d47",
+                        "border-light": "#e9e8ce",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light text-text-main antialiased selection:bg-primary selection:text-primary-content">
+<div class="relative mx-auto flex h-screen w-full max-w-md flex-col overflow-hidden bg-background-light shadow-2xl">
+<!-- Header -->
+<header class="flex items-center justify-between bg-background-light px-4 py-3 sticky top-0 z-10 border-b border-border-light/30">
+<div class="flex size-10 items-center justify-center rounded-full active:bg-background-dim cursor-pointer transition-colors text-text-main">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</div>
+<h2 class="text-text-main text-lg font-bold leading-tight tracking-tight">Reviews</h2>
+<div class="size-10"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Scrollable Content -->
+<main class="flex-1 overflow-y-auto overflow-x-hidden pb-20 scroll-smooth hide-scrollbar">
+<!-- Rating Summary Section -->
+<section class="px-6 py-6 border-b border-border-light/50">
+<div class="flex flex-col gap-6">
+<div class="flex items-start justify-between">
+<!-- Big Number Score -->
+<div class="flex flex-col gap-1">
+<p class="text-text-main text-6xl font-black leading-none tracking-tighter">4.9</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-primary text-xl fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-xl fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-xl fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-xl fill-1">star</span>
+<span class="material-symbols-outlined text-primary text-xl fill-1">star_half</span>
+</div>
+<p class="text-text-secondary text-sm font-medium mt-1">Based on 32 reviews</p>
+</div>
+<!-- Rating Bars -->
+<div class="flex-1 max-w-[180px] grid grid-cols-[12px_1fr_32px] items-center gap-x-2 gap-y-1.5 ml-4">
+<!-- 5 Stars -->
+<p class="text-text-secondary text-xs font-medium text-right">5</p>
+<div class="h-1.5 w-full rounded-full bg-background-dim overflow-hidden">
+<div class="h-full rounded-full bg-primary w-[83%]"></div>
+</div>
+<p class="text-text-secondary text-xs font-medium text-right">83%</p>
+<!-- 4 Stars -->
+<p class="text-text-secondary text-xs font-medium text-right">4</p>
+<div class="h-1.5 w-full rounded-full bg-background-dim overflow-hidden">
+<div class="h-full rounded-full bg-primary w-[10%]"></div>
+</div>
+<p class="text-text-secondary text-xs font-medium text-right">10%</p>
+<!-- 3 Stars -->
+<p class="text-text-secondary text-xs font-medium text-right">3</p>
+<div class="h-1.5 w-full rounded-full bg-background-dim overflow-hidden">
+<div class="h-full rounded-full bg-primary w-[5%]"></div>
+</div>
+<p class="text-text-secondary text-xs font-medium text-right">5%</p>
+<!-- 2 Stars -->
+<p class="text-text-secondary text-xs font-medium text-right">2</p>
+<div class="h-1.5 w-full rounded-full bg-background-dim overflow-hidden">
+<div class="h-full rounded-full bg-primary w-[2%]"></div>
+</div>
+<p class="text-text-secondary text-xs font-medium text-right">2%</p>
+<!-- 1 Star -->
+<p class="text-text-secondary text-xs font-medium text-right">1</p>
+<div class="h-1.5 w-full rounded-full bg-background-dim overflow-hidden">
+<div class="h-full rounded-full bg-primary w-[0%]"></div>
+</div>
+<p class="text-text-secondary text-xs font-medium text-right">0%</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Role Segmented Control -->
+<section class="sticky top-0 z-10 bg-background-light pt-4 pb-2 px-4 shadow-sm">
+<div class="flex h-12 w-full items-center rounded-xl bg-background-dim p-1">
+<label class="group flex h-full flex-1 cursor-pointer items-center justify-center rounded-lg px-2 transition-all has-[:checked]:bg-white has-[:checked]:shadow-sm has-[:checked]:text-text-main text-text-secondary">
+<span class="text-sm font-semibold">As Tasker</span>
+<input checked="" class="hidden peer" name="role-toggle" type="radio" value="tasker"/>
+</label>
+<label class="group flex h-full flex-1 cursor-pointer items-center justify-center rounded-lg px-2 transition-all has-[:checked]:bg-white has-[:checked]:shadow-sm has-[:checked]:text-text-main text-text-secondary">
+<span class="text-sm font-semibold">As Poster</span>
+<input class="hidden peer" name="role-toggle" type="radio" value="poster"/>
+</label>
+</div>
+</section>
+<!-- Reviews List -->
+<section class="flex flex-col px-4 pt-2 pb-6 divide-y divide-border-light/60">
+<!-- Review Card 1 -->
+<article class="flex flex-col gap-3 py-6 first:pt-4">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-cover bg-center shadow-inner" data-alt="Profile picture of Sarah Jenkins" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAcVGdeCJM4gltaBjZ0C7hs4gcjAR3duxOX0Z2yYbjbtAmWr0fSD4bZHjvbLc6Mhh9nqtP3LOMw5AMqIb8R72tm-BoJDSX69Y3_ALiwf1Z7t3UCdXEnb659wa6cPPdTzM5A98EMLA4MtbIGidSa4tU_zruHTWt-qGuHjqbKRVwnWKOek08n4NIBuzTe0KZOR2kSpiw40U4n37e6pJDGwi1dpIVW2Vn-DA__gHbzWEQqlN6pr08UUJAzFrkZw4wMSh2kIvUzptBAbiWM');"></div>
+<div>
+<h3 class="text-text-main font-bold text-base">Sarah Jenkins</h3>
+<p class="text-text-secondary text-xs font-medium">Oct 24, 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-0.5 bg-background-dim px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="text-text-main text-sm font-bold ml-1">5.0</span>
+</div>
+</div>
+<p class="text-text-main text-sm leading-relaxed">
+                        Great work! Arrived on time and fixed the leak quickly. Highly recommend.
+                    </p>
+<div class="flex items-center justify-between mt-1">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-background-dim text-xs font-medium text-text-secondary">
+<span class="material-symbols-outlined text-sm">plumbing</span>
+                            Task: Plumbing Fix
+                        </div>
+<div class="flex gap-4 text-text-secondary">
+<button class="flex items-center gap-1.5 hover:text-text-main transition-colors">
+<span class="material-symbols-outlined text-lg">thumb_up</span>
+<span class="text-xs font-medium">12</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Review Card 2 -->
+<article class="flex flex-col gap-3 py-6">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-cover bg-center shadow-inner" data-alt="Profile picture of Mike Ross" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAiBm9zEPdh4lxMDtgslgpc916rF_K4G9trdbENzOlHxMFx3JmAIlBGSv3TFcsoTVKBiIlw2CNgI7udBHqJVNdix91fmx8pgTWMZiHy5GaeizI4eEpYUjuwa-BWF8iXzzQu5nZb1KDMcXpNnN-Rm2gQiMKd55fNBySR7etCwPlHOpuwUw54ypF2PLn6N09CN6YxSddwMY4YxURfMnfLJplz0ZjI-1GFLOp5F5OXFDXQgnb4HUzH5wohqzaaj5nC4W_Oek3CvJMBoKfY');"></div>
+<div>
+<h3 class="text-text-main font-bold text-base">Mike Ross</h3>
+<p class="text-text-secondary text-xs font-medium">Oct 20, 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-0.5 bg-background-dim px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="text-text-main text-sm font-bold ml-1">5.0</span>
+</div>
+</div>
+<p class="text-text-main text-sm leading-relaxed">
+                        Excellent communication and very professional. Would hire again.
+                    </p>
+<div class="flex items-center justify-between mt-1">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-background-dim text-xs font-medium text-text-secondary">
+<span class="material-symbols-outlined text-sm">chair</span>
+                            Task: Furniture Assembly
+                        </div>
+<div class="flex gap-4 text-text-secondary">
+<button class="flex items-center gap-1.5 hover:text-text-main transition-colors">
+<span class="material-symbols-outlined text-lg">thumb_up</span>
+<span class="text-xs font-medium">8</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Review Card 3 -->
+<article class="flex flex-col gap-3 py-6">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-cover bg-center shadow-inner" data-alt="Profile picture of Jessica Pearson" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_ZGgNHvfnK16oS1FHWtPoFak0Xvt_pyupEWyRAyuzgcoXaDFyLF1lpZCoWS7_jHaFWC8WQtwInjB2Vg-LxJjeZLKWTTqLddFmJTLGQooV6q48Bws6l1jMfQzZJARb3q_vjHUUixckQA7vdh8PVaa6k3vlmCCXT1SDmEszfUhdiOR7_kGgLgYqpViCoMGxstlVEszYWf4Dh7JbO-GKcG5CVmqC49-mZkByNEOvNit8isJ6agembna3FmcuPcZnT0UPmbR7L9Y7V8dv');"></div>
+<div>
+<h3 class="text-text-main font-bold text-base">Jessica Pearson</h3>
+<p class="text-text-secondary text-xs font-medium">Sep 15, 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-0.5 bg-background-dim px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="text-text-main text-sm font-bold ml-1">4.0</span>
+</div>
+</div>
+<p class="text-text-main text-sm leading-relaxed">
+                        Good job overall, but a bit later than expected.
+                    </p>
+<div class="flex items-center justify-between mt-1">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-background-dim text-xs font-medium text-text-secondary">
+<span class="material-symbols-outlined text-sm">grass</span>
+                            Task: Lawn Mowing
+                        </div>
+<div class="flex gap-4 text-text-secondary">
+<button class="flex items-center gap-1.5 hover:text-text-main transition-colors">
+<span class="material-symbols-outlined text-lg">thumb_up</span>
+<span class="text-xs font-medium">2</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Review Card 4 -->
+<article class="flex flex-col gap-3 py-6">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="size-12 rounded-full bg-cover bg-center shadow-inner" data-alt="Profile picture of Harvey Specter" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7Udebn1AElG9NF0KkfCYuc8ZV5vm2GOMhn-SU7o8jJcKFkKlYqBdPDqHpniTMQhV4RzVgHXTERS3Y8-VeXUUC6CkhZqPFztsvvlYTjKrmioK-dva2WSbsXGHcMmkpwNOTZOzPm_jWi5SZElk1QWQ_oPkrS9O8m327NNhLk39TV3UlxcD-H6zgyP_iyRBKNPYGt79nc5uw9liiHX_DBpHo8YPHnHhy40zq-Lmr_pHQPstQOJnZe9vF4xo5OaEzPLSqixIaAofkrdl6');"></div>
+<div>
+<h3 class="text-text-main font-bold text-base">Harvey Specter</h3>
+<p class="text-text-secondary text-xs font-medium">Aug 30, 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-0.5 bg-background-dim px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-sm fill-1">star</span>
+<span class="text-text-main text-sm font-bold ml-1">5.0</span>
+</div>
+</div>
+<p class="text-text-main text-sm leading-relaxed">
+                        Amazing service, very polite and efficient.
+                    </p>
+<div class="flex items-center justify-between mt-1">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-background-dim text-xs font-medium text-text-secondary">
+<span class="material-symbols-outlined text-sm">box</span>
+                            Task: Moving Help
+                        </div>
+<div class="flex gap-4 text-text-secondary">
+<button class="flex items-center gap-1.5 hover:text-text-main transition-colors">
+<span class="material-symbols-outlined text-lg">thumb_up</span>
+<span class="text-xs font-medium">15</span>
+</button>
+</div>
+</div>
+</article>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="absolute bottom-0 left-0 right-0 border-t border-border-light/60 bg-background-light px-4 pb-6 pt-2 z-20">
+<div class="flex items-center justify-between">
+<a class="flex flex-1 flex-col items-center gap-1 text-text-secondary hover:text-text-main transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-[10px] font-medium tracking-wide">Home</span>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1 text-text-secondary hover:text-text-main transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">list_alt</span>
+<span class="text-[10px] font-medium tracking-wide">My Tasks</span>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1 text-text-secondary hover:text-text-main transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">chat_bubble</span>
+<span class="text-[10px] font-medium tracking-wide">Chat</span>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1 text-text-secondary hover:text-text-main transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+<span class="text-[10px] font-medium tracking-wide">Wallet</span>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1 text-text-main transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl fill-1">person</span>
+<span class="text-[10px] font-medium tracking-wide">Profile</span>
+</a>
+</div>
+</nav>
+</div>
+</body></html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskLink Toast Component</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f9f506",
+              "background-light": "#f8f8f5",
+              "background-dark": "#23220f",
+              "surface-dark": "#1c1c0d",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem", 
+              "lg": "0.5rem", 
+              "xl": "0.75rem", 
+              "full": "9999px"
+            },
+            boxShadow: {
+                'toast': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Hide scrollbar for cleaner demo */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-surface-dark dark:text-white antialiased transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl border-x border-black/5 dark:border-white/5">
+<!-- Header -->
+<header class="flex items-center px-4 py-3 bg-background-light dark:bg-background-dark sticky top-0 z-10 backdrop-blur-md bg-opacity-90">
+<button class="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-surface-dark dark:text-white" style="font-size: 24px;">arrow_back</span>
+</button>
+<h1 class="text-surface-dark dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Toast / Snackbar</h1>
+<div class="w-10"></div> <!-- Spacer for alignment -->
+</header>
+<!-- Content Body -->
+<main class="flex-1 flex flex-col p-4 pb-32 gap-6">
+<!-- Description -->
+<div class="space-y-2">
+<h2 class="text-xl font-bold tracking-tight">Component Variations</h2>
+<p class="text-sm text-gray-500 dark:text-gray-400">
+                    Floating feedback messages providing brief status updates. Designed for high contrast and quick readability.
+                </p>
+</div>
+<!-- STATIC EXAMPLES SECTION -->
+<div class="space-y-6">
+<!-- Variation 1: Simple Message -->
+<div class="space-y-2">
+<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Type A: Simple Message</p>
+<div class="bg-[#1a1a1a] text-white p-4 rounded-lg shadow-toast flex items-center justify-between gap-4">
+<span class="text-sm font-medium">Profile settings updated</span>
+</div>
+</div>
+<!-- Variation 2: With Icon (Success) -->
+<div class="space-y-2">
+<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Type B: Success Status</p>
+<div class="bg-[#1a1a1a] text-white p-4 rounded-lg shadow-toast flex items-center gap-3">
+<span class="material-symbols-outlined text-green-400" style="font-size: 20px;">check_circle</span>
+<span class="text-sm font-medium">Task posted successfully</span>
+</div>
+</div>
+<!-- Variation 3: With Action (Undo) -->
+<div class="space-y-2">
+<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Type C: Actionable</p>
+<div class="bg-[#1a1a1a] text-white p-3 pl-4 rounded-lg shadow-toast flex items-center justify-between gap-3">
+<span class="text-sm font-medium truncate">Message deleted from chat</span>
+<button class="text-primary hover:text-white font-bold text-sm px-3 py-1 rounded transition-colors uppercase tracking-wide">
+                            Undo
+                        </button>
+</div>
+</div>
+<!-- Variation 4: Error/Warning -->
+<div class="space-y-2">
+<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Type D: Error / Retry</p>
+<div class="bg-[#1a1a1a] text-white p-3 pl-4 rounded-lg shadow-toast flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 overflow-hidden">
+<span class="material-symbols-outlined text-red-400 shrink-0" style="font-size: 20px;">error</span>
+<span class="text-sm font-medium truncate">Connection failed</span>
+</div>
+<button class="text-primary hover:text-white font-bold text-sm px-3 py-1 rounded transition-colors uppercase tracking-wide shrink-0">
+                            Retry
+                        </button>
+</div>
+</div>
+<!-- Variation 5: Multi-line / Long content -->
+<div class="space-y-2">
+<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Type E: Multi-line</p>
+<div class="bg-[#1a1a1a] text-white p-4 rounded-lg shadow-toast flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5 shrink-0" style="font-size: 20px;">info</span>
+<div class="flex flex-col gap-1">
+<span class="text-sm font-medium leading-tight">New tasker application received</span>
+<span class="text-xs text-gray-400 leading-tight">Review their profile to accept or decline the offer.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Mock Content to show scrolling -->
+<div class="mt-4 pt-6 border-t border-black/5 dark:border-white/5">
+<h3 class="font-bold mb-4">Context Preview</h3>
+<div class="bg-white dark:bg-[#1c1c0d] p-4 rounded-xl shadow-sm border border-black/5">
+<div class="flex items-center gap-3 mb-3">
+<div class="size-10 rounded-full bg-gray-200 dark:bg-gray-700" data-alt="User profile avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDN_J_66YZrkV3bdxehLtDFqJ3GGDCX2wgMbsZWj2NjqfuOW-mNKHuLo3CY5HvreE7N3XR3lFqL2vkHkr2WFTs-_PAvcSQh9U9Whd1HueHwrqs8CgF1S4NE5AEx0Qh6NC9Sr5SayqvHMsnGN9TEtdEJ2V_AK4FAYrxDGezZRjmWksTP9XNlOnXsZFHyQXvJhxzcScaYKeXgzDJFKWS7oNBrGhMwWminApOq0NHY0g0lFlCABO_F1qkP0aL0oiqScRegDbWrgWw-xSRj'); background-size: cover;"></div>
+<div>
+<p class="font-bold text-sm">Sarah Jenkins</p>
+<p class="text-xs text-gray-500">Tasker • 2m ago</p>
+</div>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300">I can help with the moving task this Saturday! I have a truck.</p>
+</div>
+</div>
+</main>
+<!-- FLOATING LIVE DEMO TOAST -->
+<!-- This represents the actual fixed position component in the UI -->
+<div class="fixed bottom-[88px] left-0 right-0 px-4 z-40 flex justify-center pointer-events-none w-full max-w-md mx-auto">
+<div class="animate-[slideUp_0.4s_ease-out] pointer-events-auto bg-[#1a1a1a] text-white w-full shadow-2xl rounded-lg p-3 pl-4 flex items-center justify-between gap-4 ring-1 ring-white/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-size: 20px;">check_circle</span>
+<span class="text-sm font-medium">Offer sent to Sarah</span>
+</div>
+<button class="text-primary hover:text-white font-bold text-sm px-2 py-1.5 rounded transition-colors uppercase tracking-wide">
+                    View
+                </button>
+</div>
+</div>
+<!-- BOTTOM NAVIGATION BAR -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-[#1c1c0d] border-t border-black/5 dark:border-white/5 pb-5 pt-2 px-2 max-w-md mx-auto">
+<ul class="flex justify-around items-end">
+<li class="flex-1 flex flex-col items-center gap-1 cursor-pointer group">
+<span class="material-symbols-outlined text-surface-dark dark:text-white group-hover:text-primary transition-colors" style="font-size: 24px; font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[10px] font-medium text-surface-dark dark:text-white group-hover:text-primary transition-colors">Home</span>
+</li>
+<li class="flex-1 flex flex-col items-center gap-1 cursor-pointer group">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors" style="font-size: 24px;">assignment</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">My Tasks</span>
+</li>
+<li class="flex-1 flex flex-col items-center gap-1 cursor-pointer group">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors" style="font-size: 24px;">chat_bubble</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">Chat</span>
+</li>
+<li class="flex-1 flex flex-col items-center gap-1 cursor-pointer group">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors" style="font-size: 24px;">account_balance_wallet</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">Wallet</span>
+</li>
+<li class="flex-1 flex flex-col items-center gap-1 cursor-pointer group">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors" style="font-size: 24px;">person</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">Profile</span>
+</li>
+</ul>
+</nav>
+</div>
+<style>
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body></html>

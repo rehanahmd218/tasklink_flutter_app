@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskLink - Delete Confirmation</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ef4343",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221010",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen relative overflow-hidden">
+<!-- BACKGROUND APP CONTENT (Dimmed/Blurred Context) -->
+<!-- This simulates the app screen behind the modal to provide context -->
+<div class="h-full w-full flex flex-col pt-12 px-6 pb-6 opacity-40 blur-[2px] select-none pointer-events-none transition-all duration-300">
+<!-- Nav Bar Simulation -->
+<div class="flex items-center justify-between mb-8">
+<button class="w-10 h-10 rounded-full bg-white dark:bg-[#351a1a] shadow-sm flex items-center justify-center text-slate-900 dark:text-white">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold text-slate-900 dark:text-white">Task Details</h1>
+<button class="w-10 h-10 rounded-full bg-white dark:bg-[#351a1a] shadow-sm flex items-center justify-center text-slate-900 dark:text-white">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<!-- Task Card Simulation -->
+<div class="bg-white dark:bg-[#351a1a] rounded-xl p-6 shadow-sm mb-6 flex-1 flex flex-col relative overflow-hidden">
+<!-- Decorative Yellow Accent for TaskLink Brand -->
+<div class="absolute top-0 left-0 w-full h-2 bg-yellow-400"></div>
+<div class="flex items-start justify-between mb-4 mt-2">
+<div class="flex gap-3 items-center">
+<div class="w-12 h-12 rounded-full bg-cover bg-center" data-alt="Portrait of the task poster" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCinuuLHBtWy7Of9TDohjnZ1ThQFHOim3eWjRhLmMhbZRhiatR7MPrTDiOkD2_FAbcgTEXur5SqPFhFBD5UoKVGUleG9bW-RPevkjqleEuXj3S4OlIoen61wJ0InG5rKOOZMJFAUikKYPmzPbN2YAGCvTLnOF_kzWtrBPE5pWihcDiTRn1dACtpD1v3ODmA3a6yf3lu6T2JXoC5rkI9sZRcW38wi-y9B-3sg2TEYmvOZtDHHQRqw9ooWx58z9PPlDrHpXmCQPsFA8Fw');"></div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Posted by Alex M.</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">2 hours ago</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs font-bold">Open</span>
+</div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Assemble IKEA Wardrobe</h2>
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-slate-400 text-lg">location_on</span>
+<p class="text-sm text-slate-500 dark:text-slate-400">Downtown, 5th Avenue</p>
+</div>
+<div class="h-40 w-full bg-cover bg-center rounded-lg mb-6" data-alt="Cardboard boxes and furniture parts on a wooden floor" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7C0X7KN_NaZ4isHLCwHq-J40aLT3VpBSGk3q3yuTiI3L0b1LFEu21u-jzW7A0Y3c_FQgzCTh6ZlyytjD1o2ynwnGSkaFuOSIaErwGPyUn0npdf5TM6L2NefrGWUAIcwLePBq5QheHy0D1Nl1xAhvtXF-fJMNXY1Igopg9BwtUMacplkVXL6ZyqGUAuFoQ7qGoYfWZeeGdjKMCQy62uMV2R0puEkEDN6K9BVevoLq-zYYx1xCR_U4BLC-K_cKduXo09Qit2tXP3vRC');"></div>
+<p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6">
+                I need help assembling a large PAX wardrobe. Tools will be provided, but experience with IKEA furniture is preferred. It's a 2-person job so I'll be helping...
+            </p>
+</div>
+<!-- Simulated Bottom Action Bar -->
+<div class="h-16 w-full bg-white dark:bg-[#351a1a] rounded-t-xl fixed bottom-0 left-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]"></div>
+</div>
+<!-- CONFIRMATION DIALOG OVERLAY -->
+<!-- Ideally this has role="dialog" and aria-modal="true" for accessibility -->
+<div aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-slate-900/60 backdrop-blur-[2px] transition-opacity duration-300" role="dialog">
+<!-- Dialog Card -->
+<!-- Using white for light mode, and a warm dark gray for dark mode -->
+<div class="w-full max-w-[340px] bg-white dark:bg-[#2a1d1d] rounded-2xl shadow-2xl overflow-hidden animate-[bounce_0.3s_ease-out_1]">
+<div class="flex flex-col items-center p-6 text-center">
+<!-- Icon Circle -->
+<div class="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+<span class="material-symbols-outlined text-[32px] text-primary">warning</span>
+</div>
+<!-- Headline -->
+<h3 class="mb-2 text-xl font-bold text-slate-900 dark:text-white tracking-tight">
+                    Are you sure?
+                </h3>
+<!-- Body Text -->
+<p class="mb-2 text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-[260px]">
+                    Do you really want to delete this task? This process cannot be undone.
+                </p>
+</div>
+<!-- Button Group -->
+<div class="flex flex-row gap-3 px-6 pb-6">
+<!-- Cancel Button -->
+<button class="flex-1 cursor-pointer items-center justify-center rounded-lg h-11 px-4 border border-slate-200 dark:border-slate-700 bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-white/5 text-slate-700 dark:text-slate-200 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400">
+                    Cancel
+                </button>
+<!-- Confirm Button -->
+<!-- Using primary color #ef4343 -->
+<button class="flex-1 cursor-pointer items-center justify-center rounded-lg h-11 px-4 bg-primary hover:bg-red-600 text-white text-sm font-semibold shadow-md shadow-primary/20 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-[#2a1d1d]">
+                    Yes, Delete
+                </button>
+</div>
+</div>
+</div>
+</body></html>

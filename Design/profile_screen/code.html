@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskLink Profile</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#23220f",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d2c1b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-50 font-display antialiased overflow-x-hidden selection:bg-primary selection:text-black pb-24">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm transition-colors duration-200">
+<div class="flex items-center p-4 justify-between">
+<!-- Ghost element to balance the center title -->
+<div class="w-12"></div>
+<h2 class="text-lg font-bold leading-tight tracking-tight text-center">Profile</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex items-center justify-center rounded-full p-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Profile Header -->
+<section class="flex flex-col items-center px-4 pt-2 pb-6 gap-6">
+<div class="flex flex-col items-center gap-4">
+<!-- Avatar -->
+<div class="relative group">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-32 w-32 border-4 border-white dark:border-surface-dark shadow-md" data-alt="Portrait of Alex Johnson smiling in work attire" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDaA2akIlN7W67ScIeEypzQdV_kWwE39Mn5BsmZgolULqSXX_MexuXu_eYBYTlXJGveoHCoJt_ZmvibZoiqrJyb52NSA68tZCGWsk8Xs5OQ6v4XTsY2U4oyovg21fbP9f_ZTPuGi_4rdzRx8i70l_7o25J_IWFfTCGgvgmnpbdzgsCij9rYbCDdbdD_c9gHxM9LuKuggH1ATIILhqPO9-82jODnoARiE68GDHVqPZnOgSYwmpGGZXjbFX2GPOf9Pn-0D-351pwyNjXW");'>
+</div>
+<div class="absolute bottom-1 right-1 bg-white dark:bg-surface-dark rounded-full p-1.5 shadow-sm border border-gray-100 dark:border-gray-700">
+<span class="material-symbols-outlined text-green-600 text-[20px] block">verified</span>
+</div>
+</div>
+<!-- Text Info -->
+<div class="flex flex-col items-center text-center">
+<h1 class="text-2xl font-bold leading-tight tracking-tight mb-1">Alex Johnson</h1>
+<p class="text-gray-600 dark:text-gray-400 text-base font-normal">Handyman &amp; Assembly Expert</p>
+<p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Member since Jan 2023</p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="w-full flex gap-3 max-w-sm">
+<button class="flex-1 cursor-pointer items-center justify-center rounded-lg h-12 px-4 bg-primary text-black text-sm font-bold shadow-sm hover:brightness-95 active:scale-[0.98] transition-all">
+                Edit Profile
+            </button>
+<button class="cursor-pointer items-center justify-center rounded-lg h-12 w-12 border border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="px-4 py-2">
+<div class="flex gap-3 justify-between">
+<!-- Stat 1 -->
+<div class="flex flex-1 flex-col gap-1 rounded-xl bg-surface-light dark:bg-surface-dark p-4 items-center text-center shadow-sm border border-gray-100 dark:border-gray-800">
+<p class="text-2xl font-bold leading-tight">12</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">Posted</p>
+</div>
+<!-- Stat 2 -->
+<div class="flex flex-1 flex-col gap-1 rounded-xl bg-surface-light dark:bg-surface-dark p-4 items-center text-center shadow-sm border border-gray-100 dark:border-gray-800">
+<p class="text-2xl font-bold leading-tight">45</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">Done</p>
+</div>
+<!-- Stat 3 -->
+<div class="flex flex-1 flex-col gap-1 rounded-xl bg-surface-light dark:bg-surface-dark p-4 items-center text-center shadow-sm border border-gray-100 dark:border-gray-800 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-1 opacity-10">
+<span class="material-symbols-outlined text-4xl">star</span>
+</div>
+<div class="flex items-center gap-1">
+<p class="text-2xl font-bold leading-tight">4.8</p>
+<span class="material-symbols-outlined text-primary text-xl fill-1">star</span>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">Rating</p>
+</div>
+</div>
+</section>
+<div class="h-px bg-gray-100 dark:bg-gray-800 mx-4 my-6"></div>
+<!-- Portfolio Section -->
+<section class="flex flex-col">
+<div class="flex items-center justify-between px-4 pb-4">
+<h3 class="text-lg font-bold">Portfolio</h3>
+<button class="text-sm font-medium text-gray-500 hover:text-black dark:hover:text-primary transition-colors">See All</button>
+</div>
+<!-- Horizontal Scroll Container -->
+<div class="flex overflow-x-auto gap-4 px-4 pb-4 no-scrollbar snap-x snap-mandatory">
+<!-- Item 1 -->
+<div class="flex-none w-64 snap-center flex flex-col gap-3 group cursor-pointer">
+<div class="w-full aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden relative">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Assembled wooden bookshelf in a living room" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDJ-YwRF1G1Ih8jnJEtV8ElPHPyWnGiu0KaA-33Ds9ARYFM5YZclWsfvimqmvSJRnlB4_jigjirARF0JAG8RVycO250MONAU3463QY1Ps4m2BX5QtXe8fsLLrJ5dixi3rIl4YIJ9QUBv2lRcbf7bpkQcQ44pnpv9Ph1s5ci3r7RrnsqRCn8my3AVgvmhcHX4CGuJVrlwZVNz3pjULVi3_N7HQtItLfONV_5PDWRoB93mA0fGeJAHj_gqRJqjXBJ-uPqaClLslf2X6-X");'></div>
+</div>
+<div>
+<p class="font-semibold text-sm">Furniture Assembly</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs">Jan 15 • Living Room Set</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex-none w-64 snap-center flex flex-col gap-3 group cursor-pointer">
+<div class="w-full aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden relative">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Clean garden path with freshly trimmed hedges" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBtAvG6fyIOPIzjb8-Y4hyQ0amt4opKWKG74GF3RwX6BsCdbxOYq7jAhXZ-gNlcsoxqFp6iOmBmWXvX2dHBgvwGvwsShVoJO-i7vdJ8x77JYboGzv6MQaDPb2KZuRLm6hTdv-eS_xV89w6TGvvgDa2dFDVtj6beelDU6aJTb_iRsAF5fphHfjYcxoOwz5utxeZsCXgzYz-GNLoDjCJ81vHVQLo2MPQB7xZfn-tOQ0OLunIsZzR3jv_EWS2hZPS7i4QwhhoJ85l7ucJK");'></div>
+</div>
+<div>
+<p class="font-semibold text-sm">Garden Cleanup</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs">Feb 02 • Backyard Maintenance</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex-none w-64 snap-center flex flex-col gap-3 group cursor-pointer">
+<div class="w-full aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden relative">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Cardboard boxes stacked neatly in a hallway for moving" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBjyz6tja3jRtKuwB44yXw03k44UvNU4szvRZezG_dIMlA9pQecRgicQAuo4kRGQb0oLrExYO6nktJt0IpLVukMs4VvYaPepvvrtBKA4TEs-jwPSjjSl_po8mYfuWbAZWN3d2XewPxdoEEPMkhvFvMtcc2UooCwDxHav6qWIsPkud164HTo8DIm3RzC9AiPoyrwbkOf2UbVk7Z2RDi55zvmrFnaEPYzPoP3iOn9f1JWTM1fUbFYcb1ny6OZHwFW355vd4ToOH7lP7tr");'></div>
+</div>
+<div>
+<p class="font-semibold text-sm">Moving Help</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs">Mar 10 • 2 Bedroom Apt</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Reviews Section -->
+<section class="flex flex-col mt-4">
+<div class="flex items-center justify-between px-4 pb-4">
+<h3 class="text-lg font-bold">Reviews</h3>
+<div class="flex items-center gap-1 text-sm font-medium text-gray-500">
+<span class="material-symbols-outlined text-primary text-base fill-1">star</span>
+<span class="text-gray-900 dark:text-white font-bold">4.8</span>
+<span>(42)</span>
+</div>
+</div>
+<div class="flex flex-col gap-4 px-4">
+<!-- Review 1 -->
+<div class="flex flex-col p-4 bg-surface-light dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 bg-center bg-cover" data-alt="Portrait of Sarah M" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAi1X6qa_rL3glOHbfavJ_1_gNQQTbEkvNbF4Ip8KanveeVDaxZJu-PsaaFIABDsFY3-ZW46TRqYxHnWEpVe3cY7DQPR3F1bh_5l6ZkNcSlYEacyzyG3GJeOusFMT87qptn4PRmSHnQN1S6XXctsQEUEKWl807DZ3y-AzijJVo5B9CvZg3ZdiHUMm1ePnQG6y5pHFThdpLPUqvSIFMxXkxuZA-tibsFYuha0Sp1evWSV_2NIw-PFC9eBH_ya4kMfzur_Lgzj6YoODaa')"></div>
+<p class="text-sm font-semibold">Sarah M.</p>
+</div>
+<div class="flex text-primary">
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+</div>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">"Great work, very fast! Alex assembled my IKEA wardrobe in record time. Highly recommended."</p>
+<p class="text-xs text-gray-400 mt-2">2 days ago</p>
+</div>
+<!-- Review 2 -->
+<div class="flex flex-col p-4 bg-surface-light dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 bg-center bg-cover" data-alt="Portrait of John D" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB3ZiCsq8OaHqo2GzLKpCVUy4mnKe3Fj4vPXbYxeVgNjG1GpnBw1rVcqQTbXKaOoI8FHyDyHA5p7mbrUF9zE-OVSL9fmOsRAS-5SPTRhcTdk4f3zW_XIdfIDnIzGZPmbLyXo8_okxWiqklo1oq_dmKxnQaKBK97EPCsIXzTSmQZP29N_YEN5FUTBWS4GbYJGRL9pRYf-30KvZCqb78UP2ZFqvEWZ5s_kc_nq16-GBPc8DKVmKhaNmkERJXMno9aPk4yFNRfUoRWDPw4')"></div>
+<p class="text-sm font-semibold">John D.</p>
+</div>
+<div class="flex text-primary">
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star_half</span>
+</div>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">"Arrived on time and was polite. The job was a bit more complex than expected but he handled it well."</p>
+<p class="text-xs text-gray-400 mt-2">1 week ago</p>
+</div>
+<!-- Review 3 -->
+<div class="flex flex-col p-4 bg-surface-light dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 bg-center bg-cover" data-alt="Portrait of Emily R" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCDQoSMZkMhZ1ChMdoS19B1tEXXnoT0Bh76tcBwyME_8-fIRNTysK4KXaGkByzlqn-FRhKhc7jkSK0ahWELURrtzNchVHfKn156VygVowposmp8iZlTX3lcxbZusNhB3ep2dcAR8FuR9aPSMX70IyIyoVGiPfutELDHju7ZHP6lPE9kFb5U5pkD94sDzEFdWUlGf6LYzDBZlcjZZwrvovegitYiALqPZq5L5EbmvudgggXlQKLDdlG4ZnCjei1APMCWm2CXoKiwHAW7')"></div>
+<p class="text-sm font-semibold">Emily R.</p>
+</div>
+<div class="flex text-primary">
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+<span class="material-symbols-outlined text-[18px] fill-1">star</span>
+</div>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">"Would hire again. Very professional and brought all the necessary tools."</p>
+<p class="text-xs text-gray-400 mt-2">2 weeks ago</p>
+</div>
+</div>
+<button class="mx-4 mt-4 py-3 text-sm font-semibold text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            Show all 42 reviews
+        </button>
+</section>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 pb-safe pt-2 px-2 z-50">
+<div class="flex justify-around items-end h-14 pb-2">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center w-full gap-1 group text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-colors">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<!-- My Tasks -->
+<button class="flex flex-col items-center justify-center w-full gap-1 group text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-colors">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">list_alt</span>
+<span class="text-[10px] font-medium">My Tasks</span>
+</button>
+<!-- Chat -->
+<button class="flex flex-col items-center justify-center w-full gap-1 group text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-colors relative">
+<div class="relative">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">chat</span>
+<span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary border-2 border-white dark:border-surface-dark"></span>
+</span>
+</div>
+<span class="text-[10px] font-medium">Chat</span>
+</button>
+<!-- Wallet -->
+<button class="flex flex-col items-center justify-center w-full gap-1 group text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-colors">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">account_balance_wallet</span>
+<span class="text-[10px] font-medium">Wallet</span>
+</button>
+<!-- Profile (Active) -->
+<button class="flex flex-col items-center justify-center w-full gap-1 text-black dark:text-primary transition-colors">
+<div class="relative flex items-center justify-center">
+<div class="absolute inset-0 bg-primary/20 rounded-full scale-150"></div>
+<span class="material-symbols-outlined text-2xl fill-1 relative z-10 text-black dark:text-primary">person</span>
+</div>
+<span class="text-[10px] font-bold mt-1 text-black dark:text-primary">Profile</span>
+</button>
+</div>
+</nav>
+<!-- Spacer for bottom nav -->
+<div class="h-20"></div>
+</body></html>

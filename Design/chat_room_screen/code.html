@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskLink Chat</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#f9f506",
+            "primary-content": "#1c1c0d",
+            "background-light": "#fcfcf8",
+            "background-dark": "#23220f",
+            "surface-light": "#f4f4e6",
+            "surface-dark": "#2d2d1e",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-slate-900 dark:text-white h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation & Task Context -->
+<header class="shrink-0 bg-white dark:bg-background-dark border-b border-gray-100 dark:border-gray-800 z-10 pt-safe-top">
+<!-- Main Header Row -->
+<div class="flex items-center justify-between p-4 pb-2">
+<!-- Back Button -->
+<button class="flex items-center justify-center w-10 h-10 -ml-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-slate-800 dark:text-white transition-colors">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</button>
+<!-- User Info -->
+<div class="flex flex-col items-center flex-1 mx-2">
+<h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">Alex M.</h1>
+<div class="flex items-center gap-1 text-xs text-green-600 font-medium">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+          Online
+        </div>
+</div>
+<!-- Actions -->
+<div class="flex items-center justify-end w-10">
+<button class="flex items-center justify-center w-10 h-10 -mr-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-slate-800 dark:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Task Context Pill -->
+<div class="px-4 pb-3 w-full overflow-x-auto no-scrollbar">
+<div class="flex items-center justify-between bg-surface-light dark:bg-surface-dark rounded-lg p-3 w-full">
+<div class="flex items-center gap-3">
+<div class="bg-primary/20 p-2 rounded-lg text-primary-content">
+<span class="material-symbols-outlined text-lg">build</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider font-bold text-gray-500 dark:text-gray-400">Current Task</span>
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Assemble IKEA Desk</span>
+</div>
+</div>
+<button class="text-xs font-bold text-slate-900 dark:text-white bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-700 px-3 py-1.5 rounded shadow-sm">
+            Details
+        </button>
+</div>
+</div>
+</header>
+<!-- Chat Area -->
+<main class="flex-1 overflow-y-auto p-4 space-y-6 bg-background-light dark:bg-background-dark scroll-smooth pb-20">
+<!-- System Message -->
+<div class="flex justify-center py-4">
+<span class="bg-gray-100 dark:bg-surface-dark text-gray-500 dark:text-gray-400 text-xs px-3 py-1 rounded-full font-medium">
+        You started a chat with Alex M. • Today 1:24 PM
+      </span>
+</div>
+<!-- Incoming Message (Alex M.) -->
+<div class="flex items-end gap-2 group">
+<div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden shrink-0" data-alt="Alex M. avatar showing a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCvTo_VmGcJEbMsK-DMupI3mKufrnwRYFFamhP2P6Vw1ISHrZRAjqSBWKfBecKFA5VNBPDpDxdrSCEuSRbSJ4H9DeCiXyPiE0eElh0eZjXcRetzvKNYU-5wFedR31mrFewwkTPCXzAdMwGUpLt2gXRzG5S3yf28F90g5KCgw1B_YCEYCf1wjJGUWkF8s9hOHAFRMWpZAKG3ki3YkurUUhulSjO65N7QSx5tTz06pAqMi5KsbSrLZT6ALGonfetA9nVgseAC02IRrL6J"); background-size: cover; background-position: center;'></div>
+<div class="flex flex-col gap-1 max-w-[75%]">
+<div class="px-4 py-3 bg-surface-light dark:bg-surface-dark rounded-2xl rounded-bl-none text-slate-800 dark:text-gray-100 text-[15px] leading-relaxed shadow-sm">
+          Hi! I saw your request for the desk assembly. Is it the large corner desk?
+        </div>
+<span class="text-[11px] text-gray-400 dark:text-gray-500 pl-1">1:30 PM</span>
+</div>
+</div>
+<!-- Outgoing Message (Me) -->
+<div class="flex items-end gap-2 justify-end group">
+<div class="flex flex-col gap-1 items-end max-w-[75%]">
+<div class="px-4 py-3 bg-primary text-primary-content rounded-2xl rounded-br-none text-[15px] leading-relaxed shadow-sm font-medium">
+          Hey! Yes, it's the L-shaped one. Do you have tools?
+        </div>
+<div class="flex items-center gap-1 pr-1">
+<span class="text-[11px] text-gray-400 dark:text-gray-500">1:32 PM</span>
+<span class="material-symbols-outlined text-[12px] text-primary dark:text-primary">done_all</span>
+</div>
+</div>
+</div>
+<!-- Incoming Message (Alex M.) -->
+<div class="flex items-end gap-2 group">
+<div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden shrink-0" data-alt="Alex M. avatar showing a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCs5W7VlV1ZiQI42yb11E26jrWBPodLHYnNGT4HJIUUlE_dE2A7Jb1R-_aJEZ9cb37H0FV2HkagvKJwrXa6LUUdD5lP5OoC1r16z29NAG3DGy4DZ_Tzex-IbZf5h5qzNws-ZmzxCQxX3XtSnSeEWqkCZpDIMQiwHc9TUB8B1kasNK89kCcvdVFhnWl3u7caLHBLUsFObvOa4rBQ2c0cJFE875r9pyVG5sGHexO56vTp3tnhDUK7Yw4tc3Vji9no7cWuWayTHoejsw3T"); background-size: cover; background-position: center;'></div>
+<div class="flex flex-col gap-1 max-w-[75%]">
+<div class="px-4 py-3 bg-surface-light dark:bg-surface-dark rounded-2xl rounded-bl-none text-slate-800 dark:text-gray-100 text-[15px] leading-relaxed shadow-sm">
+          Absolutely. I have my own power drill and screwdrivers. I can be there by 2 PM if that works?
+        </div>
+<span class="text-[11px] text-gray-400 dark:text-gray-500 pl-1">1:35 PM</span>
+</div>
+</div>
+<!-- Outgoing Message (Me) - Image Attachment Example -->
+<div class="flex items-end gap-2 justify-end group">
+<div class="flex flex-col gap-1 items-end max-w-[75%]">
+<div class="p-1 bg-primary rounded-2xl rounded-br-none shadow-sm overflow-hidden">
+<div class="rounded-xl overflow-hidden aspect-video w-48 bg-gray-100" data-alt="Photo of IKEA boxes stacked in a room" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDvJwXl2ebvrcz_9znTBHrrM6LRKIUrE3saEdGDU8--nDdF4nqCdZuhfKpSNrEalFbmfocmE5nt-Zoe4oemfnO1GugoSrwl-FM8epSrU_kWSkZNWKabbFi1pCEzDUMMzRd1LXPhZL-EXTOTahFJspB8ebJ3YOwp7cY5rhWSnV5qxhF-85HtjsDVhsVQ7J9uUGvmLQcoS1aEkiG5pJGqastFfgBbuuBoDA8ck2Csvtkg7vR-5Ea3MEl091f0CGIWH9IptQjVIrFhlIum"); background-size: cover; background-position: center;'></div>
+</div>
+<div class="flex items-center gap-1 pr-1">
+<span class="text-[11px] text-gray-400 dark:text-gray-500">1:36 PM</span>
+<span class="material-symbols-outlined text-[12px] text-gray-400 dark:text-gray-500">done</span>
+</div>
+</div>
+</div>
+<!-- Outgoing Message (Me) -->
+<div class="flex items-end gap-2 justify-end group">
+<div class="flex flex-col gap-1 items-end max-w-[75%]">
+<div class="px-4 py-3 bg-primary text-primary-content rounded-2xl rounded-br-none text-[15px] leading-relaxed shadow-sm font-medium">
+            Perfect, see you then!
+          </div>
+<div class="flex items-center gap-1 pr-1">
+<span class="text-[11px] text-gray-400 dark:text-gray-500">1:36 PM</span>
+<span class="material-symbols-outlined text-[12px] text-gray-400 dark:text-gray-500">done</span>
+</div>
+</div>
+</div>
+<!-- Typing Indicator -->
+<div class="flex items-end gap-2 group animate-pulse">
+<div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden shrink-0" data-alt="Alex M. avatar showing a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD6QDuLeso_YAmeea40LgFNhZfUl5Y-2bazky6Pj6FpdTWpwSsRwwuYu2YjZuR5xn02g73F6J3YicB0p-HozLVGK2cw4zhhpT_k1k6R2xNEdUSSMdAApc44cbuD85R9H-RFVIRHQfF51IQJ-FckNzuHY8mSpvRwwrhqIV9C-KC3QMQGkOVWzPlESDg6NQvcQTYNP1pdNolpWurOKi_WCTEdbDh_t1GkoWNJbNZijb-ldxMi-T7b6JLiajBHsEDsRA0EUudWW0OXngw3"); background-size: cover; background-position: center;'></div>
+<div class="px-4 py-3 bg-surface-light dark:bg-surface-dark rounded-2xl rounded-bl-none shadow-sm flex items-center gap-1 h-[46px]">
+<div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+<div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+<div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+</div>
+</div>
+<!-- Spacer for bottom nav/input area -->
+<div class="h-6"></div>
+</main>
+<!-- Input Area -->
+<footer class="bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 p-3 pb-safe-bottom z-20 sticky bottom-0">
+<div class="flex items-end gap-2 max-w-full">
+<!-- Attachment Button -->
+<button class="shrink-0 w-10 h-10 mb-1 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-2xl">add_circle</span>
+</button>
+<!-- Input Field -->
+<div class="flex-1 bg-surface-light dark:bg-surface-dark rounded-2xl px-4 py-3 min-h-[48px] max-h-[120px] overflow-y-auto flex items-center focus-within:ring-2 focus-within:ring-primary/50 transition-all">
+<input class="w-full bg-transparent border-none p-0 text-slate-900 dark:text-white placeholder-gray-400 focus:ring-0 text-[15px] resize-none leading-normal" placeholder="Type a message..." type="text"/>
+</div>
+<!-- Send Button -->
+<button class="shrink-0 w-12 h-12 mb-0 flex items-center justify-center rounded-full bg-primary text-primary-content shadow-md hover:bg-yellow-300 transition-colors transform active:scale-95">
+<span class="material-symbols-outlined filled font-bold">arrow_upward</span>
+</button>
+</div>
+</footer>
+<style>
+    /* Utility for safe area spacing on newer iPhones */
+    .pt-safe-top {
+        padding-top: env(safe-area-inset-top, 20px);
+    }
+    .pb-safe-bottom {
+        padding-bottom: env(safe-area-inset-bottom, 20px);
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    
+    .filled {
+        font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
+    }
+  </style>
+</body></html>
