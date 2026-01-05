@@ -17,7 +17,7 @@ class BidManagementScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,
       appBar: PrimaryAppBar(
-        title: 'Manage Bid',
+        title: 'Manage Bids',
       ),
       body: Column(
         children: [
