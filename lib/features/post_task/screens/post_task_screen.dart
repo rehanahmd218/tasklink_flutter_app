@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/features/post_task/widgets/post_task_category_selector.dart';
@@ -10,6 +11,7 @@ import 'package:tasklink/controllers/features/post_task_controller.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/common/widgets/primary_button.dart';
 import 'package:tasklink/common/widgets/app_text_field.dart';
+import 'package:tasklink/routes/routes.dart';
 
 class PostTaskScreen extends StatelessWidget {
   const PostTaskScreen({super.key});
@@ -83,10 +85,30 @@ class PostTaskScreen extends StatelessWidget {
                    
                    const SizedBox(height: 12),
                    
-                   // Location
+                   // Location (Map Selection)
                    Padding(
                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                      child: PostTaskLocationInput(controller: controller),
+                   ),
+
+                   // Address (Text Input)
+                   Padding(
+                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                     child: AppTextField(
+                       label: 'Address',
+                       hint: 'Enter full address',
+                       controller: controller.address,
+                     ),
+                   ),
+
+                   // Estimated Duration
+                   Padding(
+                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                     child: AppTextField(
+                       label: 'Estimated Duration',
+                       hint: 'e.g., 2 hours, 1 day',
+                       controller: controller.estimatedDuration,
+                     ),
                    ),
                    
                    const SizedBox(height: 12),
@@ -97,9 +119,11 @@ class PostTaskScreen extends StatelessWidget {
                      child: PostTaskDateBudgetRow(controller: controller),
                    ),
                    
+
+
                    // Info
                    const Padding(
-                     padding: EdgeInsets.all(20),
+                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                      child: PostTaskInfoTip(),
                    ),
                 ],
@@ -115,8 +139,11 @@ class PostTaskScreen extends StatelessWidget {
               border: Border(top: BorderSide(color: isDark ? Colors.grey[800]! : Colors.grey[200]!)),
             ),
             child: PrimaryButton(
-              onPressed: () {},
-              text: 'Post Task',
+              onPressed: () {
+                // Navigate to Media Screen
+                Get.toNamed(Routes.POST_TASK_MEDIA);
+              },
+              text: 'Next',
               icon: Icons.arrow_forward,
             ),
           ),

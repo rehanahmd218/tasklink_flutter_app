@@ -13,6 +13,7 @@ import '../features/home/screens/home_screen.dart';
 import '../features/task_details/screens/task_details_screen.dart';
 import '../features/task_details/screens/task_details_tasker_screen.dart';
 import '../features/post_task/screens/post_task_screen.dart';
+import '../features/post_task/screens/post_task_media_screen.dart';
 import '../features/place_bid/screens/place_bid_screen.dart';
 import '../features/my_posted_tasks/screens/my_posted_tasks_screen.dart';
 import '../features/my_tasks/screens/my_tasks_screen.dart';
@@ -50,6 +51,7 @@ class AppPages {
     GetPage(name: Routes.TASK_DETAILS_TASKER, page: () => const TaskDetailsTaskerScreen()),
 
     GetPage(name: Routes.POST_TASK, page: () => const PostTaskScreen()),
+    GetPage(name: Routes.POST_TASK_MEDIA, page: () => const PostTaskMediaScreen()),
     GetPage(name: Routes.PLACE_BID, page: () => const PlaceBidScreen()),
     GetPage(name: Routes.MY_POSTED_TASKS, page: () => const MyPostedTasksScreen()),
     GetPage(name: Routes.MY_TASKS, page: () => const MyTasksScreen()),

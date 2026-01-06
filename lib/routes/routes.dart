@@ -13,6 +13,7 @@ class Routes {
   static const TASK_DETAILS_TASKER = '/task-details-tasker';
   
   static const POST_TASK = '/post-task';
+  static const POST_TASK_MEDIA = '/post-task-media';
   static const PLACE_BID = '/place-bid';
   static const MY_POSTED_TASKS = '/my-posted-tasks';
   static const MY_TASKS = '/my-tasks';

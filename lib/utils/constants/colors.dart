@@ -11,7 +11,8 @@ class TColors {
 
   // Background Colors
   static const Color backgroundLight = Color(0xFFf8f7f5);
-  static const Color backgroundDark = Color(0xFF231d0f);
+  static const Color backgroundDark = Color.fromARGB(255, 19, 19, 19);
+  // static const Color backgroundDark = Color(0xFF231d0f);
   static const Color darkContainer = Color(0xFF292524); // Stone 800
   static const Color lightContainer = Colors.white;
 
