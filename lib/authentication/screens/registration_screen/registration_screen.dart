@@ -15,7 +15,7 @@ class RegistrationScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,
+      // backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () => Get.back(),

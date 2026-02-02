@@ -15,7 +15,7 @@ class BidManagementScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,
+      // backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,
       appBar: PrimaryAppBar(
         title: 'Manage Bids',
       ),
