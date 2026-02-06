@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 
-import 'package:tasklink/common/widgets/primary_button.dart';
-import 'package:tasklink/common/widgets/secondary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/secondary_button.dart';
 
 class WalletActionButtons extends StatelessWidget {
   final bool isDark;

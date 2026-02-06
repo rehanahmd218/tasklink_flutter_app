@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/features/reviews/screens/widgets/review_rating_section.dart';
 import 'package:tasklink/features/reviews/screens/widgets/review_tasker_info.dart';
 import 'package:tasklink/features/reviews/screens/widgets/review_text_input.dart';

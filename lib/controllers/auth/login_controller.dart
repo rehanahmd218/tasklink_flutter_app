@@ -11,7 +11,7 @@ class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   final phone = TextEditingController();
-  final countryCode = '+1'.obs;
+  final countryCode = '+92'.obs;
 
   void toggleLoginMethod() {
     isEmailLogin.value = !isEmailLogin.value;

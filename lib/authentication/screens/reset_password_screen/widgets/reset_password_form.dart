@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/controllers/auth/reset_password_controller.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/common/widgets/app_text_field.dart';
 
 class ResetPasswordForm extends StatelessWidget {

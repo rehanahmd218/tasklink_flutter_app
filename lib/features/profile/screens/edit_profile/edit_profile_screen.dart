@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/features/profile/screens/widgets/profile_picture_uploader.dart';
 import 'package:tasklink/common/widgets/app_dropdown.dart';
 import 'package:tasklink/common/widgets/app_text_field.dart';

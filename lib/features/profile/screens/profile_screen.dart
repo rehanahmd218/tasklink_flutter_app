@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
-import 'package:tasklink/common/widgets/secondary_button.dart';
+import 'package:tasklink/common/widgets/buttons/secondary_button.dart';
 import 'package:tasklink/features/profile/screens/widgets/portfolio_card.dart';
 import 'package:tasklink/features/profile/screens/widgets/profile_header.dart';
 import 'package:tasklink/features/profile/screens/widgets/profile_stat_card.dart';

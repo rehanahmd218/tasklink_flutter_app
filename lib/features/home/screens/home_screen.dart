@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasklink/common/widgets/dialogs/status_popup.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
+
 import '../../../../utils/constants/colors.dart';
 import 'package:tasklink/controllers/features/home_controller.dart';
 import '../widgets/home_header.dart';
@@ -20,7 +23,11 @@ class HomeScreen extends StatelessWidget {
       // backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,
       body: Column(
         children: [
-          const HomeHeader(),
+          // const HomeHeader(),
+          ElevatedButton(onPressed: (){
+            StatusSnackbar.showError(message: 'This is an error popup');
+
+          }, child: Text('Show Popup')),
           Expanded(
             child: Obx(() => controller.isMapView.value 
               ? const HomeMapView() 

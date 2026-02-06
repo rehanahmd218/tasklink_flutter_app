@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../utils/constants/colors.dart';
+import '../../../utils/constants/colors.dart';
 
 /// Primary button matching HTML design
 /// Height: 56px, rounded-xl (12px), primary background

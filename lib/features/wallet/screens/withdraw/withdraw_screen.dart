@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/features/wallet/screens/widgets/withdraw/payout_method_selection.dart';
 import 'package:tasklink/features/wallet/screens/widgets/withdraw/withdraw_amount_input.dart';
 import 'package:tasklink/features/wallet/screens/widgets/withdraw/withdraw_balance_card.dart';

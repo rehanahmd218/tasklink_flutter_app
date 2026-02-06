@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:tasklink/common/test/animation_test_screen.dart';
+import 'package:tasklink/common/test/loader_test_screen.dart';
 
 import 'package:tasklink/routes/routes.dart';
 
@@ -12,14 +14,19 @@ class SplashScreenController extends GetxController {
  
     // Initial splash delay
     await Future.delayed(const Duration(seconds: 3));
+    
+    // Get.offAllNamed(Routes.HOME);
 
-    for (final route in Routes.all) {
-      // print('Navigating to: $route');
+  Get.to(() => const LoaderTestScreen());
+    // for (final route in Routes.all) {
+    //   // print('Navigating to: $route');
 
-      Get.offAllNamed(route);
+    //   Get.offAllNamed(route);
       
-      // Wait 10 seconds before next screen
-      await Future.delayed(const Duration(seconds: 4));
-    }
+    //   // Wait 10 seconds before next screen
+    //   await Future.delayed(const Duration(seconds: 4));
+    // }
+
+
   }
 }

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/controllers/features/post_task_controller.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 

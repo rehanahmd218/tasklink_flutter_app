@@ -4,7 +4,7 @@ import 'package:tasklink/features/disputes/screens/widgets/dispute_description_i
 import 'package:tasklink/features/disputes/screens/widgets/dispute_evidence_section.dart';
 import 'package:tasklink/features/disputes/screens/widgets/dispute_reason_dropdown.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 
 class DisputeScreen extends StatefulWidget {
   const DisputeScreen({super.key});

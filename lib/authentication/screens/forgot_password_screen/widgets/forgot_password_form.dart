@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasklink/controllers/auth/forgot_password_controller.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/common/widgets/app_text_field.dart';
 import '../../reset_password_screen/reset_password_screen.dart';
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../utils/constants/colors.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
-import 'package:tasklink/common/widgets/secondary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/secondary_button.dart';
 import 'package:tasklink/common/widgets/rounded_container.dart';
 
 class TaskBidCard extends StatelessWidget {

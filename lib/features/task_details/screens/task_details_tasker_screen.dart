@@ -2,7 +2,7 @@
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../utils/constants/colors.dart';
-import 'package:tasklink/common/widgets/app_button.dart';
+import 'package:tasklink/common/widgets/buttons/app_button.dart';
 import 'package:tasklink/controllers/features/task_details_tasker_controller.dart';
 import '../widgets/safe_payment_warning.dart';
 import '../widgets/task_detail_card.dart';

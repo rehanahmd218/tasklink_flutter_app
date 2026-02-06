@@ -9,7 +9,7 @@ import 'package:tasklink/features/post_task/widgets/post_task_location_input.dar
 import '../../../../utils/constants/colors.dart';
 import 'package:tasklink/controllers/features/post_task_controller.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/common/widgets/app_text_field.dart';
 import 'package:tasklink/routes/routes.dart';
 

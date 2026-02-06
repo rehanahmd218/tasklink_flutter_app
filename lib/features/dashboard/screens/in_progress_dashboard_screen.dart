@@ -2,7 +2,7 @@
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../utils/constants/colors.dart';
-import 'package:tasklink/common/widgets/app_button.dart';
+import 'package:tasklink/common/widgets/buttons/app_button.dart';
 import 'package:tasklink/common/widgets/app_card.dart';
 import 'package:tasklink/controllers/features/in_progress_dashboard_controller.dart';
 import 'widgets/status_stepper.dart';
@@ -176,7 +176,7 @@ class InProgressDashboardScreen extends StatelessWidget {
                   
                   // Task Evidence
                   Obx(() => TaskEvidenceGallery(
-                    photos: controller.evidencePhotos,
+                    photos: controller.evidencePhotos.toList(),
                     onAddPhoto: controller.addPhoto,
                   )),
                 ],

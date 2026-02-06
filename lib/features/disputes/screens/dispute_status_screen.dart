@@ -5,7 +5,7 @@ import 'package:tasklink/features/disputes/screens/widgets/dispute_info_table.da
 import 'package:tasklink/features/disputes/screens/widgets/dispute_status_banner.dart';
 import 'package:tasklink/features/disputes/screens/widgets/dispute_status_task_card.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 
 class DisputeStatusScreen extends StatelessWidget {
   const DisputeStatusScreen({super.key});

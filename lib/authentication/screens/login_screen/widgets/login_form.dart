@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/controllers/auth/login_controller.dart';
-import 'package:tasklink/common/widgets/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/common/widgets/app_text_field.dart';
 
 import '../../../../utils/constants/colors.dart';
@@ -35,8 +35,7 @@ class LoginForm extends StatelessWidget {
           child: Obx(
             () => Row(
               children: [
-                if (controller.isEmailLogin.value)
-                  Expanded(
+                Expanded(
                     child: GestureDetector(
                       onTap: () {
                         if (controller.isEmailLogin.value)
@@ -212,42 +211,25 @@ class LoginForm extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 110,
-              child: DropdownButtonFormField<String>(
-                initialValue: controller.countryCode.value,
-                items: const [
-                  DropdownMenuItem(value: '+1', child: Text('🇺🇸 +1')),
-                  DropdownMenuItem(value: '+44', child: Text('🇬🇧 +44')),
-                  DropdownMenuItem(value: '+91', child: Text('🇮🇳 +91')),
-                  DropdownMenuItem(value: '+81', child: Text('🇯🇵 +81')),
-                ],
-                onChanged: (val) => controller.countryCode.value = val!,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 16,
-                  ),
-                  filled: true,
-                  fillColor: isDark ? TColors.darkContainer : TColors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: isDark
-                          ? TColors.darkBorderPrimary
-                          : TColors.borderSecondary,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: isDark
-                          ? TColors.darkBorderPrimary
-                          : TColors.borderSecondary,
-                    ),
+            Container(
+              width: 100,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              decoration: BoxDecoration(
+                color: isDark ? TColors.darkContainer : TColors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: isDark ? TColors.darkBorderPrimary : TColors.borderSecondary,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  '🇵🇰 +92',
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: isDark ? TColors.darkTextPrimary : TColors.textPrimary,
                   ),
                 ),
-                icon: const Icon(Icons.expand_more),
               ),
             ),
             const SizedBox(width: 12),
