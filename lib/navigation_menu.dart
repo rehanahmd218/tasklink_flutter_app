@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tasklink/controllers/features/navigation_controller.dart';
 import 'package:tasklink/features/chat/screens/chat_list_screen.dart';
 import 'package:tasklink/features/home/screens/home_screen.dart';
 import 'package:tasklink/features/my_tasks/screens/my_tasks_screen.dart';
@@ -20,26 +21,14 @@ class NavigationMenu extends StatelessWidget {
       bottomNavigationBar: Obx(
         () => NavigationBarAndToolbar(
           selectedIndex: controller.selectedIndex.value,
-          onDestinationSelected: (index) => controller.selectedIndex.value = index,
+          onDestinationSelected: (index) =>
+              controller.selectedIndex.value = index,
           isDark: isDark,
         ),
       ),
       body: Obx(() => controller.screens[controller.selectedIndex.value]),
     );
   }
-}
-
-class NavigationController extends GetxController {
-  final Rx<int> selectedIndex = 0.obs;
-
-  final screens = [
-    
-    const HomeScreen(),
-    const MyTasksScreen(),
-    const ChatListScreen(), 
-    const WalletScreen(),
-    const ProfileScreen(),
-  ];
 }
 
 class NavigationBarAndToolbar extends StatelessWidget {
@@ -60,19 +49,25 @@ class NavigationBarAndToolbar extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF23220f) : Colors.white,
         border: Border(
-            top: BorderSide(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.05)
-                    : Colors.grey[200]!)),
+          top: BorderSide(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.05)
+                : Colors.grey[200]!,
+          ),
+        ),
         boxShadow: [
           if (!isDark)
             BoxShadow(
-                color: Colors.black.withValues(alpha: 0.03),
-                blurRadius: 10,
-                offset: const Offset(0, -2))
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, -2),
+            ),
         ],
       ),
-      padding: const EdgeInsets.only(top: 8, bottom: 8), // Adjusted for safe area usually
+      padding: const EdgeInsets.only(
+        top: 8,
+        bottom: 8,
+      ), // Adjusted for safe area usually
       child: SafeArea(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -97,10 +92,12 @@ class NavigationBarAndToolbar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
             decoration: isSelected
                 ? BoxDecoration(
-                    color: isDark ? Colors.white.withValues(alpha: 0.1) : TColors.primary.withValues(alpha: 0.15),
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.1)
+                        : TColors.primary.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(16),
                   )
                 : null,

@@ -5,12 +5,7 @@ import 'package:tasklink/common/widgets/buttons/app_button.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 
 /// Type of status popup
-enum PopupType {
-  success,
-  error,
-  info,
-  warning,
-}
+enum PopupType { success, error, info, warning }
 
 /// Unified status popup dialog for success, error, info, and warning messages
 class StatusPopup extends StatelessWidget {
@@ -100,16 +95,20 @@ class StatusPopup extends StatelessWidget {
     required String message,
     String? buttonText,
     VoidCallback? onPressed,
+    bool dismissible = true,
   }) {
     return Get.dialog(
-      StatusPopup(
-        type: type,
-        title: title,
-        message: message,
-        buttonText: buttonText,
-        onPressed: onPressed,
+      PopScope(
+        canPop: dismissible,
+        child: StatusPopup(
+          type: type,
+          title: title,
+          message: message,
+          buttonText: buttonText,
+          onPressed: onPressed,
+        ),
       ),
-      barrierDismissible: type != PopupType.success,
+      barrierDismissible: dismissible,
     );
   }
 
@@ -150,9 +149,7 @@ class StatusPopup extends StatelessWidget {
 
     return Dialog(
       backgroundColor: isDark ? TColors.darkContainer : TColors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -196,7 +193,9 @@ class StatusPopup extends StatelessWidget {
             // Button
             AppButton(
               text: buttonText ?? config.defaultButtonText,
-              type: type == PopupType.error ? ButtonType.danger : ButtonType.primary,
+              type: type == PopupType.error
+                  ? ButtonType.danger
+                  : ButtonType.primary,
               onPressed: onPressed ?? () => Get.back(),
             ),
           ],

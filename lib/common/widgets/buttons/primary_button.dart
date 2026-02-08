@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../utils/constants/colors.dart';
+
 class PrimaryButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String text;
   final IconData? icon;
   final Color? backgroundColor;
@@ -30,12 +31,19 @@ class PrimaryButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor ?? TColors.primary,
           foregroundColor: foregroundColor ?? Colors.black,
-          padding: EdgeInsets.symmetric(vertical: (height - 24) / 2), // Approximate centering
+          padding: EdgeInsets.symmetric(
+            vertical: (height - 24) / 2,
+          ), // Approximate centering
           minimumSize: Size(width, height),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
           elevation: 4,
           shadowColor: TColors.primary.withValues(alpha: 0.2),
-          textStyle: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold),
+          textStyle: GoogleFonts.inter(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

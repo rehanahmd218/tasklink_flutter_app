@@ -60,63 +60,12 @@ All API responses follow a consistent structure:
 ## 🗂️ Flutter Folder Structure
 
 Create a modular, feature-based architecture with clear separation of concerns:
+services that interect with database 
+one folder for authentication 
+one for other featuers
 
-```
-lib/
-├── core/
-│   ├── constants/
-│   │   ├── api_constants.dart          # API endpoints, base URLs
-│   │   └── app_constants.dart          # App-wide constants
-│   ├── network/
-│   │   ├── api_client.dart             # Dio/HTTP client configuration
-│   │   ├── api_interceptor.dart        # JWT token interceptor
-│   │   └── api_response.dart           # Generic API response wrapper
-│   ├── errors/
-│   │   ├── exceptions.dart             # Custom exception classes
-│   │   └── failures.dart               # Failure handling
-│   └── utils/
-│       ├── validators.dart             # Input validation utilities
-│       └── storage_helper.dart         # Secure storage for tokens
-│
-├── features/
-│   └── accounts/
-│       ├── data/
-│       │   ├── models/
-│       │   │   ├── user_model.dart
-│       │   │   ├── user_profile_model.dart
-│       │   │   └── wallet_model.dart
-│       │   ├── repositories/
-│       │   │   └── accounts_repository.dart
-│       │   └── data_sources/
-│       │       └── accounts_remote_data_source.dart
-│       ├── domain/
-│       │   ├── entities/
-│       │   │   ├── user.dart
-│       │   │   ├── user_profile.dart
-│       │   │   └── wallet.dart
-│       │   └── repositories/
-│       │       └── i_accounts_repository.dart
-│       ├── presentation/
-│       │   ├── controllers/
-│       │   │   ├── auth_controller.dart
-│       │   │   ├── profile_controller.dart
-│       │   │   └── wallet_controller.dart
-│       │   ├── screens/
-│       │   │   ├── register_screen.dart
-│       │   │   ├── login_screen.dart
-│       │   │   ├── otp_verification_screen.dart
-│       │   │   ├── profile_screen.dart
-│       │   │   ├── edit_profile_screen.dart
-│       │   │   ├── change_password_screen.dart
-│       │   │   ├── forgot_password_screen.dart
-│       │   │   └── wallet_screen.dart
-│       │   └── widgets/
-│       │       ├── profile_image_picker.dart
-│       │       └── custom_text_field.dart
-│       └── accounts_module.dart
-│
-└── main.dart
-```
+
+
 
 ---
 
@@ -136,6 +85,7 @@ class UserModel {
   final int totalTasksPosted;
   final int totalTasksCompleted;
   final DateTime createdAt;
+  final DateTime updatedAt;
   final UserProfileModel? profile;
 
   UserModel({
@@ -976,32 +926,10 @@ String? validatePassword(String? value) {
 - [ ] Create all data models with proper JSON serialization
 - [ ] Implement API client with Dio/HTTP
 - [ ] Add JWT interceptor for automatic token injection
-- [ ] Implement secure storage for tokens
+- [ ] Implement secure storage for tokens also store tokens to a global variable like in a getx controller
 - [ ] Create repository pattern for data layer
-- [ ] Build all authentication screens (register, login, OTP)
-- [ ] Build profile management screens
 - [ ] Build password reset flow
 - [ ] Implement form validation
-- [ ] Add error handling and user feedback
-- [ ] Test all API integrations
-- [ ] Implement loading states
-- [ ] Add image picker for profile pictures
-- [ ] Test token refresh mechanism
+- [ ] Add error handling , show errors and feedbacks using the screens/dialogs etc defined in the common folder
 
----
-
-## 🚀 Next Steps
-
-After completing the accounts module:
-1. Implement **Tasks** module (task creation, bidding)
-2. Implement **Chat** module (real-time messaging)
-3. Implement **Payments** module (wallet, escrow)
-4. Implement **Reviews** module
-5. Implement **Disputes** module
-6. Implement **Notifications** module
-
-Each module will follow the same architectural pattern established in the accounts module.
-
----
-
-> **Note**: This guide focuses exclusively on the **Accounts** module. Do not implement features from other modules until explicitly instructed.
+--

@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Controller already initialized in HomeHeader if we put it there? 
+    // Controller already initialized in HomeHeader if we put it there?
     // Better to put it here or rely on Get.put
     final controller = Get.put(HomeController());
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -23,15 +23,13 @@ class HomeScreen extends StatelessWidget {
       // backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,
       body: Column(
         children: [
-          // const HomeHeader(),
-          ElevatedButton(onPressed: (){
-            StatusSnackbar.showError(message: 'This is an error popup');
+          const HomeHeader(),
 
-          }, child: Text('Show Popup')),
           Expanded(
-            child: Obx(() => controller.isMapView.value 
-              ? const HomeMapView() 
-              : const HomeListView()
+            child: Obx(
+              () => controller.isMapView.value
+                  ? const HomeMapView()
+                  : const HomeListView(),
             ),
           ),
         ],

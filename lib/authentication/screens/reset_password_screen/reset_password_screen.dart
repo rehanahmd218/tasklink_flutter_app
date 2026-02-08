@@ -18,8 +18,11 @@ class ResetPasswordScreen extends StatelessWidget {
       // backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: Icon(Icons.arrow_back_ios_new, color: isDark ? Colors.white : TColors.textPrimary)
+          onPressed: () => Get.back(),
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: isDark ? Colors.white : TColors.textPrimary,
+          ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -42,17 +45,19 @@ class ResetPasswordScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              
+
               Text.rich(
                 TextSpan(
                   text: 'Enter the 6-digit code sent to ',
                   style: GoogleFonts.inter(
                     fontSize: 16,
-                    color: isDark ? TColors.darkTextSecondary : TColors.textSecondary,
+                    color: isDark
+                        ? TColors.darkTextSecondary
+                        : TColors.textSecondary,
                   ),
                   children: [
                     TextSpan(
-                      text: 'user@example.com',
+                      text: controller.identifier.value,
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w600,
                         color: isDark ? Colors.grey[200] : Colors.black,
@@ -62,25 +67,30 @@ class ResetPasswordScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 32),
-              
+
               // OTP Section
               ResetOtpSection(controller: controller),
-              
+
               const SizedBox(height: 32),
-              
+
               // New Password Inputs
               ResetPasswordForm(controller: controller),
-              
+
               const SizedBox(height: 32),
-              
+
               // Support Link
               Center(
                 child: Text.rich(
                   TextSpan(
                     text: 'Having trouble? ',
-                    style: GoogleFonts.inter(fontSize: 14, color: isDark ? TColors.darkTextSecondary : TColors.textSecondary),
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: isDark
+                          ? TColors.darkTextSecondary
+                          : TColors.textSecondary,
+                    ),
                     children: [
                       TextSpan(
                         text: 'Contact Support',
@@ -102,6 +112,4 @@ class ResetPasswordScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }
