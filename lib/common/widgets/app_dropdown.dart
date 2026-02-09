@@ -22,29 +22,58 @@ class AppDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    // Ensure value is in items list, otherwise set to null
+    final validValue =
+        (value != null && value!.isNotEmpty && items.contains(value))
+        ? value
+        : null;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w500, color: isDark ? TColors.darkTextPrimary : TColors.textPrimary)),
+        Text(
+          label,
+          style: GoogleFonts.inter(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: isDark ? TColors.darkTextPrimary : TColors.textPrimary,
+          ),
+        ),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
             color: isDark ? TColors.darkContainer : TColors.white,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: isDark ? TColors.darkBorderPrimary : TColors.borderSecondary),
+            border: Border.all(
+              color: isDark
+                  ? TColors.darkBorderPrimary
+                  : TColors.borderSecondary,
+            ),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              value: value,
-              hint: hint != null ? Text(hint!, style: GoogleFonts.inter(color: TColors.textSecondary)) : null,
+              value: validValue,
+              hint: hint != null
+                  ? Text(
+                      hint!,
+                      style: GoogleFonts.inter(color: TColors.textSecondary),
+                    )
+                  : null,
               isExpanded: true,
               icon: Icon(Icons.arrow_drop_down, color: TColors.textSecondary),
               dropdownColor: isDark ? TColors.darkContainer : TColors.white,
               items: items.map((String item) {
                 return DropdownMenuItem<String>(
                   value: item,
-                  child: Text(item, style: GoogleFonts.inter(color: isDark ? TColors.darkTextPrimary : TColors.textPrimary)),
+                  child: Text(
+                    item,
+                    style: GoogleFonts.inter(
+                      color: isDark
+                          ? TColors.darkTextPrimary
+                          : TColors.textPrimary,
+                    ),
+                  ),
                 );
               }).toList(),
               onChanged: onChanged,

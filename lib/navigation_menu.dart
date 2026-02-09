@@ -74,9 +74,9 @@ class NavigationBarAndToolbar extends StatelessWidget {
           children: [
             _buildNavItem(0, Icons.home_rounded, "Home"),
             _buildNavItem(1, Icons.assignment_rounded, "My Tasks"),
-            _buildNavItem(2, Icons.chat_bubble_rounded, "Chat"),
-            _buildNavItem(3, Icons.account_balance_wallet_rounded, "Wallet"),
-            _buildNavItem(4, Icons.person_rounded, "Profile"),
+            _buildNavItem(2, Icons.gavel_rounded, "Bids"),
+            _buildNavItem(3, Icons.chat_bubble_rounded, "Chat"),
+            _buildNavItem(4, Icons.account_balance_wallet_rounded, "Wallet"),
           ],
         ),
       ),

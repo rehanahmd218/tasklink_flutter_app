@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/features/notifications/screens/notifications_screen.dart';
+import 'package:tasklink/features/profile/screens/profile_screen.dart';
+import 'package:tasklink/features/tasks/screens/unified_my_tasks_screen.dart';
 import '../../../../utils/constants/colors.dart';
 import 'package:tasklink/controllers/features/home_controller.dart';
 import 'home_search_bar.dart';
-import 'home_view_toggle.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -33,72 +34,132 @@ class HomeHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: TColors.primary,
+                      size: 24,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'CURRENT LOCATION',
+                            style: GoogleFonts.inter(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: TColors.textSecondary,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  'San Francisco, CA',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: isDark
+                                        ? Colors.white
+                                        : TColors.textPrimary,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const Icon(Icons.expand_more, size: 20),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Row(
                 children: [
-                   const Icon(Icons.location_on, color: TColors.primary, size: 26),
-                   const SizedBox(width: 6),
-                   Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       Text(
-                         'CURRENT LOCATION',
-                         style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: TColors.textSecondary, letterSpacing: 0.5),
-                       ),
-                       Row(
-                         children: [
-                           Text(
-                             'San Francisco, CA', // Or Downtown, NY based on design variance
-                             style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.bold, color: isDark ? Colors.white : TColors.textPrimary),
-                           ),
-                           const Icon(Icons.expand_more, size: 20),
-                         ],
-                       )
-                     ],
-                   )
-                ],
-              ),
-              Stack(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: isDark ? Colors.grey[800] : Colors.grey[100],
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.notifications_outlined, color: isDark ? Colors.white : Colors.black87, size: 24),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      onPressed: () => Get.to(() => const NotificationsScreen()),
-                    ),
+                  Stack(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isDark ? Colors.grey[800] : Colors.grey[100],
+                          border: Border.all(
+                            color: isDark
+                                ? Colors.grey[700]!
+                                : Colors.transparent,
+                            width: 0.5,
+                          ),
+                        ),
+                        child: Center(
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.notifications_outlined,
+                              color: isDark ? Colors.white : Colors.black87,
+                              size: 20,
+                            ),
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            onPressed: () =>
+                                Get.to(() => UnifiedMyTasksScreen()),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 10,
+                        right: 10,
+                        child: Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: isDark
+                                  ? TColors.backgroundDark
+                                  : Colors.white,
+                              width: 1.5,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    top: 8,
-                    right: 8,
+                  const SizedBox(width: 12),
+                  GestureDetector(
+                    onTap: () => Get.to(() => const ProfileScreen()),
                     child: Container(
-                      width: 8,
-                      height: 8,
+                      width: 40,
+                      height: 40,
                       decoration: BoxDecoration(
-                        color: Colors.red,
                         shape: BoxShape.circle,
-                        border: Border.all(color: isDark ? TColors.backgroundDark : Colors.white, width: 1.5),
+                        color: isDark ? Colors.grey[800] : Colors.grey[200],
+                        image: const DecorationImage(
+                          image: NetworkImage(
+                            'https://lh3.googleusercontent.com/aida-public/AB6AXuAr3fJTn31zIPtg9-Tv0QHdbWvknBuARuDIjSA5t5EFgvHq1sUl7D8hfxJjYCwJTGl7DjKXozw1HsXxn1mae5APm3GUtjCmpMDGmOZnFpXlwzEV1gJA7ANhfm4fzxhNq2_cMPrwAWTcg1JH9q1GuNFaSU-OnMMohDyi89ZyiHLMnntVoYptWi7BP2WA__zWMaDvOTbhAJfhUzt_93rSAByT0MWzbfVldfspKBW7MgUbRqogGeYMor8Em4fdWCnWyWgE35LarultZGkR',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Search Bar
           const HomeSearchBar(),
-          
+
           const SizedBox(height: 16),
-          
-          // Toggle Segmented Control
-          const HomeViewToggle(),
         ],
       ),
     );

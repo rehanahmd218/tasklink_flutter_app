@@ -8,7 +8,12 @@ class ApiConfig {
   /// - iOS Simulator: Use 'http://localhost:8000/api/v1/'
   /// - Production: Use your deployed server URL
 
-  static const String baseUrl = 'http://172.30.80.1:8000/api/v1/';
+  /// ### Base url for Emulator
+  // static const String baseUrl = 'http://172.30.80.1:8000/api/v1/';
+
+  /// ### Base url for Mobile
+  static const String baseUrl = 'http://10.8.24.142:8000/api/v1/';
+  // static const String baseUrl = 'http://10.8.25.206:8000/api/v1/';
 
   /// Timeouts
   static const int connectTimeout = 30;
