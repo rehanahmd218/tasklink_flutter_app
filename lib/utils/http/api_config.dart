@@ -12,7 +12,7 @@ class ApiConfig {
   // static const String baseUrl = 'http://172.30.80.1:8000/api/v1/';
 
   /// ### Base url for Mobile
-  static const String baseUrl = 'http://10.8.24.142:8000/api/v1/';
+  static const String baseUrl = 'http://192.168.100.54:8000/api/v1/';
   // static const String baseUrl = 'http://10.8.25.206:8000/api/v1/';
 
   /// Timeouts
@@ -39,6 +39,13 @@ class ApiConfig {
 
   /// Wallet endpoints
   static const String walletEndpoint = 'wallet/';
+
+  /// Task endpoints
+  static const String tasksEndpoint = 'tasks/';
+  static const String tasksNearbyEndpoint = 'tasks/nearby/';
+
+  /// Get task detail by ID
+  static String taskDetailEndpoint(String taskId) => 'tasks/$taskId/';
 
   // ===================================================================
   // PUBLIC ENDPOINTS (No Authentication Required)

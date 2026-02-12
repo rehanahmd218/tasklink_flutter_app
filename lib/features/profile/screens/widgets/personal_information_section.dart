@@ -142,10 +142,12 @@ class PersonalInformationSection extends StatelessWidget {
           value,
           style: GoogleFonts.inter(
             fontSize: 14,
-            fontWeight: isMultiline ? FontWeight.normal : FontWeight.w500,
-            color: isDark
-                ? (isMultiline ? Colors.grey[300] : Colors.grey[100])
-                : (isMultiline ? Colors.grey[600] : Colors.grey[900]),
+            // fontWeight: isMultiline ? FontWeight.normal : FontWeight.w500,
+            fontWeight: FontWeight.w500,
+            // color: isDark
+            //     ? (isMultiline ? Colors.grey[300] : Colors.grey[100])
+            //     : (isMultiline ? Colors.grey[600] : Colors.grey[900]),
+            color: isDark ? Colors.grey[100] : Colors.grey[900],
             height: isMultiline ? 1.5 : 1.2,
           ),
         ),

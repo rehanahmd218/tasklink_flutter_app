@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 class SecondaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
@@ -29,7 +30,7 @@ class SecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     // Default colors
     final defaultFg = isDark ? Colors.white : Colors.black;
     final defaultBorder = isDark ? Colors.grey[700]! : Colors.grey[300]!;
@@ -41,9 +42,13 @@ class SecondaryButton extends StatelessWidget {
           foregroundColor: foregroundColor ?? defaultFg,
           backgroundColor: backgroundColor ?? Colors.transparent,
           side: BorderSide(color: borderColor ?? defaultBorder),
-          padding: padding ?? EdgeInsets.symmetric(vertical: (height - 24) / 2),
+          padding:
+              padding ??
+              EdgeInsets.symmetric(vertical: (height - 24) / 2, horizontal: 12),
           minimumSize: Size(width, height),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
           textStyle: GoogleFonts.inter(
             fontSize: fontSize ?? 16,
             fontWeight: FontWeight.bold,

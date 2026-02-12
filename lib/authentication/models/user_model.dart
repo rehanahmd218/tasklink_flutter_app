@@ -11,6 +11,7 @@ class UserModel {
   final bool isEmailVerified;
   final String role; // 'POSTER', 'TASKER', 'BOTH'
   final double ratingAvg;
+  final int reviewsCount;
   final int totalTasksPosted;
   final int totalTasksCompleted;
   final DateTime createdAt;
@@ -26,6 +27,7 @@ class UserModel {
     required this.isEmailVerified,
     required this.role,
     required this.ratingAvg,
+    required this.reviewsCount,
     required this.totalTasksPosted,
     required this.totalTasksCompleted,
     required this.createdAt,
@@ -43,6 +45,7 @@ class UserModel {
       isEmailVerified: json['is_email_verified'] ?? false,
       role: json['role'] ?? 'POSTER',
       ratingAvg: _parseDouble(json['rating_avg']),
+      reviewsCount: _parseInt(json['reviews_count']),
       totalTasksPosted: _parseInt(json['total_tasks_posted']),
       totalTasksCompleted: _parseInt(json['total_tasks_completed']),
       createdAt: json['created_at'] != null
@@ -83,6 +86,7 @@ class UserModel {
       'is_email_verified': isEmailVerified,
       'role': role,
       'rating_avg': ratingAvg,
+      'reviews_count': reviewsCount,
       'total_tasks_posted': totalTasksPosted,
       'total_tasks_completed': totalTasksCompleted,
       'created_at': createdAt.toIso8601String(),
@@ -108,6 +112,7 @@ class UserModel {
     bool? isEmailVerified,
     String? role,
     double? ratingAvg,
+    int? reviewsCount,
     int? totalTasksPosted,
     int? totalTasksCompleted,
     DateTime? createdAt,
@@ -122,6 +127,7 @@ class UserModel {
       isEmailVerified: isEmailVerified ?? this.isEmailVerified,
       role: role ?? this.role,
       ratingAvg: ratingAvg ?? this.ratingAvg,
+      reviewsCount: reviewsCount ?? this.reviewsCount,
       totalTasksPosted: totalTasksPosted ?? this.totalTasksPosted,
       totalTasksCompleted: totalTasksCompleted ?? this.totalTasksCompleted,
       createdAt: createdAt ?? this.createdAt,

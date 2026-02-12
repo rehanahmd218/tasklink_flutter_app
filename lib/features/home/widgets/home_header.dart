@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/features/notifications/screens/notifications_screen.dart';
 import 'package:tasklink/features/profile/screens/profile_screen.dart';
-import 'package:tasklink/features/tasks/screens/unified_my_tasks_screen.dart';
 import '../../../../utils/constants/colors.dart';
 import 'package:tasklink/controllers/features/home_controller.dart';
 import 'home_search_bar.dart';
@@ -107,7 +106,7 @@ class HomeHeader extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             constraints: const BoxConstraints(),
                             onPressed: () =>
-                                Get.to(() => UnifiedMyTasksScreen()),
+                                Get.to(() => const NotificationsScreen()),
                           ),
                         ),
                       ),

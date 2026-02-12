@@ -16,7 +16,14 @@ class PostTaskCategorySelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Category', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: isDark ? Colors.white : Colors.black)),
+        Text(
+          'Category',
+          style: GoogleFonts.inter(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: isDark ? Colors.white : Colors.black,
+          ),
+        ),
         const SizedBox(height: 12),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -47,16 +54,36 @@ class PostTaskCategorySelector extends StatelessWidget {
           width: 80,
           height: 80,
           decoration: BoxDecoration(
-            color: isSelected ? TColors.primary.withValues(alpha: 0.2) : (isDark ? const Color(0xFF27272A) : Colors.white),
+            color: isSelected
+                ? TColors.primary.withValues(alpha: 0.2)
+                : (isDark ? const Color(0xFF27272A) : Colors.white),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: isSelected ? TColors.primary : (isDark ? Colors.grey[700]! : Colors.grey[200]!), width: isSelected ? 2 : 1),
+            border: Border.all(
+              color: isSelected
+                  ? TColors.primary
+                  : (isDark ? Colors.grey[700]! : Colors.grey[200]!),
+              width: isSelected ? 2 : 1,
+            ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 28, color: isSelected ? Colors.yellow[800] : (isDark ? Colors.grey[400] : Colors.grey[600])),
-               const SizedBox(height: 4),
-              Text(label, style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: isDark ? Colors.white : Colors.black)),
+              Icon(
+                icon,
+                size: 28,
+                color: isSelected
+                    ? Colors.yellow[800]
+                    : (isDark ? Colors.grey[400] : Colors.grey[600]),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: isDark ? Colors.white : Colors.black,
+                ),
+              ),
             ],
           ),
         ),

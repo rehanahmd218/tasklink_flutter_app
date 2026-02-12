@@ -21,6 +21,8 @@ class ApiResponse<T> {
     Map<String, dynamic> json,
     T Function(dynamic)? dataParser,
   ) {
+    print(json);
+    print(dataParser);
     return ApiResponse(
       success: json['success'] ?? false,
       message: json['message'] ?? '',

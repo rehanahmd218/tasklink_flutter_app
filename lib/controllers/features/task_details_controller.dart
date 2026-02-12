@@ -1,11 +1,100 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+import 'package:tasklink/controllers/user_controller.dart';
+import 'package:tasklink/models/tasks/task_model.dart';
+import 'package:tasklink/services/tasks/task_service.dart';
 
 enum TaskRole { poster, tasker }
 
 class TaskDetailsController extends GetxController {
-  final userRole = Rx<TaskRole>(TaskRole.tasker); // Default to tasker for demo of 'Find Work' flow
+  static final Logger _log = Logger(printer: PrettyPrinter(methodCount: 0));
+  final UserController _userController = UserController.instance;
+  final TaskService _taskService = TaskService();
 
+  final Rx<TaskModel?> currentTask = Rx<TaskModel?>(null);
+  final userRole = Rx<TaskRole>(TaskRole.tasker);
+  final RxBool isLoading = false.obs;
+  final RxString errorMessage = ''.obs;
+
+  /// Fetch task by ID from backend
+  Future<void> fetchTaskById(String taskId) async {
+    try {
+      isLoading.value = true;
+      errorMessage.value = '';
+      _log.i('Fetching task details for ID: $taskId');
+
+      final task = await _taskService.getTaskById(taskId);
+      currentTask.value = task;
+      _determineRole();
+
+      _log.i('Task fetched successfully: ${task.title}');
+    } catch (e) {
+      _log.e('Error fetching task: $e');
+      errorMessage.value = e.toString();
+      Get.snackbar(
+        'Error',
+        'Failed to load task details: ${e.toString()}',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  /// Set the current task and determine the role (for when task is already available)
+  void setTask(TaskModel task) {
+    currentTask.value = task;
+    _determineRole();
+  }
+
+  /// Manually set role (for demo purposes)
   void setRole(TaskRole role) {
     userRole.value = role;
+  }
+
+  /// Determine user role based on current user and task poster
+  void _determineRole() {
+    final currentUser = _userController.currentUser.value;
+    final task = currentTask.value;
+
+    if (currentUser == null || task == null) {
+      userRole.value = TaskRole.tasker;
+      return;
+    }
+
+    // If current user is the poster of this task, set role to poster
+    if (task.poster?.id == currentUser.id) {
+      userRole.value = TaskRole.poster;
+    } else {
+      userRole.value = TaskRole.tasker;
+    }
+  }
+
+  /// Check if current user is the owner of the task
+  bool get isTaskOwner {
+    final currentUser = _userController.currentUser.value;
+    final task = currentTask.value;
+
+    if (currentUser == null || task == null) return false;
+
+    return task.poster?.id == currentUser.id;
+  }
+
+  /// Check if user can place a bid (is a tasker and not the owner)
+  bool get canPlaceBid {
+    final currentUser = _userController.currentUser.value;
+    final task = currentTask.value;
+
+    if (currentUser == null || task == null) return false;
+
+    // User can place bid if they are not the poster and task is in BIDDING status
+    return task.poster?.id != currentUser.id &&
+        task.status == 'BIDDING' &&
+        (currentUser.role == 'TASKER' || currentUser.role == 'BOTH');
+  }
+
+  /// Check if user can edit/delete (is poster and owns the task)
+  bool get canEditDelete {
+    return isTaskOwner && userRole.value == TaskRole.poster;
   }
 }

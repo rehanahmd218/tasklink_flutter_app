@@ -11,6 +11,7 @@ class PrimaryButton extends StatelessWidget {
   final double width;
   final double height;
   final double borderRadius;
+  final double? fontSize;
   const PrimaryButton({
     super.key,
     required this.onPressed,
@@ -21,6 +22,7 @@ class PrimaryButton extends StatelessWidget {
     this.width = double.infinity,
     this.height = 56,
     this.borderRadius = 12,
+    this.fontSize,
   });
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class PrimaryButton extends StatelessWidget {
           foregroundColor: foregroundColor ?? Colors.black,
           padding: EdgeInsets.symmetric(
             vertical: (height - 24) / 2,
+            horizontal: 12,
           ), // Approximate centering
           minimumSize: Size(width, height),
           shape: RoundedRectangleBorder(
@@ -41,7 +44,7 @@ class PrimaryButton extends StatelessWidget {
           elevation: 4,
           shadowColor: TColors.primary.withValues(alpha: 0.2),
           textStyle: GoogleFonts.inter(
-            fontSize: 18,
+            fontSize: fontSize ?? 18,
             fontWeight: FontWeight.bold,
           ),
         ),

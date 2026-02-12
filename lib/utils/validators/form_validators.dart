@@ -86,4 +86,58 @@ class FormValidators {
     }
     return null;
   }
+
+  /// Validate budget amount
+  static String? validateBudget(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Budget is required';
+    }
+
+    final budget = double.tryParse(value.trim());
+    if (budget == null || budget <= 0) {
+      return 'Please enter a valid budget amount';
+    }
+
+    return null;
+  }
+
+  /// Validate radius (km)
+  static String? validateRadius(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Radius is required';
+    }
+
+    final radius = double.tryParse(value.trim());
+    if (radius == null || radius < 0.01 || radius > 50.0) {
+      return 'Radius must be between 0.01 and 50 km';
+    }
+
+    return null;
+  }
+
+  /// Validate task title
+  static String? validateTaskTitle(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Task title is required';
+    }
+
+    if (value.trim().length < 3) {
+      return 'Title must be at least 3 characters';
+    }
+
+    return null;
+  }
+
+  /// Validate task description
+  static String? validateTaskDescription(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Task description is required';
+    }
+
+    if (value.trim().length < 10) {
+      return 'Description must be at least 10 characters';
+    }
+
+    return null;
+  }
 }
