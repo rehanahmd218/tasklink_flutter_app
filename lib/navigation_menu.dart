@@ -7,6 +7,7 @@ import 'package:tasklink/features/home/screens/home_screen.dart';
 import 'package:tasklink/features/my_tasks/screens/my_tasks_screen.dart';
 import 'package:tasklink/features/profile/screens/profile_screen.dart';
 import 'package:tasklink/features/wallet/screens/wallet_screen.dart';
+import 'package:tasklink/features/my_posted_tasks/screens/my_posted_tasks_screen.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 
 class NavigationMenu extends StatelessWidget {
@@ -71,12 +72,18 @@ class NavigationBarAndToolbar extends StatelessWidget {
       child: SafeArea(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+
           children: [
             _buildNavItem(0, Icons.home_rounded, "Home"),
             _buildNavItem(1, Icons.assignment_rounded, "My Tasks"),
-            _buildNavItem(2, Icons.gavel_rounded, "Bids"),
-            _buildNavItem(3, Icons.chat_bubble_rounded, "Chat"),
-            _buildNavItem(4, Icons.account_balance_wallet_rounded, "Wallet"),
+            _buildNavItem(2, Icons.chat, "Chat"),
+
+            _buildNavItem(3, Icons.account_balance_wallet_rounded, "Wallet"),
+            _buildNavItem(
+              4,
+              Icons.person_outline_rounded,
+              "Profile",
+            ), // Changed Bids to Profile and moved Wallet
           ],
         ),
       ),

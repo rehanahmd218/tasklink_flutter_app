@@ -13,6 +13,7 @@ import 'package:tasklink/features/task_details/widgets/task_media_gallery.dart';
 import 'package:tasklink/features/task_details/widgets/task_description_section.dart';
 import 'package:tasklink/features/task_details/widgets/task_details_place_bid_footer.dart';
 import 'package:tasklink/features/task_details/widgets/task_details_edit_delete_footer.dart';
+import 'package:tasklink/routes/routes.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 
 class TaskDetailsScreen extends StatefulWidget {
@@ -271,7 +272,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   void _handleProfileTap(TaskModel task, bool isOwner) {
     if (isOwner) {
       // Navigate to own profile
-      Get.toNamed('/profile');
+      Get.toNamed(Routes.PROFILE);
     } else {
       // Navigate to poster's public profile
       // TODO: Implement public profile view
@@ -285,11 +286,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   void _handlePlaceBid() {
     // TODO: Navigate to place bid screen
-    Get.snackbar(
-      'Place Bid',
-      'Navigate to place bid screen',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    Get.toNamed(Routes.PLACE_BID);
   }
 
   void _handleEdit() {

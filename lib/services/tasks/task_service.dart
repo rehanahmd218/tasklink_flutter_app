@@ -171,6 +171,55 @@ class TaskService {
     }
   }
 
+  /// Get nearby tasks
+  Future<List<TaskModel>> getNearbyTasks({
+    required double lat,
+    required double lng,
+    int? radius,
+  }) async {
+    _log.i('Fetching nearby tasks at ($lat, $lng) radius: $radius');
+
+    try {
+      final queryParams = <String, dynamic>{
+        'lat': lat.toString(),
+        'lng': lng.toString(),
+      };
+
+      if (radius != null) {
+        queryParams['tasker_radius'] = radius.toString();
+      }
+
+      final response = await _dio.get(
+        '${ApiConfig.tasksEndpoint}nearby/',
+        queryParameters: queryParams,
+      );
+
+      final apiResponse = ApiResponse<List<TaskModel>>.fromJson(response.data, (
+        data,
+      ) {
+        if (data is Map<String, dynamic> && data.containsKey('results')) {
+          final results = data['results'] as List;
+          return results.map((item) => TaskModel.fromJson(item)).toList();
+        }
+        if (data is List) {
+          return data.map((item) => TaskModel.fromJson(item)).toList();
+        }
+        return [];
+      });
+
+      if (apiResponse.isSuccess && apiResponse.data != null) {
+        _log.i('Fetched ${apiResponse.data!.length} nearby tasks');
+        return apiResponse.data!;
+      } else {
+        _log.w('Failed to fetch nearby tasks: ${apiResponse.message}');
+        return [];
+      }
+    } on DioException catch (e) {
+      _log.e('Get nearby tasks error: ${e.type}');
+      return [];
+    }
+  }
+
   /// Get a single task by ID
   Future<TaskModel> getTaskById(String taskId) async {
     _log.i('Fetching task details for ID: $taskId');

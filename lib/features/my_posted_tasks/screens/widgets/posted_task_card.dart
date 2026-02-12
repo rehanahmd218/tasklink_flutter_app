@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:logger/logger.dart';
 import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/common/widgets/buttons/secondary_button.dart';
 import '../../../../utils/constants/colors.dart';

@@ -7,7 +7,6 @@ import 'package:tasklink/controllers/features/task_details_tasker_controller.dar
 import '../widgets/safe_payment_warning.dart';
 import '../widgets/task_detail_card.dart';
 import '../widgets/task_location_card.dart';
-import '../widgets/task_map_preview.dart';
 import '../widgets/task_poster_profile.dart';
 
 class TaskDetailsTaskerScreen extends StatelessWidget {

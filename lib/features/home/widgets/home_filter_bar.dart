@@ -24,7 +24,7 @@ class HomeFilterBar extends StatelessWidget {
             child: Obx(() {
               final radius = controller.radius.value;
               final label = radius == 30 ? 'Any distance' : '${radius}km';
-              final isActive = radius != 30; // Active if not default
+              final isActive = radius != 30;
 
               return Container(
                 margin: const EdgeInsets.only(right: 12),
@@ -65,23 +65,55 @@ class HomeFilterBar extends StatelessWidget {
             }),
           ),
 
-          _buildFilterChip('All', Icons.apps, isActive: true, isDark: isDark),
-          _buildFilterChip(
-            'Moving',
-            Icons.widgets_outlined,
-            isDark: isDark,
-          ), // box icon substitute
-          _buildFilterChip(
-            'Cleaning',
-            Icons.cleaning_services_outlined,
-            isDark: isDark,
+          Obx(
+            () => Row(
+              children: [
+                _buildFilterChip('All', Icons.apps, controller, isDark),
+                _buildFilterChip(
+                  'Moving',
+                  Icons.widgets_outlined,
+                  controller,
+                  isDark,
+                ),
+                _buildFilterChip(
+                  'Cleaning',
+                  Icons.cleaning_services_outlined,
+                  controller,
+                  isDark,
+                ),
+                _buildFilterChip(
+                  'Gardening',
+                  Icons.yard_outlined,
+                  controller,
+                  isDark,
+                ),
+                _buildFilterChip(
+                  'Assembly',
+                  Icons.build_outlined,
+                  controller,
+                  isDark,
+                ),
+                _buildFilterChip(
+                  'Delivery',
+                  Icons.local_shipping_outlined,
+                  controller,
+                  isDark,
+                ),
+                _buildFilterChip(
+                  'Tech',
+                  Icons.computer_outlined,
+                  controller,
+                  isDark,
+                ),
+                _buildFilterChip(
+                  'Pet Care',
+                  Icons.pets_outlined,
+                  controller,
+                  isDark,
+                ),
+              ],
+            ),
           ),
-          _buildFilterChip(
-            'Gardening',
-            Icons.yard_outlined,
-            isDark: isDark,
-          ), // potted_plant substitute
-          _buildFilterChip('Assembly', Icons.build_outlined, isDark: isDark),
         ],
       ),
     );
@@ -180,36 +212,45 @@ class HomeFilterBar extends StatelessWidget {
 
   Widget _buildFilterChip(
     String label,
-    IconData icon, {
-    bool isActive = false,
-    required bool isDark,
-  }) {
-    return Container(
-      margin: const EdgeInsets.only(right: 12),
-      child: Chip(
-        label: Text(label),
-        avatar: Icon(
-          icon,
-          size: 18,
-          color: isActive
-              ? Colors.black
-              : (isDark ? Colors.grey[300] : Colors.grey[700]),
+    IconData icon,
+    HomeController controller,
+    bool isDark,
+  ) {
+    final isActive = controller.currentCategory.value == label;
+
+    return GestureDetector(
+      onTap: () => controller.setCategoryFilter(label),
+      child: Container(
+        margin: const EdgeInsets.only(right: 12),
+        child: Chip(
+          label: Text(label),
+          avatar: Icon(
+            icon,
+            size: 18,
+            color: isActive
+                ? Colors.black
+                : (isDark ? Colors.grey[300] : Colors.grey[700]),
+          ),
+          backgroundColor: isActive
+              ? TColors.primary
+              : (isDark ? Colors.grey[800] : Colors.white),
+          labelStyle: GoogleFonts.inter(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: isActive
+                ? Colors.black
+                : (isDark ? Colors.grey[300] : Colors.grey[700]),
+          ),
+          side: isActive
+              ? BorderSide.none
+              : BorderSide(
+                  color: isDark ? Colors.grey[700]! : Colors.grey[200]!,
+                ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
         ),
-        backgroundColor: isActive
-            ? TColors.primary
-            : (isDark ? Colors.grey[800] : Colors.white),
-        labelStyle: GoogleFonts.inter(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: isActive
-              ? Colors.black
-              : (isDark ? Colors.grey[300] : Colors.grey[700]),
-        ),
-        side: isActive
-            ? BorderSide.none
-            : BorderSide(color: isDark ? Colors.grey[700]! : Colors.grey[200]!),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
       ),
     );
   }

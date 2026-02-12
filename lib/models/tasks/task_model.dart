@@ -21,6 +21,7 @@ class TaskModel {
   final TaskResponseUserModel? poster;
   final TaskResponseUserModel? assignedTasker;
   final List<TaskMediaModel> media;
+  final double distance; // Added distance field
   final int bidCount;
   final BidModel? userBid;
   final DateTime createdAt;
@@ -42,6 +43,7 @@ class TaskModel {
     this.poster,
     this.assignedTasker,
     this.media = const [],
+    this.distance = 0.0, // Default to 0.0
     this.bidCount = 0,
     this.userBid,
     required this.createdAt,
@@ -79,6 +81,7 @@ class TaskModel {
                 .map((e) => TaskMediaModel.fromJson(e))
                 .toList()
           : [],
+      distance: _parseDouble(json['distance']), // Parse distance
       bidCount: _parseInt(json['bid_count']),
       userBid: json['user_bid'] != null
           ? BidModel.fromJson(json['user_bid'])
@@ -123,6 +126,7 @@ class TaskModel {
       if (poster != null) 'poster': poster!.toJson(),
       if (assignedTasker != null) 'assigned_tasker': assignedTasker!.toJson(),
       'media': media.map((e) => e.toJson()).toList(),
+      'distance': distance, // Include distance in toJson
       'bid_count': bidCount,
       if (userBid != null) 'user_bid': userBid!.toJson(),
       'created_at': createdAt.toIso8601String(),
