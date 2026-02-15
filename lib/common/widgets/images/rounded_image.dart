@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:tasklink/theme/app_colors.dart';
+import 'package:tasklink/utils/constants/app_colors.dart';
 
 class RoundedImage extends StatelessWidget {
   final double? width, height;

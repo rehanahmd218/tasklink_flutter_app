@@ -47,6 +47,82 @@ class BidService {
     }
   }
 
+  /// Get all bids for a specific task (Poster view)
+  Future<List<BidModel>> getBidsForTask(String taskId) async {
+    _log.i('Fetching bids for task: $taskId');
+
+    try {
+      final response = await _dio.get(
+        ApiConfig.bidsEndpoint,
+        queryParameters: {'task': taskId},
+      );
+
+      final apiResponse = ApiResponse<List<BidModel>>.fromJson(response.data, (
+        data,
+      ) {
+        if (data is List) {
+          return data.map((item) => BidModel.fromJson(item)).toList();
+        }
+        // Handle pagination if present (though this endpoint might just return a list based on backend)
+        if (data is Map<String, dynamic> && data.containsKey('results')) {
+          final results = data['results'] as List;
+          return results.map((item) => BidModel.fromJson(item)).toList();
+        }
+        return [];
+      });
+
+      if (apiResponse.isSuccess && apiResponse.data != null) {
+        _log.i('Fetched ${apiResponse.data!.length} bids for task');
+        return apiResponse.data!;
+      } else {
+        _log.w('Failed to fetch bids for task: ${apiResponse.message}');
+        return [];
+      }
+    } on DioException catch (e) {
+      _log.e('Get bids for task error: ${e.type}');
+      // Return empty list instead of throwing to avoid blocking UI
+      return [];
+    }
+  }
+
+  /// Get all bids placed by the current user (Tasker view)
+  Future<List<BidModel>> getMyBids() async {
+    _log.i('Fetching my bids');
+
+    try {
+      final response = await _dio.get(
+        ApiConfig.bidsEndpoint,
+        queryParameters: {
+          'filter': 'my_bids',
+        }, // Assuming backend supports this filter
+      );
+
+      final apiResponse = ApiResponse<List<BidModel>>.fromJson(response.data, (
+        data,
+      ) {
+        if (data is List) {
+          return data.map((item) => BidModel.fromJson(item)).toList();
+        }
+        if (data is Map<String, dynamic> && data.containsKey('results')) {
+          final results = data['results'] as List;
+          return results.map((item) => BidModel.fromJson(item)).toList();
+        }
+        return [];
+      });
+
+      if (apiResponse.isSuccess && apiResponse.data != null) {
+        _log.i('Fetched ${apiResponse.data!.length} my bids');
+        return apiResponse.data!;
+      } else {
+        _log.w('Failed to fetch my bids: ${apiResponse.message}');
+        return [];
+      }
+    } on DioException catch (e) {
+      _log.e('Get my bids error: ${e.type}');
+      return [];
+    }
+  }
+
   Never _handleDioError(DioException e) {
     if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout ||

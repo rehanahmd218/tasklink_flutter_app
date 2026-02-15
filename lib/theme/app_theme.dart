@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasklink/theme/app_colors.dart';
+import 'package:tasklink/utils/constants/app_colors.dart';
 import 'package:tasklink/theme/text_styles.dart';
 
 class AppTheme {

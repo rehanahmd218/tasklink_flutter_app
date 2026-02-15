@@ -6,6 +6,8 @@ import 'package:tasklink/controllers/user_controller.dart';
 import 'package:tasklink/services/bids/bid_service.dart';
 import 'package:tasklink/utils/helpers/error_handler.dart';
 
+import 'package:tasklink/models/tasks/bid_model.dart';
+
 class BidController extends GetxController {
   static BidController get instance => Get.find();
 
@@ -22,6 +24,9 @@ class BidController extends GetxController {
 
   // Reactive state for UI
   final rxBidAmount = 0.0.obs;
+  final myBids = <BidModel>[].obs;
+  final taskBids = <BidModel>[].obs;
+  final isLoadingBids = false.obs;
 
   // Earnings calculation (10% fee)
   double get earnings => rxBidAmount.value * 0.9;
@@ -88,6 +93,32 @@ class BidController extends GetxController {
       FullScreenLoader.hide();
       isLoading.value = false;
       ErrorHandler.showErrorPopup(e, buttonText: 'OK');
+    }
+  }
+
+  /// Fetch bids for a specific task (Poster view)
+  Future<void> fetchBidsForTask(String taskId) async {
+    try {
+      isLoadingBids.value = true;
+      final bids = await _bidService.getBidsForTask(taskId);
+      taskBids.assignAll(bids);
+    } catch (e) {
+      ErrorHandler.showErrorPopup(e, buttonText: 'OK');
+    } finally {
+      isLoadingBids.value = false;
+    }
+  }
+
+  /// Fetch all bids placed by current user (Tasker view)
+  Future<void> fetchMyBids() async {
+    try {
+      isLoadingBids.value = true;
+      final bids = await _bidService.getMyBids();
+      myBids.assignAll(bids);
+    } catch (e) {
+      ErrorHandler.showErrorPopup(e, buttonText: 'OK');
+    } finally {
+      isLoadingBids.value = false;
     }
   }
 }

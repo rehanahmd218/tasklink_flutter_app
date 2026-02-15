@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:tasklink/features/bids/bids_poster_view/bids_poster_view.dart';
+import 'package:tasklink/features/bids/bids_tasker_view/bids_tasker_view.dart';
 import 'package:tasklink/routes/routes.dart';
 import 'package:tasklink/models/tasks/task_model.dart';
 
@@ -125,6 +127,12 @@ class AppPages {
     GetPage(
       name: Routes.DASHBOARD,
       page: () => const InProgressDashboardScreen(),
+    ),
+
+    GetPage(name: Routes.BIDS_TASKER, page: () => const BidsTaskerView()),
+    GetPage(
+      name: Routes.BIDS_POSTER,
+      page: () => const BidsPosterView(taskId: ''),
     ),
   ];
 }
