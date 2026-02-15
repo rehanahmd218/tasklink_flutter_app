@@ -244,6 +244,56 @@ class TaskService {
     }
   }
 
+  /// Update an existing task.
+  /// Expects standard API response: { success, message, data }.
+  /// Backend returns the full updated task in [data]; if it ever returns only
+  /// modified fields, merge with the existing task before use.
+  Future<TaskModel> updateTask(String taskId, TaskCreateRequest request) async {
+    _log.i('Updating task: $taskId');
+
+    try {
+      final data = request.toJson();
+
+      final response = await _dio.patch(
+        '${ApiConfig.tasksEndpoint}$taskId/',
+        data: data,
+      );
+
+      // Standard format: { success, message, data: <task> }
+      final apiResponse = ApiResponse<TaskModel>.fromJson(
+        response.data as Map<String, dynamic>,
+        (data) => TaskModel.fromJson(data as Map<String, dynamic>),
+      );
+
+      if (apiResponse.isSuccess && apiResponse.data != null) {
+        _log.i('Task updated successfully: ${apiResponse.data!.id}');
+        return apiResponse.data!;
+      } else {
+        _log.w('Task update failed: ${apiResponse.message}');
+        throw ValidationException(
+          apiResponse.message,
+          apiResponse.errors ?? {},
+        );
+      }
+    } on DioException catch (e) {
+      _log.e('Update task error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
+  /// Delete a task
+  Future<void> deleteTask(String taskId) async {
+    _log.i('Deleting task: $taskId');
+
+    try {
+      await _dio.delete('${ApiConfig.tasksEndpoint}$taskId/');
+      _log.i('Task deleted successfully');
+    } on DioException catch (e) {
+      _log.e('Delete task error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
   Never _handleDioError(DioException e) {
     if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout ||

@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:tasklink/common/widgets/dialogs/status_popup.dart';
 import 'package:tasklink/utils/exceptions/api_exceptions.dart';
@@ -53,6 +54,22 @@ class ErrorHandler {
       message: info.message,
       buttonText: buttonText,
       onPressed: () => Get.back(),
+    );
+  }
+
+  /// Show success popup
+  static void showSuccess(
+    String message, {
+    String title = 'Success',
+    String buttonText = 'OK',
+    VoidCallback? onPressed,
+  }) {
+    StatusPopup.show(
+      type: PopupType.success,
+      title: title,
+      message: message,
+      buttonText: buttonText,
+      onPressed: onPressed ?? () => Get.back(),
     );
   }
 }

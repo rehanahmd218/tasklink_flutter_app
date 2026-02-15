@@ -6,28 +6,19 @@ class PostedTasksTabs extends StatelessWidget {
   final String activeTab;
   final Function(String) onTabSelected;
   final Map<String, int>? taskCounts;
+  final List<String> tabs;
 
   const PostedTasksTabs({
     super.key,
     required this.activeTab,
     required this.onTabSelected,
     this.taskCounts,
+    required this.tabs,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    final tabs = [
-      'All',
-      'Bidding',
-      'Assigned',
-
-      'Delivered',
-      'Completed',
-      'Disputed',
-      'Cancelled',
-    ];
 
     return Container(
       height: 48, // Fixed height for horizontal list

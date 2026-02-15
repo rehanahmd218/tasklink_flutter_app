@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
+import 'package:tasklink/controllers/features/tasks/post_task_controller.dart';
 import 'package:tasklink/controllers/features/tasks/task_details_controller.dart';
 import 'package:tasklink/models/tasks/task_model.dart';
 import 'package:tasklink/features/tasks/task_details/widgets/task_details_header.dart';
@@ -292,16 +293,16 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   }
 
   void _handleEdit() {
-    // TODO: Navigate to edit task screen
-    Get.snackbar(
-      'Edit Task',
-      'Navigate to edit task screen',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    final task = controller.currentTask.value;
+    if (task != null) {
+      Get.toNamed(Routes.POST_TASK, arguments: task);
+    }
   }
 
   void _handleDelete() {
-    // Show confirmation dialog
+    final task = controller.currentTask.value;
+    if (task == null) return;
+
     Get.dialog(
       AlertDialog(
         title: const Text('Delete Task'),
@@ -312,13 +313,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
           TextButton(onPressed: () => Get.back(), child: const Text('Cancel')),
           TextButton(
             onPressed: () {
-              Get.back();
-              // TODO: Implement delete task API call
-              Get.snackbar(
-                'Delete Task',
-                'Task deletion will be implemented',
-                snackPosition: SnackPosition.BOTTOM,
-              );
+              Get.back(); // Close dialog
+              Get.put(PostTaskController()).deleteTask(task.id);
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Delete'),

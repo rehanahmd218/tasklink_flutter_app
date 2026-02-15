@@ -18,6 +18,7 @@ class PostedTaskCard extends StatelessWidget {
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
+  final VoidCallback? onViewBids;
 
   const PostedTaskCard({
     super.key,
@@ -30,6 +31,7 @@ class PostedTaskCard extends StatelessWidget {
     this.onTap,
     this.onEdit,
     this.onDelete,
+    this.onViewBids,
   });
 
   @override
@@ -154,7 +156,7 @@ class PostedTaskCard extends StatelessWidget {
             if (task.status == 'BIDDING' && task.bidCount > 0) ...[
               const SizedBox(height: 12),
               PrimaryButton(
-                onPressed: onTap,
+                onPressed: onViewBids ?? onTap,
                 text:
                     'View ${task.bidCount} ${task.bidCount == 1 ? 'Bid' : 'Bids'}',
                 icon: Icons.gavel,

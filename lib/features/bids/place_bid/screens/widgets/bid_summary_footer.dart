@@ -58,10 +58,12 @@ class BidSummaryFooter extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          PrimaryButton(
-            onPressed: () => controller.placeBid(taskId),
-            text: 'Submit Bid',
-            icon: Icons.arrow_forward,
+          Obx(
+            () => PrimaryButton(
+              onPressed: () => controller.submitBid(taskId),
+              text: controller.isEdit.value ? 'Update Bid' : 'Submit Bid',
+              icon: controller.isEdit.value ? Icons.save : Icons.arrow_forward,
+            ),
           ),
         ],
       ),

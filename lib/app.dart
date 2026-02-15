@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.BIDS_POSTER,
+      initialRoute: Routes.SPLASH,
       initialBinding: GeneralBindings(),
       getPages: AppPages.routes,
     );

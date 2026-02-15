@@ -24,7 +24,7 @@ class PostTaskScreen extends StatelessWidget {
     return Scaffold(
       // backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,
       appBar: PrimaryAppBar(
-        title: 'New Task',
+        title: controller.isEdit.value ? 'Edit Task' : 'New Task',
         leadingWidth: 80,
         leading: TextButton(
           onPressed: () => Get.back(),
@@ -55,7 +55,9 @@ class PostTaskScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'What needs to be done?',
+                              controller.isEdit.value
+                                  ? 'Edit Task Details'
+                                  : 'What needs to be done?',
                               style: GoogleFonts.inter(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -197,8 +199,11 @@ class PostTaskScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 12),
-                            Obx(
-                              () => controller.images.isEmpty
+                            Obx(() {
+                              final totalMedia =
+                                  controller.existingMedia.length +
+                                  controller.images.length;
+                              return totalMedia == 0
                                   ? GestureDetector(
                                       onTap: controller.pickImages,
                                       child: Container(
@@ -251,12 +256,68 @@ class PostTaskScreen extends StatelessWidget {
                                             mainAxisSpacing: 8,
                                           ),
                                       itemCount:
-                                          controller.images.length +
-                                          (controller.images.length < 3
-                                              ? 1
-                                              : 0),
+                                          totalMedia + (totalMedia < 3 ? 1 : 0),
                                       itemBuilder: (context, index) {
-                                        if (index < controller.images.length) {
+                                        // Existing Images
+                                        if (index <
+                                            controller.existingMedia.length) {
+                                          return Stack(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Image.network(
+                                                  controller
+                                                      .existingMedia[index],
+                                                  fit: BoxFit.cover,
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  errorBuilder:
+                                                      (
+                                                        context,
+                                                        error,
+                                                        stackTrace,
+                                                      ) => Container(
+                                                        color: Colors.grey[200],
+                                                        child: const Icon(
+                                                          Icons.error,
+                                                        ),
+                                                      ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: 4,
+                                                right: 4,
+                                                child: GestureDetector(
+                                                  onTap: () => controller
+                                                      .removeExistingImage(
+                                                        index,
+                                                      ),
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.all(4),
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                          color: Colors.red,
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                    child: const Icon(
+                                                      Icons.close,
+                                                      size: 16,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                        // New Images
+                                        else if (index < totalMedia) {
+                                          final fileIndex =
+                                              index -
+                                              controller.existingMedia.length;
                                           return Stack(
                                             children: [
                                               ClipRRect(
@@ -265,7 +326,7 @@ class PostTaskScreen extends StatelessWidget {
                                                 child: Image.file(
                                                   File(
                                                     controller
-                                                        .images[index]
+                                                        .images[fileIndex]
                                                         .path,
                                                   ),
                                                   fit: BoxFit.cover,
@@ -278,15 +339,17 @@ class PostTaskScreen extends StatelessWidget {
                                                 right: 4,
                                                 child: GestureDetector(
                                                   onTap: () => controller
-                                                      .removeImage(index),
+                                                      .removeImage(fileIndex),
                                                   child: Container(
                                                     padding:
                                                         const EdgeInsets.all(4),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.red,
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Icon(
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                          color: Colors.red,
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                    child: const Icon(
                                                       Icons.close,
                                                       size: 16,
                                                       color: Colors.white,
@@ -296,7 +359,9 @@ class PostTaskScreen extends StatelessWidget {
                                               ),
                                             ],
                                           );
-                                        } else {
+                                        }
+                                        // Add Button
+                                        else {
                                           return GestureDetector(
                                             onTap: controller.pickImages,
                                             child: Container(
@@ -319,8 +384,8 @@ class PostTaskScreen extends StatelessWidget {
                                           );
                                         }
                                       },
-                                    ),
-                            ),
+                                    );
+                            }),
                           ],
                         ),
                       ),
@@ -354,8 +419,8 @@ class PostTaskScreen extends StatelessWidget {
               ),
               child: PrimaryButton(
                 onPressed: controller.submitTask,
-                text: 'Post Task',
-                icon: Icons.upload,
+                text: controller.isEdit.value ? 'Update Task' : 'Post Task',
+                icon: controller.isEdit.value ? Icons.save : Icons.upload,
               ),
             ),
           ],

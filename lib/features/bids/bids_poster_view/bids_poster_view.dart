@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +8,9 @@ import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/controllers/features/bids/bid_controller.dart';
 import 'package:tasklink/models/tasks/bid_model.dart';
 import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/routes/routes.dart';
+import 'package:tasklink/common/widgets/buttons/primary_button.dart';
+import 'package:tasklink/common/widgets/buttons/secondary_button.dart';
 
 class BidsPosterView extends StatelessWidget {
   final String taskId;
@@ -21,313 +25,293 @@ class BidsPosterView extends StatelessWidget {
 
     // Fetch bids immediately
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.fetchBidsForTask(taskId);
+      if (taskId.isNotEmpty) {
+        controller.fetchBidsForTask(taskId);
+      }
     });
 
     return Scaffold(
-      backgroundColor: isDark
-          ? AppColors.backgroundDark
-          : AppColors.backgroundLight,
+      backgroundColor: isDark ? const Color(0xFF1a1a0b) : Colors.white,
       appBar: PrimaryAppBar(
-        title: taskTitle ?? 'Task Bids',
+        title: 'All Received Bids',
         showBackButton: true,
         centerTitle: true,
       ),
       body: Obx(() {
         if (controller.isLoadingBids.value) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (controller.taskBids.isEmpty) {
           return const EmptyStateWidget(
-            icon: Icons.assignment_outlined,
-            title: 'No bids yet',
-            subtitle: 'Wait for taskers to bid on your task.',
+            icon: Icons.gavel_outlined,
+            title: 'No Bids Yet',
+            subtitle: 'Wait for taskers to place bids on your task.',
           );
         }
 
-        return ListView.separated(
+        final count = controller.taskBids.length;
+        return ListView(
           padding: const EdgeInsets.all(16),
-          itemCount: controller.taskBids.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 16),
-          itemBuilder: (context, index) {
-            final bid = controller.taskBids[index];
-            return _buildBidCard(context, bid, isDark);
-          },
+          children: [
+            _buildHeader(context, count, isDark, controller, taskTitle),
+            const SizedBox(height: 20),
+            ...List.generate(controller.taskBids.length, (index) {
+              final bid = controller.taskBids[index];
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: _buildBidCard(context, bid, isDark),
+              );
+            }),
+          ],
         );
       }),
     );
   }
 
-  Widget _buildBidCard(BuildContext context, BidModel bid, bool isDark) {
-    final tasker = bid.tasker;
+  Widget _buildHeader(
+    BuildContext context,
+    int totalBids,
+    bool isDark,
+    BidController controller,
+    String? taskTitle,
+  ) {
+    return Column(
+      children: [
+        Center(
+          child: Text(
+            taskTitle ?? 'Task',
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              color: isDark ? Colors.grey[400] : AppColors.textSecondary,
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '$totalBids Total Bids',
+              style: GoogleFonts.inter(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : AppColors.textPrimary,
+              ),
+            ),
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () => _showSortOptions(context, controller, isDark),
+                borderRadius: BorderRadius.circular(8),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.sort,
+                        size: 20,
+                        color: isDark ? Colors.grey[400] : AppColors.textSecondary,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'SORT',
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: isDark ? Colors.grey[400] : AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
+  void _showSortOptions(BuildContext context, BidController controller, bool isDark) {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF23220f) : Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Sort by',
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: isDark ? Colors.white : AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 12),
+              ListTile(
+                title: const Text('Amount (low to high)'),
+                onTap: () {
+                  controller.sortTaskBidsByAmount(ascending: true);
+                  Get.back();
+                },
+              ),
+              ListTile(
+                title: const Text('Amount (high to low)'),
+                onTap: () {
+                  controller.sortTaskBidsByAmount(ascending: false);
+                  Get.back();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBidCard(BuildContext context, BidModel bid, bool isDark) {
     return AppCard(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Top Section: Tasker Info & Amount
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Left: Avatar & Details
+              CircleAvatar(
+                radius: 24,
+                backgroundImage: CachedNetworkImageProvider(
+                  bid.tasker!.profileImage ?? 'https://via.placeholder.com/150',
+                ),
+              ),
+              const SizedBox(width: 12),
               Expanded(
-                child: Row(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Avatar
-                    Stack(
+                    Text(
+                      bid.tasker!.displayName,
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: isDark ? Colors.white : AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
                       children: [
-                        AvatarWidget(
-                          imageUrl: tasker?.profileImage,
-                          initials: tasker?.fullName.isNotEmpty == true
-                              ? tasker!.fullName[0].toUpperCase()
-                              : '?',
-                          size: 56, // w-14 = 3.5rem = 56px
+                        const Icon(
+                          Icons.star,
+                          color: AppColors.primary,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          bid.tasker!.ratingAvg.toStringAsFixed(1),
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? Colors.white : AppColors.black,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          '(${bid.tasker!.reviewsCount} reviews)',
+                          style: GoogleFonts.inter(
+                            fontSize: 12,
+                            color: isDark
+                                ? Colors.grey[400]
+                                : AppColors.textSecondary,
+                          ),
                         ),
                       ],
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Name
-                          Text(
-                            tasker?.fullName ?? 'Unknown Tasker',
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
-                              textStyle: Theme.of(
-                                context,
-                              ).textTheme.titleMedium,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: isDark
-                                  ? AppColors.darkTextPrimary
-                                  : AppColors.textPrimary,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          // Rating
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.star,
-                                size: 16,
-                                color: AppColors.primary,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                (tasker?.ratingAvg ?? 0.0).toStringAsFixed(1),
-                                style: GoogleFonts.inter(
-                                  textStyle: Theme.of(
-                                    context,
-                                  ).textTheme.bodyMedium,
-                                  fontWeight: FontWeight.bold,
-                                  color: isDark
-                                      ? AppColors.darkTextPrimary
-                                      : AppColors.textPrimary,
-                                ),
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                '(${tasker?.reviewsCount ?? 0} reviews)',
-                                style: GoogleFonts.inter(
-                                  textStyle: Theme.of(
-                                    context,
-                                  ).textTheme.bodySmall,
-                                  color: AppColors.textSecondary,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
               ),
-
-              // Right: Bid Amount
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'BID AMOUNT',
+                    '\$${bid.amount.toStringAsFixed(2)}',
                     style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textSecondary,
-                      letterSpacing: 0.5,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : AppColors.black,
                     ),
                   ),
-                  const SizedBox(height: 2),
                   Text(
-                    '\$${bid.amount.toStringAsFixed(0)}',
+                    'Offered',
                     style: GoogleFonts.inter(
-                      textStyle: Theme.of(context).textTheme.headlineSmall,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
                       color: isDark
-                          ? AppColors.darkTextPrimary
-                          : AppColors.textPrimary,
+                          ? Colors.grey[400]
+                          : AppColors.textSecondary,
                     ),
                   ),
                 ],
               ),
             ],
           ),
-
-          const SizedBox(
-            height: 16,
-          ), // mb-5 equivalent? HTML has mb-4 then mb-5.
-          // Message Section
+          const SizedBox(height: 16),
           if (bid.message != null && bid.message!.isNotEmpty) ...[
             Text(
-              '"${bid.message!}"',
+              bid.message!,
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                color: isDark ? Colors.grey[300] : AppColors.textSecondary,
+                height: 1.5,
+              ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.inter(
-                textStyle: Theme.of(context).textTheme.bodyMedium,
-                fontStyle: FontStyle.italic,
-                color: isDark
-                    ? AppColors.darkTextSecondary
-                    : AppColors.textSecondary.withValues(alpha: 0.8),
-              ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
           ],
-
-          // Buttons Section
-          if (bid.status == 'ACTIVE')
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 48,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: isDark
-                            ? AppColors.darkBorderPrimary
-                            : AppColors.borderSecondary,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        // Chat logic
-                      },
-                      borderRadius: BorderRadius.circular(12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.chat_bubble_outline,
-                            size: 20,
-                            color: isDark
-                                ? AppColors.darkTextPrimary
-                                : AppColors.textSecondary,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Chat',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: isDark
-                                  ? AppColors.darkTextPrimary
-                                  : AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+          Row(
+            children: [
+              Expanded(
+                child: SecondaryButton(
+                  onPressed: () {
+                    // Chat logic placeholder or navigation
+                  },
+                  text: 'Chat',
+                  icon: Icons.chat_bubble_outline,
+                  height: 48,
+                  fontSize: 14,
+                  borderRadius: 12,
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Container(
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.1),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        // View Offer / Accept Logic
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: PrimaryButton(
+                  onPressed: () {
+                    Get.toNamed(
+                      Routes.BID_MANAGEMENT,
+                      arguments: {
+                        'bid': bid,
+                        'isPoster': true,
+                        'taskId': taskId,
+                        'taskTitle': taskTitle,
                       },
-                      borderRadius: BorderRadius.circular(12),
-                      child: Center(
-                        child: Text(
-                          'View Offer',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: AppColors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                    );
+                  },
+                  text: 'View Offer',
+                  height: 48,
+                  fontSize: 14,
+                  borderRadius: 12,
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.black,
                 ),
-              ],
-            )
-          else
-            // If not active, show status chip centered or similar?
-            Center(child: _buildStatusChip(bid.status)),
+              ),
+            ],
+          ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildStatusChip(String status) {
-    Color color;
-    Color bgColor;
-
-    switch (status.toUpperCase()) {
-      case 'ACCEPTED':
-        color = AppColors.success;
-        bgColor = AppColors.success.withValues(alpha: 0.1);
-        break;
-      case 'REJECTED':
-        color = AppColors.error;
-        bgColor = AppColors.error.withValues(alpha: 0.1);
-        break;
-      case 'ACTIVE':
-        color = AppColors.info;
-        bgColor = AppColors.info.withValues(alpha: 0.1);
-        break;
-      default:
-        color = AppColors.grey;
-        bgColor = AppColors.grey.withValues(alpha: 0.1);
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
-      ),
-      child: Text(
-        status.toUpperCase(),
-        style: GoogleFonts.inter(
-          color: color,
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
-        ),
       ),
     );
   }

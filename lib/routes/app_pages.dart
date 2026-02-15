@@ -132,7 +132,10 @@ class AppPages {
     GetPage(name: Routes.BIDS_TASKER, page: () => const BidsTaskerView()),
     GetPage(
       name: Routes.BIDS_POSTER,
-      page: () => const BidsPosterView(taskId: ''),
+      page: () => BidsPosterView(
+        taskId: Get.arguments['taskId'] ?? '',
+        taskTitle: Get.arguments['taskTitle'],
+      ),
     ),
   ];
 }

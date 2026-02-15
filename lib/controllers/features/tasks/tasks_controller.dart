@@ -68,6 +68,14 @@ class TasksController extends GetxController {
     }
   }
 
+  /// Reload tasks when role changes
+  Future<void> reloadForRoleChange() async {
+    _log.i('Reloading tasks due to role change');
+    allTasks.clear();
+    currentFilter.value = 'All';
+    await fetchTasks();
+  }
+
   /// Refresh tasks
   Future<void> refreshTasks() async {
     try {

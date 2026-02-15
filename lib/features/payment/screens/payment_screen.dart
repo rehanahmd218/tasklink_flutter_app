@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
+import 'package:tasklink/controllers/features/payment/payment_controller.dart';
+import 'package:tasklink/models/tasks/bid_model.dart';
+import 'package:tasklink/models/tasks/task_model.dart';
 import 'package:tasklink/features/payment/screens/widgets/payment_bottom_bar.dart';
 import 'package:tasklink/features/payment/screens/widgets/payment_breakdown.dart';
 import 'package:tasklink/features/payment/screens/widgets/payment_method_card.dart';
@@ -10,10 +14,32 @@ class PaymentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get arguments
+    final args = Get.arguments as Map<String, dynamic>? ?? {};
+    final task = args['task'] as TaskModel?;
+    final bid = args['bid'] as BidModel?;
+    // Support taskId (string) argument if task object not passed?
+    // Ideally we should have the full objects here for display.
+    // If taskId string passed, we might need to fetch task, but let's assume objects passed for now.
+
+    if (task == null || bid == null) {
+      return const Scaffold(
+        body: Center(child: Text('Error: Missing task or bid details')),
+      );
+    }
+
+    final controller = Get.put(PaymentController());
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    // Calculate fees
+    final amount = bid.amount;
+    final serviceFee = amount * 0.05; // 5% fee example
+    final total = amount + serviceFee;
+
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF23220f) : const Color(0xFFf8f8f5),
+      backgroundColor: isDark
+          ? const Color(0xFF23220f)
+          : const Color(0xFFf8f8f5),
       appBar: const PrimaryAppBar(title: 'Secure Payment'),
       body: Stack(
         children: [
@@ -23,49 +49,64 @@ class PaymentScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Hero Task Card
-                const PaymentTaskCard(
-                  imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuALT-KKiLnes24ZblxdwTW3lYFqalpKa14icsGFTwvq-OI2VcU9vNmTcUlKCj4T3iNteD55gJUBFtVczaubT4r2BtbFI3vhV2M06c69UZpK2V5ePVbdqyk8e3BFT1Yqo8FQg5Gr2_u2M4HkggLjetnKWkkXlClC7oh_fgN7_Z-MDURsrsWQmWdRfxJ9KGEumPUTODR_qW_GyLBrb8QVRTwgGE0XXVL-zAPH7pRhX6Ou6KWvuJWcxXwl6mVt3dqkaDSFxqF8GOoK1qUC',
-                  title: 'Assemble IKEA Wardrobe',
-                  postId: 'TL-8492',
+                PaymentTaskCard(
+                  imageUrl: task.media.isNotEmpty
+                      ? task.media.first.file
+                      : 'https://via.placeholder.com/400x200', // Fallback or placeholder
+                  title: task.title,
+                  postId: 'TL-${task.id.substring(0, 8)}', // Display ID segment
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Payment Breakdown
                 PaymentBreakdown(
                   isDark: isDark,
-                  taskPrice: '\$50.00',
-                  serviceFee: '\$2.50',
-                  total: '\$52.50',
+                  taskPrice: '\$${amount.toStringAsFixed(2)}',
+                  serviceFee: '\$${serviceFee.toStringAsFixed(2)}',
+                  total: '\$${total.toStringAsFixed(2)}',
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Payment Method
                 PaymentMethodCard(
                   isDark: isDark,
-                  balance: '\$120.00',
-                  progress: 0.43,
-                  usedAmount: '\$52.50',
-                  remainingAmount: '\$67.50',
+                  balance: '\$500.00', // Mock balance for now
+                  progress: 1.0,
+                  usedAmount: '\$${total.toStringAsFixed(2)}',
+                  remainingAmount: '\$${(500 - total).toStringAsFixed(2)}',
                 ),
               ],
             ),
           ),
-          
+
           // Sticky Footer
           Positioned(
-            left: 0, right: 0, bottom: 0,
-            child: PaymentBottomBar(
-              isDark: isDark,
-              amount: '\$52.50',
-              onPay: () {},
-              onAddFunds: () {},
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Obx(
+              () => PaymentBottomBar(
+                isDark: isDark,
+                amount: '\$${total.toStringAsFixed(2)}',
+                isLoading: controller.isLoading.value,
+                onPay: () {
+                  controller.processPayment(
+                    taskId: task.id,
+                    bidId: bid.id,
+                    amount: total,
+                  );
+                },
+                onAddFunds: () {
+                  // Navigate to Top Up
+                  // Get.toNamed(Routes.TOP_UP);
+                },
+              ),
             ),
           ),
         ],
       ),
     );
   }
-
 }

@@ -12,6 +12,8 @@ class PrimaryButton extends StatelessWidget {
   final double height;
   final double borderRadius;
   final double? fontSize;
+  final bool isLoading;
+
   const PrimaryButton({
     super.key,
     required this.onPressed,
@@ -23,13 +25,15 @@ class PrimaryButton extends StatelessWidget {
     this.height = 56,
     this.borderRadius = 12,
     this.fontSize,
+    this.isLoading = false,
   });
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor ?? TColors.primary,
           foregroundColor: foregroundColor ?? Colors.black,
@@ -48,16 +52,27 @@ class PrimaryButton extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(text),
-            if (icon != null) ...[
-              const SizedBox(width: 8),
-              Icon(icon, size: 20),
-            ],
-          ],
-        ),
+        child: isLoading
+            ? SizedBox(
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    foregroundColor ?? Colors.black,
+                  ),
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(text),
+                  if (icon != null) ...[
+                    const SizedBox(width: 8),
+                    Icon(icon, size: 20),
+                  ],
+                ],
+              ),
       ),
     );
   }

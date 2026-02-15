@@ -29,9 +29,30 @@ class BidStatusChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-           Container(width: 8, height: 8, decoration: BoxDecoration(color: indicatorColor, shape: BoxShape.circle, boxShadow: [BoxShadow(color: indicatorColor.withValues(alpha: 0.5), blurRadius: 4, spreadRadius: 2)])),
-           const SizedBox(width: 8),
-           Text(label, style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: textColor)),
+          Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(
+              color: indicatorColor,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: indicatorColor.withValues(alpha: 0.5),
+                  blurRadius: 4,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: textColor,
+            ),
+          ),
         ],
       ),
     );

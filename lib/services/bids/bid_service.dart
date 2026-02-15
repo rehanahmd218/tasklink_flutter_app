@@ -47,6 +47,66 @@ class BidService {
     }
   }
 
+  /// Accept a bid (Poster only)
+  Future<BidModel> acceptBid(String bidId) async {
+    _log.i('Accepting bid: $bidId');
+
+    try {
+      final response = await _dio.post(
+        '${ApiConfig.bidsEndpoint}$bidId/accept/',
+      );
+
+      final apiResponse = ApiResponse<BidModel>.fromJson(
+        response.data,
+        (data) => BidModel.fromJson(data),
+      );
+
+      if (apiResponse.isSuccess && apiResponse.data != null) {
+        _log.i('Bid accepted successfully');
+        return apiResponse.data!;
+      } else {
+        _log.w('Accept bid failed: ${apiResponse.message}');
+        throw ValidationException(
+          apiResponse.message,
+          apiResponse.errors ?? {},
+        );
+      }
+    } on DioException catch (e) {
+      _log.e('Accept bid error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
+  /// Reject a bid (Poster only)
+  Future<BidModel> rejectBid(String bidId) async {
+    _log.i('Rejecting bid: $bidId');
+
+    try {
+      final response = await _dio.post(
+        '${ApiConfig.bidsEndpoint}$bidId/reject/',
+      );
+
+      final apiResponse = ApiResponse<BidModel>.fromJson(
+        response.data,
+        (data) => BidModel.fromJson(data),
+      );
+
+      if (apiResponse.isSuccess && apiResponse.data != null) {
+        _log.i('Bid rejected');
+        return apiResponse.data!;
+      } else {
+        _log.w('Reject bid failed: ${apiResponse.message}');
+        throw ValidationException(
+          apiResponse.message,
+          apiResponse.errors ?? {},
+        );
+      }
+    } on DioException catch (e) {
+      _log.e('Reject bid error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
   /// Get all bids for a specific task (Poster view)
   Future<List<BidModel>> getBidsForTask(String taskId) async {
     _log.i('Fetching bids for task: $taskId');
@@ -120,6 +180,56 @@ class BidService {
     } on DioException catch (e) {
       _log.e('Get my bids error: ${e.type}');
       return [];
+    }
+  }
+
+  /// Update a bid
+  Future<BidModel> updateBid({
+    required String bidId,
+    required double amount,
+    String? message,
+  }) async {
+    _log.i('Updating bid: $bidId');
+
+    try {
+      final data = {'amount': amount, 'message': message};
+
+      final response = await _dio.patch(
+        '${ApiConfig.bidsEndpoint}$bidId/',
+        data: data,
+      );
+
+      final apiResponse = ApiResponse<BidModel>.fromJson(
+        response.data,
+        (data) => BidModel.fromJson(data),
+      );
+
+      if (apiResponse.isSuccess && apiResponse.data != null) {
+        _log.i('Bid updated successfully');
+        return apiResponse.data!;
+      } else {
+        _log.w('Bid update failed: ${apiResponse.message}');
+        throw ValidationException(
+          apiResponse.message,
+          apiResponse.errors ?? {},
+        );
+      }
+    } on DioException catch (e) {
+      _log.e('Update bid error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
+  /// Delete (withdraw) a bid
+  Future<void> deleteBid(String bidId) async {
+    _log.i('Deleting bid: $bidId');
+
+    try {
+      await _dio.delete('${ApiConfig.bidsEndpoint}$bidId/');
+      _log.i('Bid deleted successfully');
+    } on DioException catch (e) {
+      _log.e('Delete bid error: ${e.type}');
+      _handleDioError(e);
     }
   }
 

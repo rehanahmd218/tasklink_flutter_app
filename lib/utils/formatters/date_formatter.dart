@@ -1,6 +1,4 @@
-// Date and Time Formatting Utilities
-//
-// Provides helper functions for formatting dates and times
+import 'package:intl/intl.dart';
 
 // Formats a DateTime to a relative time string (e.g., "Posted 2h ago")
 String formatTimeAgo(DateTime dateTime) {
@@ -33,4 +31,15 @@ String formatTimeAgo(DateTime dateTime) {
 // Formats a double as currency string
 String formatCurrency(double amount) {
   return 'Rs ${amount.toStringAsFixed(0)}';
+}
+
+class TFormatter {
+  // Formats date to "Oct 24, 10:30 AM" format
+  static String formatDate(DateTime date) {
+    return DateFormat('MMM dd, hh:mm a').format(date);
+  }
+
+  // Static wrapper for consistency if needed
+  static String formatCurrency(double amount) =>
+      'Rs ${amount.toStringAsFixed(0)}';
 }
