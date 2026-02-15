@@ -1,4 +1,5 @@
 import 'package:tasklink/authentication/models/user_model.dart';
+import 'package:tasklink/models/tasks/task_response_user_model.dart';
 
 /// Bid Model
 ///
@@ -7,7 +8,7 @@ class BidModel {
   final String id;
   final String task;
   final String? taskTitle;
-  final UserModel? tasker;
+  final TaskResponseUserModel? tasker;
   final double amount;
   final String? message;
   final String status; // 'ACTIVE', 'ACCEPTED', 'REJECTED'
@@ -30,7 +31,7 @@ class BidModel {
       task: json['task']?.toString() ?? '',
       taskTitle: json['task_title'],
       tasker: json['tasker'] != null
-          ? UserModel.fromJson(json['tasker'])
+          ? TaskResponseUserModel.fromJson(json['tasker'])
           : null,
       amount: _parseDouble(json['amount']),
       message: json['message'],

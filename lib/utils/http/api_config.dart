@@ -44,6 +44,8 @@ class ApiConfig {
   static const String tasksEndpoint = 'tasks/';
   static const String tasksNearbyEndpoint = 'tasks/nearby/';
 
+  static const String bidsEndpoint = 'bids/';
+
   /// Get task detail by ID
   static String taskDetailEndpoint(String taskId) => 'tasks/$taskId/';
 

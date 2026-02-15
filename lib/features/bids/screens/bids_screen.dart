@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
-import 'package:tasklink/features/my_tasks/screens/widgets/applied_task_card.dart';
+import 'package:tasklink/features/tasks/my_tasks/screens/widgets/applied_task_card.dart';
 
 class BidsScreen extends StatelessWidget {
   const BidsScreen({super.key});

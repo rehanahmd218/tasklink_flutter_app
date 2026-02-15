@@ -21,6 +21,7 @@ class UserService {
     DateTime? dateOfBirth,
     String? gender,
     File? profileImage,
+    String? role,
   }) async {
     _log.i('Updating user profile');
 
@@ -40,6 +41,11 @@ class UserService {
       }
       if (gender != null) {
         formData.fields.add(MapEntry('profile.gender', gender));
+      }
+
+      // Add role if provided (this is on the user model, not profile)
+      if (role != null) {
+        formData.fields.add(MapEntry('role', role));
       }
 
       // Add profile image if provided
@@ -77,6 +83,11 @@ class UserService {
       _log.e('Update profile error: ${e.type}');
       _handleDioError(e);
     }
+  }
+
+  /// Update user role
+  Future<UserModel> updateRole(String role) async {
+    return updateProfile(role: role);
   }
 
   /// Get current user profile

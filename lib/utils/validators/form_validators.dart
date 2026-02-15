@@ -140,4 +140,35 @@ class FormValidators {
 
     return null;
   }
+
+  /// Validate bid amount
+  static String? validateBidAmount(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Bid amount is required';
+    }
+
+    final amount = double.tryParse(value.trim());
+    if (amount == null || amount <= 0) {
+      return 'Please enter a valid amount';
+    }
+
+    if (amount < 50) {
+      return 'Minimum bid amount is Rs 50';
+    }
+
+    return null;
+  }
+
+  /// Validate bid pitch
+  static String? validateBidPitch(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please explain why you are the best fit';
+    }
+
+    if (value.trim().length < 50) {
+      return 'Pitch must be at least 50 characters';
+    }
+
+    return null;
+  }
 }

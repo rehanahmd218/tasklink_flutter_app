@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/common/widgets/buttons/primary_button.dart';
@@ -8,6 +9,7 @@ import 'package:tasklink/features/settings/screens/widgets/settings_section_head
 import 'package:tasklink/features/settings/screens/widgets/settings_switch_tile.dart';
 import 'package:tasklink/features/settings/screens/widgets/settings_card.dart';
 import 'package:tasklink/controllers/user_controller.dart';
+import 'package:tasklink/controllers/settings/settings_controller.dart';
 import '../../../../../utils/constants/colors.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -16,6 +18,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    Get.put(SettingsController());
 
     return Scaffold(
       backgroundColor: isDark

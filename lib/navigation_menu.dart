@@ -4,10 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/controllers/features/navigation_controller.dart';
 import 'package:tasklink/features/chat/screens/chat_list_screen.dart';
 import 'package:tasklink/features/home/screens/home_screen.dart';
-import 'package:tasklink/features/my_tasks/screens/my_tasks_screen.dart';
+import 'package:tasklink/features/tasks/my_tasks/screens/my_tasks_screen.dart';
 import 'package:tasklink/features/profile/screens/profile_screen.dart';
 import 'package:tasklink/features/wallet/screens/wallet_screen.dart';
-import 'package:tasklink/features/my_posted_tasks/screens/my_posted_tasks_screen.dart';
+import 'package:tasklink/features/tasks/my_posted_tasks/screens/my_posted_tasks_screen.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 
 class NavigationMenu extends StatelessWidget {

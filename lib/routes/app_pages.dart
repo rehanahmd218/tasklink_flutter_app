@@ -11,14 +11,14 @@ import '../authentication/screens/reset_password_screen/reset_password_screen.da
 import '../authentication/screens/verification_screen/verification_screen.dart';
 
 import '../features/home/screens/home_screen.dart';
-import '../features/task_details/screens/task_details_screen.dart';
-import '../features/task_details/screens/task_details_tasker_screen.dart';
-import '../features/post_task/screens/post_task_screen.dart';
-import '../features/post_task/screens/post_task_media_screen.dart';
-import '../features/place_bid/screens/place_bid_screen.dart';
-import '../features/my_posted_tasks/screens/my_posted_tasks_screen.dart';
-import '../features/my_tasks/screens/my_tasks_screen.dart';
-import '../features/bid_management/screens/bid_management_screen.dart';
+import '../features/tasks/task_details/screens/task_details_screen.dart';
+import '../features/tasks/task_details/screens/task_details_tasker_screen.dart';
+import '../features/tasks/post_task/screens/post_task_screen.dart';
+import '../features/tasks/post_task/screens/post_task_media_screen.dart';
+import '../features/bids/place_bid/screens/place_bid_screen.dart';
+import '../features/tasks/my_posted_tasks/screens/my_posted_tasks_screen.dart';
+import '../features/tasks/my_tasks/screens/my_tasks_screen.dart';
+import '../features/bids/bid_management/screens/bid_management_screen.dart';
 import '../features/chat/screens/chat_list_screen.dart';
 import '../features/chat/screens/chat_room_screen.dart';
 import '../features/disputes/screens/dispute_screen.dart';
