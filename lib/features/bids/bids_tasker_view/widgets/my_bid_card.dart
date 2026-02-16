@@ -1,0 +1,240 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tasklink/common/widgets/app_card.dart';
+import 'package:tasklink/models/tasks/bid_model.dart';
+import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/routes/routes.dart';
+
+/// Reusable card for a single "my bid" (tasker view). Used in BidsTaskerView and Assigned Tasks > Applied > Bids.
+class MyBidCard extends StatelessWidget {
+  final BidModel bid;
+  final VoidCallback? onChat;
+  final VoidCallback? onViewTask;
+
+  const MyBidCard({
+    super.key,
+    required this.bid,
+    this.onChat,
+    this.onViewTask,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return AppCard(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.handyman_outlined,
+                    size: 28,
+                    color: isDark ? AppColors.primary : Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      bid.taskTitle ?? 'Unknown Task',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: isDark
+                            ? AppColors.darkTextPrimary
+                            : AppColors.textPrimary,
+                        height: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      'Posted by Client',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        color: isDark
+                            ? AppColors.darkTextSecondary
+                            : AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              _buildStatusChip(bid.status, isDark),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: BoxDecoration(
+              border: Border.symmetric(
+                horizontal: BorderSide(
+                  color: isDark
+                      ? AppColors.darkBorderPrimary
+                      : AppColors.borderSecondary,
+                  width: 1,
+                ),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'YOUR BID',
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textSecondary,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '\$${bid.amount.toStringAsFixed(0)}',
+                      style: GoogleFonts.inter(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: isDark
+                            ? AppColors.darkTextPrimary
+                            : AppColors.textPrimary,
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'TASK BUDGET',
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textSecondary,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '\$${(bid.amount * 0.9).floor()} - \$${(bid.amount * 1.2).ceil()}',
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: isDark
+                            ? AppColors.darkTextSecondary
+                            : AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: onChat,
+                  icon: const Icon(Icons.chat_bubble_outline, size: 18),
+                  label: const Text('Chat'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: isDark
+                        ? AppColors.darkTextPrimary
+                        : AppColors.textSecondary,
+                    side: BorderSide(
+                      color: isDark
+                          ? AppColors.darkBorderPrimary
+                          : AppColors.borderSecondary,
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: onViewTask ?? () {
+                    Get.toNamed(Routes.TASK_DETAILS, arguments: {'taskId': bid.task});
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.black,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
+                  child: Text(
+                    'View Task',
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusChip(String status, bool isDark) {
+    Color textColor;
+    Color bgColor;
+    String label = status.toUpperCase();
+
+    if (status.toUpperCase() == 'ACTIVE') {
+      textColor = isDark
+          ? AppColors.darkTextSecondary
+          : AppColors.textSecondary;
+      bgColor = isDark ? AppColors.darkContainer : AppColors.softGrey;
+      label = 'PENDING';
+    } else if (status.toUpperCase() == 'ACCEPTED') {
+      textColor = AppColors.success;
+      bgColor = AppColors.success.withValues(alpha: 0.1);
+    } else if (status.toUpperCase() == 'REJECTED') {
+      textColor = AppColors.error;
+      bgColor = AppColors.error.withValues(alpha: 0.1);
+    } else {
+      textColor = AppColors.error;
+      bgColor = AppColors.error.withValues(alpha: 0.1);
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: Text(
+        label,
+        style: GoogleFonts.inter(
+          color: textColor,
+          fontSize: 11,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 0.5,
+        ),
+      ),
+    );
+  }
+}

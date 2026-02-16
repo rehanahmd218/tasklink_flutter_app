@@ -10,7 +10,11 @@ import '../../../../../utils/helpers/category_helper.dart';
 
 class PostedTaskCard extends StatelessWidget {
   final TaskModel task;
+  /// When true, card is shown in tasker's "Assigned Tasks" (e.g. Message poster + Complete for in-progress).
+  final bool isTasker;
   final VoidCallback? onMessageTasker;
+  final VoidCallback? onMessagePoster; // Tasker: chat with poster
+  final VoidCallback? onMarkTaskComplete; // Tasker: mark task as completed
   final VoidCallback? onTrackStatus;
   final VoidCallback? onMarkCompletion;
   final VoidCallback? onGiveFeedback;
@@ -23,7 +27,10 @@ class PostedTaskCard extends StatelessWidget {
   const PostedTaskCard({
     super.key,
     required this.task,
+    this.isTasker = false,
     this.onMessageTasker,
+    this.onMessagePoster,
+    this.onMarkTaskComplete,
     this.onTrackStatus,
     this.onMarkCompletion,
     this.onGiveFeedback,
@@ -83,7 +90,7 @@ class PostedTaskCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          _buildOptionsMenu(isDark),
+                          if (!isTasker) _buildOptionsMenu(isDark),
                         ],
                       ),
                       // const SizedBox(height: 4),
@@ -309,6 +316,13 @@ class PostedTaskCard extends StatelessWidget {
           'color': Colors.green[100]!,
           'textColor': Colors.green[800]!,
         };
+      case 'IN_PROGRESS':
+        return {
+          'label': 'In progress',
+          'icon': Icons.hourglass_top,
+          'color': Colors.blue[100]!,
+          'textColor': Colors.blue[800]!,
+        };
 
       case 'COMPLETED':
         return {
@@ -365,6 +379,31 @@ class PostedTaskCard extends StatelessWidget {
     switch (task.status) {
       case 'ASSIGNED':
       case 'IN_PROGRESS':
+        if (isTasker) {
+          return Row(
+            children: [
+              Expanded(
+                child: SecondaryButton(
+                  onPressed: onMessagePoster ?? onMessageTasker,
+                  text: 'Message poster',
+                  icon: Icons.chat_bubble_outline,
+                  height: 40,
+                  fontSize: 13,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: PrimaryButton(
+                  onPressed: onMarkTaskComplete,
+                  text: 'Complete',
+                  icon: Icons.check_circle_outline,
+                  height: 40,
+                  fontSize: 13,
+                ),
+              ),
+            ],
+          );
+        }
         return Row(
           children: [
             Expanded(

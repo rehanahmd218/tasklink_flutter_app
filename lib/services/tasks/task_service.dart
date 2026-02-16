@@ -281,6 +281,29 @@ class TaskService {
     }
   }
 
+  /// Mark task as completed (tasker only). POST tasks/{id}/mark_completed/
+  Future<TaskModel> markTaskCompleted(String taskId) async {
+    _log.i('Marking task as completed: $taskId');
+
+    try {
+      final response = await _dio.post(
+        '${ApiConfig.tasksEndpoint}$taskId/mark_completed/',
+      );
+
+      final data = response.data;
+      if (data is Map<String, dynamic> && data.containsKey('data')) {
+        return TaskModel.fromJson(data['data'] as Map<String, dynamic>);
+      }
+      if (data is Map<String, dynamic>) {
+        return TaskModel.fromJson(data);
+      }
+      throw ValidationException('Invalid response format', {});
+    } on DioException catch (e) {
+      _log.e('Mark task completed error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
   /// Delete a task
   Future<void> deleteTask(String taskId) async {
     _log.i('Deleting task: $taskId');

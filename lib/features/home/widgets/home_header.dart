@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tasklink/controllers/user_controller.dart';
 import 'package:tasklink/features/notifications/screens/notifications_screen.dart';
 import 'package:tasklink/features/profile/screens/profile_screen.dart';
 import '../../../../utils/constants/colors.dart';
@@ -14,7 +16,7 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(HomeController());
     final isDark = Theme.of(context).brightness == Brightness.dark;
-
+    final currentUser = UserController.instance.currentUser;
     return Container(
       padding: const EdgeInsets.only(top: 48, left: 20, right: 20, bottom: 16),
       decoration: BoxDecoration(
@@ -133,17 +135,20 @@ class HomeHeader extends StatelessWidget {
                   const SizedBox(width: 12),
                   GestureDetector(
                     onTap: () => Get.to(() => const ProfileScreen()),
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: isDark ? Colors.grey[800] : Colors.grey[200],
-                        image: const DecorationImage(
-                          image: NetworkImage(
-                            'https://lh3.googleusercontent.com/aida-public/AB6AXuAr3fJTn31zIPtg9-Tv0QHdbWvknBuARuDIjSA5t5EFgvHq1sUl7D8hfxJjYCwJTGl7DjKXozw1HsXxn1mae5APm3GUtjCmpMDGmOZnFpXlwzEV1gJA7ANhfm4fzxhNq2_cMPrwAWTcg1JH9q1GuNFaSU-OnMMohDyi89ZyiHLMnntVoYptWi7BP2WA__zWMaDvOTbhAJfhUzt_93rSAByT0MWzbfVldfspKBW7MgUbRqogGeYMor8Em4fdWCnWyWgE35LarultZGkR',
+                    child: Obx(
+                      () => Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isDark ? Colors.grey[800] : Colors.grey[200],
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(
+                              currentUser.value?.profile?.profileImage ??
+                                  'https://lh3.googleusercontent.com/aida-public/AB6AXuAr3fJTn31zIPtg9-Tv0QHdbWvknBuARuDIjSA5t5EFgvHq1sUl7D8hfxJjYCwJTGl7DjKXozw1HsXxn1mae5APm3GUtjCmpMDGmOZnFpXlwzEV1gJA7ANhfm4fzxhNq2_cMPrwAWTcg1JH9q1GuNFaSU-OnMMohDyi89ZyiHLMnntVoYptWi7BP2WA__zWMaDvOTbhAJfhUzt_93rSAByT0MWzbfVldfspKBW7MgUbRqogGeYMor8Em4fdWCnWyWgE35LarultZGkR',
+                            ),
+                            fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
