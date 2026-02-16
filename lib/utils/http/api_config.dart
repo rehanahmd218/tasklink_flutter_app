@@ -49,6 +49,40 @@ class ApiConfig {
   /// Get task detail by ID
   static String taskDetailEndpoint(String taskId) => 'tasks/$taskId/';
 
+  // -------------------------------------------------------------------------
+  // Chat endpoints
+  // -------------------------------------------------------------------------
+  static const String chatRoomsEndpoint = 'chat/rooms/';
+  static String chatRoomMessagesEndpoint(String roomId) => 'chat/rooms/$roomId/messages/';
+  static String chatRoomUploadMediaEndpoint(String roomId) => 'chat/rooms/$roomId/upload_media/';
+
+  /// WebSocket base URL for chat (replace http with ws; use port 8001 if ASGI runs there)
+  static String get wsBaseUrl {
+    final uri = Uri.parse(baseUrl);
+    final host = uri.host;
+    const wsPort = 8001;
+    return 'ws://$host:$wsPort';
+  }
+
+  static String chatWebSocketUrl(String roomId, String token) =>
+      '$wsBaseUrl/ws/chat/$roomId/?token=${Uri.encodeComponent(token)}';
+
+  /// Base URL for media files (no /api/v1/)
+  static String get mediaBaseUrl {
+    final uri = Uri.parse(baseUrl);
+    return '${uri.scheme}://${uri.host}:${uri.port}';
+  }
+
+  /// Resolve full URL for a chat media file path (e.g. from message.media[].file).
+  static String mediaFileUrl(String filePath) {
+    if (filePath.isEmpty) return '';
+    if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
+      return filePath;
+    }
+    final path = filePath.startsWith('/') ? filePath : '/media/$filePath';
+    return '$mediaBaseUrl$path';
+  }
+
   // ===================================================================
   // PUBLIC ENDPOINTS (No Authentication Required)
   // ===================================================================
