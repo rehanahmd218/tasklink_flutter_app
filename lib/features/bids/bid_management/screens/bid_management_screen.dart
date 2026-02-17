@@ -10,6 +10,9 @@ import 'package:tasklink/utils/constants/app_colors.dart';
 import 'package:tasklink/utils/formatters/date_formatter.dart';
 
 import 'package:tasklink/common/widgets/buttons/secondary_button.dart';
+import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
+import 'package:tasklink/services/payment/payment_service.dart';
+import 'package:tasklink/utils/helpers/error_handler.dart';
 import 'package:tasklink/features/bids/bid_management/screens/widgets/bid_action_buttons.dart';
 import 'package:tasklink/features/bids/bid_management/screens/widgets/bid_amount_display.dart';
 import 'package:tasklink/features/bids/bid_management/screens/widgets/bid_pitch_display.dart';
@@ -182,17 +185,22 @@ class BidManagementScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
-        // Accept Offer (primary)
+        // Accept Offer (primary): process_payment then accept_bid, no payment screen
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () async {
-              final result = await Get.toNamed(
-                Routes.PAYMENT,
-                arguments: {'taskId': bid.task, 'bid': bid},
-              );
-              if (result == true) {
-                Get.back(result: true);
+              try {
+                FullScreenLoader.show(text: 'Processing payment...');
+                await PaymentService().processPayment(
+                  taskId: bid.task,
+                  bidId: bid.id,
+                );
+                FullScreenLoader.hide();
+                await controller.acceptBid(bid.id);
+              } catch (e) {
+                FullScreenLoader.hide();
+                ErrorHandler.showErrorPopup(e, buttonText: 'OK');
               }
             },
             style: ElevatedButton.styleFrom(

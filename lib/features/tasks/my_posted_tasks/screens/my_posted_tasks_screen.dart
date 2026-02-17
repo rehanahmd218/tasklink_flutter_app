@@ -31,11 +31,25 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
   /// For tasker Applied tab: true = Tasks, false = Bids
   bool _appliedSegmentTasks = true;
 
+  /// Tasker: primary section (true = Tasks, false = Bids)
+  bool _taskerPrimarySectionTasks = true;
+  /// Tasker Tasks sub-tab
+  String _taskerTasksSubTab = 'All';
+  /// Tasker Bids sub-tab
+  String _taskerBidsSubTab = 'Active';
+
+  static const List<String> _taskerTasksTabs = [
+    'All', 'Assigned', 'Delivered', 'Completed', 'Canceled', 'Disputed',
+  ];
+  static const List<String> _taskerBidsTabs = ['Active', 'Rejected'];
+
+  /// Last role we loaded data for; reload only when role changes or on pull-to-refresh
+  String? _lastKnownRole;
+
   @override
   void initState() {
     super.initState();
-    final controller = Get.put(TasksController());
-    controller.refreshTasks();
+    Get.put(TasksController());
   }
 
   @override
@@ -58,10 +72,22 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
       final screenTitle = isPoster ? 'Posted Tasks' : 'Assigned Tasks';
       if (!isPoster) Get.put(BidController());
 
+      // Reload data only when role changes (not when switching tabs/sections)
+      if (userRole != null && userRole != _lastKnownRole) {
+        _lastKnownRole = userRole;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          controller.refreshTasks();
+          if (userRole == 'TASKER' || userRole == 'BOTH') {
+            Get.find<BidController>().fetchMyBids();
+          }
+        });
+      }
+
       return Scaffold(
         backgroundColor: isDark ? const Color(0xFF1a1a0b) : Colors.white,
         appBar: PrimaryAppBar(
           title: screenTitle,
+          showBackButton: false,
           actions: [
             if (isPoster)
               Container(
@@ -83,35 +109,57 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
         ),
         body: Column(
           children: [
-            // Tabs
-            Obx(() {
-              // If current tab is not in the new tabs list (e.g. role switch), reset to All
-              if (!tabs.contains(_activeTab)) {
-                // We need to schedule this to avoid build errors or just handle it gracefully
-                // Using Future.microtask might be safe but stateless widgets inside Obx are safer.
-                // Here we just use 'All' for logic if mismatch occurs, or reset.
-                // Best to reset in the parent Obx? No, setState during build is bad.
-                // We'll just default to 'All' in filtering if not found.
-              }
-
-              final taskCounts = _calculateTaskCounts(
-                controller.allTasks,
-                isPoster,
-              );
-              return PostedTasksTabs(
-                activeTab: tabs.contains(_activeTab) ? _activeTab : 'All',
-                tabs: tabs,
-                taskCounts: taskCounts,
-                onTabSelected: (tab) {
-                  setState(() {
-                    _activeTab = tab;
-                    if (!isPoster && tab == 'Applied') {
-                      Get.find<BidController>().fetchMyBids();
+            // Tabs: Tasker uses Tasks|Bids segment + sub-tabs; Poster uses single row
+            if (isPoster)
+              Obx(() {
+                final taskCounts = _calculateTaskCounts(
+                  controller.allTasks,
+                  isPoster,
+                );
+                return PostedTasksTabs(
+                  activeTab: tabs.contains(_activeTab) ? _activeTab : 'All',
+                  tabs: tabs,
+                  taskCounts: taskCounts,
+                  onTabSelected: (tab) => setState(() => _activeTab = tab),
+                );
+              })
+            else
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                    child: TasksBidsSegmentedControl(
+                      isTasksSelected: _taskerPrimarySectionTasks,
+                      onSelected: (tasks) {
+                        setState(() => _taskerPrimarySectionTasks = tasks);
+                      },
+                    ),
+                  ),
+                  Obx(() {
+                    final bidController = Get.find<BidController>();
+                    if (_taskerPrimarySectionTasks) {
+                      final taskCounts = _taskerTaskCounts(controller.allTasks);
+                      return PostedTasksTabs(
+                        activeTab: _taskerTasksSubTab,
+                        tabs: _taskerTasksTabs,
+                        taskCounts: taskCounts,
+                        onTabSelected: (tab) =>
+                            setState(() => _taskerTasksSubTab = tab),
+                      );
+                    } else {
+                      final bidCounts = _taskerBidCounts(bidController.myBids);
+                      return PostedTasksTabs(
+                        activeTab: _taskerBidsSubTab,
+                        tabs: _taskerBidsTabs,
+                        taskCounts: bidCounts,
+                        onTabSelected: (tab) =>
+                            setState(() => _taskerBidsSubTab = tab),
+                      );
                     }
-                  });
-                },
-              );
-            }),
+                  }),
+                ],
+              ),
 
             // Task List (or Applied segment: Tasks / Bids for tasker)
             Expanded(
@@ -133,6 +181,64 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
     });
   }
 
+  Map<String, int> _taskerTaskCounts(List<TaskModel> tasks) {
+    return {
+      'All': tasks.length,
+      'Assigned': tasks
+          .where(
+            (t) => t.status == 'ASSIGNED' || t.status == 'IN_PROGRESS',
+          )
+          .length,
+      'Delivered': tasks.where((t) => t.status == 'COMPLETED').length,
+      'Completed': tasks.where((t) => t.status == 'CONFIRMED').length,
+      'Canceled': tasks.where((t) => t.status == 'CANCELLED').length,
+      'Disputed': tasks.where((t) => t.status == 'DISPUTED').length,
+    };
+  }
+
+  Map<String, int> _taskerBidCounts(List<BidModel> bids) {
+    final active =
+        bids.where((b) => b.status.toUpperCase() == 'ACTIVE').length;
+    final rejected =
+        bids.where((b) => b.status.toUpperCase() == 'REJECTED').length;
+    return {'Active': active, 'Rejected': rejected};
+  }
+
+  List<BidModel> _filterBidsForTasker(List<BidModel> bids, String subTab) {
+    if (subTab == 'Active') {
+      return bids
+          .where((b) => b.status.toUpperCase() == 'ACTIVE')
+          .toList();
+    }
+    return bids
+        .where((b) => b.status.toUpperCase() == 'REJECTED')
+        .toList();
+  }
+
+  List<TaskModel> _filterTasksForTasker(List<TaskModel> tasks, String subTab) {
+    switch (subTab) {
+      case 'All':
+        return tasks;
+      case 'Assigned':
+        return tasks
+            .where(
+              (t) =>
+                  t.status == 'ASSIGNED' || t.status == 'IN_PROGRESS',
+            )
+            .toList();
+      case 'Delivered':
+        return tasks.where((t) => t.status == 'COMPLETED').toList();
+      case 'Completed':
+        return tasks.where((t) => t.status == 'CONFIRMED').toList();
+      case 'Canceled':
+        return tasks.where((t) => t.status == 'CANCELLED').toList();
+      case 'Disputed':
+        return tasks.where((t) => t.status == 'DISPUTED').toList();
+      default:
+        return tasks;
+    }
+  }
+
   Widget _buildBody(
     TasksController controller,
     bool isPoster,
@@ -141,27 +247,19 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
   ) {
     final currentTab = tabs.contains(_activeTab) ? _activeTab : 'All';
 
-    // Tasker + Applied tab: show Tasks/Bids segment and corresponding list
-    if (!isPoster && _activeTab == 'Applied') {
+    // Tasker: Bids section (Active / Rejected with MyBidCard + Edit/Delete)
+    if (!isPoster && !_taskerPrimarySectionTasks) {
       return Obx(() {
         final bidController = Get.find<BidController>();
-        if (bidController.myBids.isEmpty &&
-            !bidController.isLoadingBids.value) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            bidController.fetchMyBids();
-          });
-        }
         if (bidController.isLoadingBids.value) {
           return const Center(
             child: CircularProgressIndicator(color: TColors.primary),
           );
         }
-        final bids = bidController.myBids;
-        if (bids.isEmpty) {
-          return _buildEmptyState(
-            isDark,
-            _appliedSegmentTasks ? 'Tasks' : 'Bids',
-          );
+        final filteredBids =
+            _filterBidsForTasker(bidController.myBids, _taskerBidsSubTab);
+        if (filteredBids.isEmpty) {
+          return _buildEmptyState(isDark, _taskerBidsSubTab);
         }
         return RefreshIndicator(
           onRefresh: () async {
@@ -169,44 +267,74 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
             bidController.fetchMyBids();
           },
           color: TColors.primary,
-          child: ListView(
+          child: ListView.builder(
             padding: const EdgeInsets.all(16),
-            children: [
-              TasksBidsSegmentedControl(
-                isTasksSelected: _appliedSegmentTasks,
-                onSelected: (tasks) {
-                  setState(() => _appliedSegmentTasks = tasks);
-                },
-              ),
-              const SizedBox(height: 16),
-              if (_appliedSegmentTasks)
-                ...bids.map((bid) => _buildAppliedTaskCard(bid, isDark))
-              else
-                ...bids.map(
-                  (bid) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: MyBidCard(
-                      bid: bid,
-                      onViewTask: () => Get.toNamed(
-                        Routes.TASK_DETAILS,
-                        arguments: {'taskId': bid.task},
-                      ),
-                      onChat: () {
-                        Get.toNamed(
-                          Routes.TASK_DETAILS,
-                          arguments: {'taskId': bid.task},
-                        );
-                      },
-                    ),
+            itemCount: filteredBids.length,
+            itemBuilder: (context, index) {
+              final bid = filteredBids[index];
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: MyBidCard(
+                  bid: bid,
+                  onViewTask: () => Get.toNamed(
+                    Routes.TASK_DETAILS,
+                    arguments: {'taskId': bid.task},
                   ),
+                  onEditBid: () => _handleEditBid(bid),
+                  onDeleteBid: () => _handleDeleteBid(bid),
                 ),
-            ],
+              );
+            },
           ),
         );
       });
     }
 
-    // Default: tasks list
+    // Tasker: Tasks section (All, Assigned, Delivered, ...)
+    if (!isPoster && _taskerPrimarySectionTasks) {
+      return Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(color: TColors.primary),
+          );
+        }
+        final filteredTasks = _filterTasksForTasker(
+          controller.allTasks,
+          _taskerTasksSubTab,
+        );
+        if (filteredTasks.isEmpty) {
+          return _buildEmptyState(isDark, _taskerTasksSubTab);
+        }
+        return RefreshIndicator(
+          onRefresh: controller.refreshTasks,
+          color: TColors.primary,
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: filteredTasks.length,
+            itemBuilder: (context, index) {
+              final task = filteredTasks[index];
+              return PostedTaskCard(
+                task: task,
+                isTasker: true,
+                onMessageTasker: () => _handleMessageTasker(task),
+                onMessagePoster: () => _handleMessagePoster(task),
+                onMarkTaskComplete: () => _handleMarkTaskComplete(task),
+                onTrackStatus: () => _handleTrackStatus(task),
+                onMarkCompletion: () => _handleMarkCompletion(task),
+                onGiveFeedback: () => _handleGiveFeedback(task),
+                onViewDispute: () => _handleViewDispute(task),
+                onEdit: () => _handleEditTask(task),
+                onDelete: () => _handleDeleteTask(task),
+                onTap: () => _handleTaskTap(task),
+                onViewBids: () => _handleViewBids(task),
+              );
+            },
+          ),
+        );
+      });
+    }
+
+    // Poster: tasks list (unchanged)
     return Obx(() {
       if (controller.isLoading.value) {
         return const Center(
@@ -231,7 +359,7 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
             final task = filteredTasks[index];
             return PostedTaskCard(
               task: task,
-              isTasker: !isPoster,
+              isTasker: false,
               onMessageTasker: () => _handleMessageTasker(task),
               onMessagePoster: () => _handleMessagePoster(task),
               onMarkTaskComplete: () => _handleMarkTaskComplete(task),
@@ -248,6 +376,49 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
         ),
       );
     });
+  }
+
+  Future<void> _handleEditBid(BidModel bid) async {
+    final task = TaskModel(
+      id: bid.task,
+      title: bid.taskTitle ?? 'Task',
+      description: '',
+      category: '',
+      budget: 0,
+      status: '',
+      paymentVerified: false,
+      addressText: '',
+      radius: 0,
+      createdAt: bid.createdAt,
+    );
+    final result = await Get.toNamed(
+      Routes.PLACE_BID,
+      arguments: {'task': task, 'bid': bid},
+    );
+    if (result == true) Get.find<BidController>().fetchMyBids();
+  }
+
+  void _handleDeleteBid(BidModel bid) {
+    Get.dialog(
+      AlertDialog(
+        title: const Text('Delete Bid'),
+        content: const Text(
+          'Are you sure you want to withdraw this bid?',
+        ),
+        actions: [
+          TextButton(onPressed: () => Get.back(), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () async {
+              Get.back();
+              await Get.find<BidController>().withdrawBid(bid.id, popAfter: false);
+              Get.find<BidController>().fetchMyBids();
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildAppliedTaskCard(BidModel bid, bool isDark) {

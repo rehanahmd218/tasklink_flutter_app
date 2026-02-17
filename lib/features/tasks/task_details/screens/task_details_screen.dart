@@ -14,8 +14,12 @@ import 'package:tasklink/features/tasks/task_details/widgets/task_media_gallery.
 import 'package:tasklink/features/tasks/task_details/widgets/task_description_section.dart';
 import 'package:tasklink/features/tasks/task_details/widgets/task_details_place_bid_footer.dart';
 import 'package:tasklink/features/tasks/task_details/widgets/task_details_edit_delete_footer.dart';
+import 'package:tasklink/features/tasks/task_details/widgets/task_details_tasker_assigned_footer.dart';
 import 'package:tasklink/routes/routes.dart';
+import 'package:tasklink/services/tasks/task_service.dart';
 import 'package:tasklink/utils/constants/colors.dart';
+import 'package:tasklink/utils/helpers/error_handler.dart';
+import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
 
 class TaskDetailsScreen extends StatefulWidget {
   final TaskModel? task;
@@ -249,6 +253,14 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   Widget _buildFooter(TaskModel task) {
     return Obx(() {
+      // Tasker assigned: Deliver + Cancel
+      if (controller.canShowTaskerAssignedActions) {
+        return TaskDetailsTaskerAssignedFooter(
+          onDeliver: () => _handleDeliver(task),
+          onCancel: () => _handleTaskerCancel(task),
+        );
+      }
+
       // Show Place Bid button if user can place bid
       if (controller.canPlaceBid) {
         return TaskDetailsPlaceBidFooter(
@@ -265,9 +277,36 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         );
       }
 
-      // No footer for poster viewing other's tasks
       return const SizedBox.shrink();
     });
+  }
+
+  Future<void> _handleDeliver(TaskModel task) async {
+    try {
+      FullScreenLoader.show(text: 'Marking as delivered...');
+      await TaskService().markTaskCompleted(task.id);
+      FullScreenLoader.hide();
+      controller.fetchTaskById(task.id);
+      Get.snackbar('Success', 'Task marked as delivered. Waiting for poster confirmation.',
+          snackPosition: SnackPosition.BOTTOM);
+    } catch (e) {
+      FullScreenLoader.hide();
+      ErrorHandler.showErrorPopup(e, buttonText: 'OK');
+    }
+  }
+
+  Future<void> _handleTaskerCancel(TaskModel task) async {
+    try {
+      FullScreenLoader.show(text: 'Cancelling...');
+      await TaskService().cancelTask(task.id);
+      FullScreenLoader.hide();
+      controller.fetchTaskById(task.id);
+      Get.snackbar('Success', 'Task cancelled.', snackPosition: SnackPosition.BOTTOM);
+    } catch (e) {
+      FullScreenLoader.hide();
+      // Backend may return 403 for tasker; show message
+      ErrorHandler.showErrorPopup(e, buttonText: 'OK');
+    }
   }
 
   void _handleProfileTap(TaskModel task, bool isOwner) {

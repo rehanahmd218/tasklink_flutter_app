@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tasklink/common/widgets/loaders/empty_state_widget.dart';
 import 'package:tasklink/controllers/features/home_controller.dart';
 import 'package:tasklink/features/home/widgets/home_task_card.dart';
 import 'package:tasklink/utils/constants/colors.dart';
@@ -36,11 +37,25 @@ class HomeListView extends StatelessWidget {
               final tasks = controller.filteredTasks;
 
               if (tasks.isEmpty) {
-                return Center(
-                  child: Text(
-                    'No tasks found nearby',
-                    style: GoogleFonts.inter(fontSize: 16, color: Colors.grey),
-                  ),
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
+                        child: Center(
+                          child: EmptyStateWidget(
+                            icon: Icons.inbox_outlined,
+                            title: 'No tasks found',
+                            subtitle:
+                                'No tasks found nearby. Pull down to refresh.',
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 );
               }
 

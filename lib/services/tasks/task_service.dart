@@ -281,6 +281,18 @@ class TaskService {
     }
   }
 
+  /// Cancel a task. POST tasks/{id}/cancel/ (poster only on backend; tasker may get 403)
+  Future<void> cancelTask(String taskId) async {
+    _log.i('Cancelling task: $taskId');
+    try {
+      await _dio.post('${ApiConfig.tasksEndpoint}$taskId/cancel/');
+      _log.i('Task cancelled successfully');
+    } on DioException catch (e) {
+      _log.e('Cancel task error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
   /// Mark task as completed (tasker only). POST tasks/{id}/mark_completed/
   Future<TaskModel> markTaskCompleted(String taskId) async {
     _log.i('Marking task as completed: $taskId');

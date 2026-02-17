@@ -121,27 +121,15 @@ class BidController extends GetxController {
     }
   }
 
-  /// Withdraw a bid
-  Future<void> withdrawBid(String bidId) async {
+  /// Withdraw a bid.
+  /// [popAfter] if true (default), calls Get.back(result: true) after success.
+  Future<void> withdrawBid(String bidId, {bool popAfter = true}) async {
     try {
       FullScreenLoader.show(text: 'Withdrawing bid...');
       await _bidService.deleteBid(bidId);
       FullScreenLoader.hide();
-
-      // Refresh list
-      Get.back(result: true); // Return to previous screen or close modal?
-      // If called from management screen, we might need to refresh list.
-      // Usually we go back or stay and refresh.
-      // If we are on details, we go back.
-      // If we are on list, we refresh.
-
-      // Assuming we are on details or management screen, going back is safe or refreshing.
-      // Let's assume we want to refresh the current view.
-      // User said "Update/Delete for Bids".
-
+      if (popAfter) Get.back(result: true);
       StatusSnackbar.showSuccess(message: 'Bid withdrawn successfully');
-
-      // If we are in BidManagementScreen (dialog/bottomsheet/page?), we might want to close it.
     } catch (e) {
       FullScreenLoader.hide();
       ErrorHandler.showErrorPopup(e, buttonText: 'OK');

@@ -11,7 +11,6 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
   final bool centerTitle;
-  final bool showBackArrow;
   const PrimaryAppBar({
     super.key,
     this.title,
@@ -22,7 +21,6 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.bottom,
     this.centerTitle = true,
-    this.showBackArrow = true,
   });
   @override
   Widget build(BuildContext context) {

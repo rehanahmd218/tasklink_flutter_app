@@ -6,17 +6,19 @@ import 'package:tasklink/models/tasks/bid_model.dart';
 import 'package:tasklink/utils/constants/app_colors.dart';
 import 'package:tasklink/routes/routes.dart';
 
-/// Reusable card for a single "my bid" (tasker view). Used in BidsTaskerView and Assigned Tasks > Applied > Bids.
+/// Reusable card for a single "my bid" (tasker view). Used in BidsTaskerView and Tasker My Tasks > Bids.
 class MyBidCard extends StatelessWidget {
   final BidModel bid;
-  final VoidCallback? onChat;
   final VoidCallback? onViewTask;
+  final VoidCallback? onEditBid;
+  final VoidCallback? onDeleteBid;
 
   const MyBidCard({
     super.key,
     required this.bid,
-    this.onChat,
     this.onViewTask,
+    this.onEditBid,
+    this.onDeleteBid,
   });
 
   @override
@@ -151,48 +153,73 @@ class MyBidCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: onChat,
-                  icon: const Icon(Icons.chat_bubble_outline, size: 18),
-                  label: const Text('Chat'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: isDark
-                        ? AppColors.darkTextPrimary
-                        : AppColors.textSecondary,
-                    side: BorderSide(
-                      color: isDark
-                          ? AppColors.darkBorderPrimary
-                          : AppColors.borderSecondary,
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                  ),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: onViewTask ?? () {
+                Get.toNamed(Routes.TASK_DETAILS, arguments: {'taskId': bid.task});
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.black,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+              child: Text(
+                'View Task',
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
                 ),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: onViewTask ?? () {
-                    Get.toNamed(Routes.TASK_DETAILS, arguments: {'taskId': bid.task});
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.black,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                  ),
-                  child: Text(
-                    'View Task',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
+          if (onEditBid != null || onDeleteBid != null) ...[
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                if (onEditBid != null && bid.status.toUpperCase() == 'ACTIVE') ...[
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: onEditBid,
+                      icon: const Icon(Icons.edit_outlined, size: 18),
+                      label: const Text('Edit Bid'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: isDark
+                            ? AppColors.darkTextPrimary
+                            : AppColors.textSecondary,
+                        side: BorderSide(
+                          color: isDark
+                              ? AppColors.darkBorderPrimary
+                              : AppColors.borderSecondary,
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                ],
+                if (onDeleteBid != null)
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: onDeleteBid,
+                      icon: Icon(Icons.delete_outline, size: 18, color: AppColors.error),
+                      label: Text(
+                        'Delete Bid',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.error,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.error,
+                        side: const BorderSide(color: AppColors.error),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ],
         ],
       ),
     );

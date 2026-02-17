@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:tasklink/controllers/location/location_controller.dart';
 import 'package:tasklink/models/tasks/task_model.dart';
 import 'package:tasklink/services/tasks/task_service.dart';
 
@@ -58,8 +59,12 @@ class HomeController extends GetxController {
 
       // Hardcoded location for now as per previous context or standard testing
       // In a real app, use Geolocation package to get actual position
-      final double lat = 30.3753;
-      final double lng = 69.3451;
+      // final double lat = 30.3753;
+      // final double lng = 69.3451;
+
+      final locationController = LocationController.instance;
+      final double lat = locationController.latitude.value;
+      final double lng = locationController.longitude.value;
 
       final tasks = await _taskService.getNearbyTasks(
         lat: lat,

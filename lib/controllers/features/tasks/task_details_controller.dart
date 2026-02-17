@@ -97,4 +97,15 @@ class TaskDetailsController extends GetxController {
   bool get canEditDelete {
     return isTaskOwner && userRole.value == TaskRole.poster;
   }
+
+  /// Check if current user is the assigned tasker and task is in ASSIGNED or IN_PROGRESS (show Deliver + Cancel footer)
+  bool get canShowTaskerAssignedActions {
+    final currentUser = _userController.currentUser.value;
+    final task = currentTask.value;
+    if (currentUser == null || task == null) return false;
+    if (task.poster?.id == currentUser.id) return false;
+    final isAssignedToMe = task.assignedTasker?.id == currentUser.id;
+    final statusOk = task.status == 'ASSIGNED' || task.status == 'IN_PROGRESS';
+    return isAssignedToMe && statusOk;
+  }
 }

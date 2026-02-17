@@ -395,7 +395,7 @@ class PostedTaskCard extends StatelessWidget {
               Expanded(
                 child: PrimaryButton(
                   onPressed: onMarkTaskComplete,
-                  text: 'Complete',
+                  text: 'Deliver',
                   icon: Icons.check_circle_outline,
                   height: 40,
                   fontSize: 13,
@@ -428,6 +428,15 @@ class PostedTaskCard extends StatelessWidget {
           ],
         );
       case 'COMPLETED':
+        if (isTasker) {
+          return PrimaryButton(
+            onPressed: onMessagePoster ?? onMessageTasker,
+            text: 'Message poster',
+            icon: Icons.chat_bubble_outline,
+            height: 40,
+            fontSize: 13,
+          );
+        }
         return Row(
           children: [
             Expanded(

@@ -66,9 +66,6 @@ class BidsTaskerView extends StatelessWidget {
               onViewTask: () {
                 Get.toNamed(Routes.TASK_DETAILS, arguments: {'taskId': bid.task});
               },
-              onChat: () {
-                Get.toNamed(Routes.TASK_DETAILS, arguments: {'taskId': bid.task});
-              },
             );
           },
         );
