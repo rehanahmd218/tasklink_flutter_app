@@ -268,7 +268,7 @@ class PostTaskScreen extends StatelessWidget {
                                                     BorderRadius.circular(8),
                                                 child: Image.network(
                                                   controller
-                                                      .existingMedia[index],
+                                                      .existingMedia[index].file,
                                                   fit: BoxFit.cover,
                                                   width: double.infinity,
                                                   height: double.infinity,

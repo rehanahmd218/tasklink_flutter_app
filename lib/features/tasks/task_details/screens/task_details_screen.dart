@@ -269,6 +269,11 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         );
       }
 
+      // Task is biddable but user is in Poster role — prompt to switch to Tasker
+      if (controller.shouldShowSwitchToTaskerToBid) {
+        return _buildSwitchToTaskerToBidBanner();
+      }
+
       // Show Edit/Delete buttons if user owns the task
       if (controller.canEditDelete) {
         return TaskDetailsEditDeleteFooter(
@@ -279,6 +284,44 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
       return const SizedBox.shrink();
     });
+  }
+
+  Widget _buildSwitchToTaskerToBidBanner() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      decoration: BoxDecoration(
+        color: isDark
+            ? TColors.primary.withValues(alpha: 0.15)
+            : TColors.primary.withValues(alpha: 0.2),
+        border: Border(
+          top: BorderSide(
+            color: isDark ? Colors.grey[800]! : Colors.grey[200]!,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.info_outline_rounded,
+            size: 28,
+            color: isDark ? TColors.primary : Colors.black87,
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Text(
+              'Switch to Tasker to apply for this task',
+              style: GoogleFonts.inter(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: isDark ? Colors.white : Colors.black87,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _handleDeliver(TaskModel task) async {

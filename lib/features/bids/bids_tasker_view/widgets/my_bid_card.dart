@@ -113,7 +113,7 @@ class MyBidCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '\$${bid.amount.toStringAsFixed(0)}',
+                      'Rs ${bid.amount.toStringAsFixed(0)}',
                       style: GoogleFonts.inter(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -138,7 +138,7 @@ class MyBidCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '\$${(bid.amount * 0.9).floor()} - \$${(bid.amount * 1.2).ceil()}',
+                      'Rs ${(bid.amount * 0.9).floor()} - Rs ${(bid.amount * 1.2).ceil()}',
                       style: GoogleFonts.inter(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

@@ -244,10 +244,8 @@ class TaskService {
     }
   }
 
-  /// Update an existing task.
-  /// Expects standard API response: { success, message, data }.
-  /// Backend returns the full updated task in [data]; if it ever returns only
-  /// modified fields, merge with the existing task before use.
+  /// Update an existing task (JSON only).
+  /// Use [updateTaskWithMedia] when adding new images on edit.
   Future<TaskModel> updateTask(String taskId, TaskCreateRequest request) async {
     _log.i('Updating task: $taskId');
 
@@ -259,25 +257,76 @@ class TaskService {
         data: data,
       );
 
-      // Standard format: { success, message, data: <task> }
-      final apiResponse = ApiResponse<TaskModel>.fromJson(
-        response.data as Map<String, dynamic>,
-        (data) => TaskModel.fromJson(data as Map<String, dynamic>),
-      );
-
-      if (apiResponse.isSuccess && apiResponse.data != null) {
-        _log.i('Task updated successfully: ${apiResponse.data!.id}');
-        return apiResponse.data!;
-      } else {
-        _log.w('Task update failed: ${apiResponse.message}');
-        throw ValidationException(
-          apiResponse.message,
-          apiResponse.errors ?? {},
-        );
-      }
+      return _parseUpdateResponse(response);
     } on DioException catch (e) {
       _log.e('Update task error: ${e.type}');
       _handleDioError(e);
+    }
+  }
+
+  /// Update an existing task with optional new media files and/or media IDs to delete (multipart).
+  /// Use when the user added new images and/or removed existing ones in edit mode.
+  Future<TaskModel> updateTaskWithMedia(
+    String taskId,
+    TaskCreateRequest request,
+    List<File> newMediaFiles, {
+    List<String> deletedMediaIds = const [],
+  }) async {
+    _log.i(
+      'Updating task: $taskId (${newMediaFiles.length} new, ${deletedMediaIds.length} deleted)',
+    );
+
+    try {
+      final formData = FormData();
+
+      final taskData = request.toJson();
+      for (final entry in taskData.entries) {
+        if (entry.value != null) {
+          formData.fields.add(MapEntry(entry.key, entry.value.toString()));
+        }
+      }
+
+      for (final id in deletedMediaIds) {
+        formData.fields.add(MapEntry('delete_media_ids', id));
+      }
+
+      if (newMediaFiles.isNotEmpty) {
+        for (final file in newMediaFiles) {
+          final fileName = file.path.split(RegExp(r'[/\\]')).last;
+          formData.files.add(MapEntry(
+            'media_files',
+            await MultipartFile.fromFile(file.path, filename: fileName),
+          ));
+        }
+      }
+
+      final response = await _dio.patch(
+        '${ApiConfig.tasksEndpoint}$taskId/',
+        data: formData,
+      );
+
+      return _parseUpdateResponse(response);
+    } on DioException catch (e) {
+      _log.e('Update task with media error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
+  TaskModel _parseUpdateResponse(Response<dynamic> response) {
+    final apiResponse = ApiResponse<TaskModel>.fromJson(
+      response.data as Map<String, dynamic>,
+      (data) => TaskModel.fromJson(data as Map<String, dynamic>),
+    );
+
+    if (apiResponse.isSuccess && apiResponse.data != null) {
+      _log.i('Task updated successfully: ${apiResponse.data!.id}');
+      return apiResponse.data!;
+    } else {
+      _log.w('Task update failed: ${apiResponse.message}');
+      throw ValidationException(
+        apiResponse.message,
+        apiResponse.errors ?? {},
+      );
     }
   }
 

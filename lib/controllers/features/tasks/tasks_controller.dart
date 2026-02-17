@@ -19,8 +19,8 @@ class TasksController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxBool isRefreshing = false.obs;
 
-  // Current filter
-  final RxString currentFilter = 'All'.obs;
+  // Current filter (default: Active = tasks in progress, i.e. not CONFIRMED)
+  final RxString currentFilter = 'Active'.obs;
 
   // Filtered tasks based on current filter
   List<TaskModel> get filteredTasks {
@@ -38,24 +38,85 @@ class TasksController extends GetxController {
     fetchTasks();
   }
 
-  /// Fetch tasks based on user role
+  /// Apply filter and fetch tasks (called from filter bottom sheet "Apply")
+  Future<void> applyFilter(String filter) async {
+    currentFilter.value = filter;
+    _log.i('Filter applied: $filter');
+    await fetchTasks();
+  }
+
+  /// Fetch tasks based on user role and current filter (backend supports status query param)
   Future<void> fetchTasks() async {
     try {
       isLoading.value = true;
+      final userRole = _userController.currentUser.value?.role;
       _log.i(
-        'Fetching tasks for user role: ${_userController.currentUser.value?.role}',
+        'Fetching tasks for role: $userRole, filter: ${currentFilter.value}',
       );
 
-      final userRole = _userController.currentUser.value?.role;
+      final filter = currentFilter.value;
+      String? apiStatus;
+      bool filterClientSide = false;
+      List<String>? clientStatuses;
+
+      switch (filter) {
+        case 'All':
+          apiStatus = null;
+          break;
+        case 'Active':
+          // Active = task in progress (any status except CONFIRMED)
+          apiStatus = null;
+          filterClientSide = true;
+          clientStatuses = [
+            'POSTED',
+            'BIDDING',
+            'ASSIGNED',
+            'IN_PROGRESS',
+            'COMPLETED',
+            'CANCELLED',
+            'DISPUTED',
+          ];
+          break;
+        case 'Bidding':
+          apiStatus = 'BIDDING';
+          break;
+        case 'Assigned':
+          if (userRole == 'POSTER') {
+            apiStatus = 'ASSIGNED';
+          } else {
+            apiStatus = null;
+            filterClientSide = true;
+            clientStatuses = ['ASSIGNED', 'IN_PROGRESS'];
+          }
+          break;
+        case 'Delivered':
+          apiStatus = 'COMPLETED';
+          break;
+        case 'Completed':
+          apiStatus = 'CONFIRMED';
+          break;
+        case 'Disputed':
+          apiStatus = 'DISPUTED';
+          break;
+        case 'Canceled':
+        case 'Cancelled':
+          apiStatus = 'CANCELLED';
+          break;
+        default:
+          apiStatus = null;
+      }
 
       List<TaskModel> tasks;
-
       if (userRole == 'POSTER') {
-        // Fetch tasks posted by the user
-        tasks = await _taskService.getMyPostedTasks();
+        tasks = await _taskService.getMyPostedTasks(status: apiStatus);
       } else {
-        // Fetch tasks assigned to the user (TASKER or BOTH)
-        tasks = await _taskService.getTasksAssignedToMe();
+        tasks = await _taskService.getTasksAssignedToMe(status: apiStatus);
+      }
+
+      if (filterClientSide && clientStatuses != null) {
+        tasks = tasks
+            .where((t) => clientStatuses!.contains(t.status))
+            .toList();
       }
 
       allTasks.value = tasks;
@@ -72,7 +133,7 @@ class TasksController extends GetxController {
   Future<void> reloadForRoleChange() async {
     _log.i('Reloading tasks due to role change');
     allTasks.clear();
-    currentFilter.value = 'All';
+    currentFilter.value = 'Active';
     await fetchTasks();
   }
 

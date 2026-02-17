@@ -14,6 +14,13 @@ import 'package:tasklink/services/location/geocoding_service.dart';
 import 'package:tasklink/controllers/features/navigation_controller.dart';
 import 'package:tasklink/routes/routes.dart';
 
+/// One existing task media item (edit mode): backend id and file URL for display.
+class ExistingMediaItem {
+  final String id;
+  final String file;
+  ExistingMediaItem({required this.id, required this.file});
+}
+
 class PostTaskController extends GetxController {
   // Form key for validation
   final formKey = GlobalKey<FormState>();
@@ -36,7 +43,10 @@ class PostTaskController extends GetxController {
   final selectedLocationName = ''.obs;
 
   final images = <XFile>[].obs;
-  final existingMedia = <String>[].obs; // For edit mode
+  /// Existing media on the task (edit mode). Each item has id (for backend delete) and file (URL).
+  final existingMedia = <ExistingMediaItem>[].obs;
+  /// IDs of existing media that the user removed while editing; sent to backend on save.
+  final deletedMediaIds = <String>[].obs;
   final ImagePicker _picker = ImagePicker();
 
   // Services
@@ -58,8 +68,10 @@ class PostTaskController extends GetxController {
   // ... existing code ...
 
   void removeExistingImage(int index) {
-    existingMedia.removeAt(index);
-    // TODO: Track deleted media for backend update
+    if (index >= 0 && index < existingMedia.length) {
+      deletedMediaIds.add(existingMedia[index].id);
+      existingMedia.removeAt(index);
+    }
   }
 
   // Edit Mode
@@ -81,12 +93,13 @@ class PostTaskController extends GetxController {
       selectedCategory.value = cat[0].toUpperCase() + cat.substring(1);
     }
 
-    // Populate existing media
+    // Populate existing media (id + file URL for display and delete tracking)
     existingMedia.clear();
+    deletedMediaIds.clear();
     if (task.media.isNotEmpty) {
       for (var item in task.media) {
-        if (item.file.isNotEmpty) {
-          existingMedia.add(item.file);
+        if (item.file.isNotEmpty && item.id.isNotEmpty) {
+          existingMedia.add(ExistingMediaItem(id: item.id, file: item.file));
         }
       }
     }
@@ -252,9 +265,19 @@ class PostTaskController extends GetxController {
       );
 
       if (isEdit.value && taskId != null) {
-        // Update Task
-        await _taskService.updateTask(taskId!, request);
-        // Note: Image update not supported in this flow yet
+        // Update task; send new images and/or deleted media IDs
+        final newFiles = images.map((x) => File(x.path)).toList();
+        final deletedIds = deletedMediaIds.toList();
+        if (newFiles.isNotEmpty || deletedIds.isNotEmpty) {
+          await _taskService.updateTaskWithMedia(
+            taskId!,
+            request,
+            newFiles,
+            deletedMediaIds: deletedIds,
+          );
+        } else {
+          await _taskService.updateTask(taskId!, request);
+        }
       } else {
         // Create Task
         final List<File> mediaFiles = [];
@@ -266,19 +289,18 @@ class PostTaskController extends GetxController {
 
       FullScreenLoader.hide();
 
-      if (isEdit.value) {
-        Get.back(result: true); // Return to details
-        StatusSnackbar.showSuccess(message: 'Task updated successfully!');
-      } else {
-        // Go to main nav (so bottom bar is visible) and select My Posted Tasks tab
-        Get.offAllNamed(Routes.HOME);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (Get.isRegistered<NavigationController>()) {
-            Get.find<NavigationController>().selectedIndex.value = 1;
-          }
-          StatusSnackbar.showSuccess(message: 'Task created successfully!');
-        });
-      }
+      // Go to main nav and select My Posted Tasks tab (same for both create and edit)
+      Get.offAllNamed(Routes.HOME);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (Get.isRegistered<NavigationController>()) {
+          Get.find<NavigationController>().selectedIndex.value = 1;
+        }
+        StatusSnackbar.showSuccess(
+          message: isEdit.value
+              ? 'Task updated successfully!'
+              : 'Task created successfully!',
+        );
+      });
     } catch (e) {
       FullScreenLoader.hide();
       ErrorHandler.showErrorPopup(e, buttonText: 'Try Again');

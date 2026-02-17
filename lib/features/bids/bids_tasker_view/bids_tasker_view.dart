@@ -61,6 +61,7 @@ class BidsTaskerView extends StatelessWidget {
           separatorBuilder: (context, index) => const SizedBox(height: 16),
           itemBuilder: (context, index) {
             final bid = controller.myBids[index];
+            
             return MyBidCard(
               bid: bid,
               onViewTask: () {

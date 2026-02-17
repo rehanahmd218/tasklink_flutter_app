@@ -93,9 +93,24 @@ class TaskDetailsController extends GetxController {
         (currentUser.role == 'TASKER' || currentUser.role == 'BOTH');
   }
 
-  /// Check if user can edit/delete (is poster and owns the task)
+  /// Task is open for bids (not owner, BIDDING) but user's role is POSTER — show "Switch to Tasker to apply"
+  bool get shouldShowSwitchToTaskerToBid {
+    final currentUser = _userController.currentUser.value;
+    final task = currentTask.value;
+
+    if (currentUser == null || task == null) return false;
+
+    return task.poster?.id != currentUser.id &&
+        task.status == 'BIDDING' &&
+        currentUser.role == 'POSTER';
+  }
+
+  /// Check if user can edit/delete (is poster, owns the task, and status is POSTED or BIDDING)
   bool get canEditDelete {
-    return isTaskOwner && userRole.value == TaskRole.poster;
+    if (!isTaskOwner || userRole.value != TaskRole.poster) return false;
+    final task = currentTask.value;
+    if (task == null) return false;
+    return task.status == 'POSTED' || task.status == 'BIDDING';
   }
 
   /// Check if current user is the assigned tasker and task is in ASSIGNED or IN_PROGRESS (show Deliver + Cancel footer)
