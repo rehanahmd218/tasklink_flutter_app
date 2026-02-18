@@ -194,7 +194,7 @@ class PostTaskController extends GetxController {
         if (pickedFiles.length > remainingSlots) {
           Get.snackbar(
             'Limit Reached',
-            'Only ${remainingSlots} image(s) added. Maximum is 3 images.',
+            'Only $remainingSlots image(s) added. Maximum is 3 images.',
           );
         }
       }

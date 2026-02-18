@@ -70,7 +70,7 @@ class TaskStatusBanner extends StatelessWidget {
               ],
             ),
           ),
-          if (trailing != null) trailing!,
+          ?trailing,
         ],
       ),
     );

@@ -39,11 +39,11 @@ class BidManagementScreen extends StatelessWidget {
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final controller = Get.put(BidController());
-    final taskId = task?.id ?? bid.task ?? args['taskId'] as String? ?? '';
+    final taskId = task?.id ?? bid.task;
     final taskTitle =
         task?.title ?? bid.taskTitle ?? args['taskTitle'] as String? ?? 'Task';
-    final taskImageUrl = (task != null && task!.media.isNotEmpty)
-        ? task!.media.first.file
+    final taskImageUrl = (task != null && task.media.isNotEmpty)
+        ? task.media.first.file
         : null;
 
     return Scaffold(

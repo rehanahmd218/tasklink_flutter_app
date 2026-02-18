@@ -67,6 +67,10 @@ class ReviewService {
       } else if (data is Map<String, dynamic>) {
         if (data.containsKey('data') && data['data'] is List) {
           list = data['data'] as List;
+        } else if (data.containsKey('data') &&
+            data['data'] is Map<String, dynamic> &&
+            data['data'].containsKey('results')) {
+          list = data['data']['results'] as List;
         } else if (data.containsKey('results')) {
           list = data['results'] as List?;
         }

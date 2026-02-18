@@ -46,6 +46,7 @@ class HomeHeader extends StatelessWidget {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -57,23 +58,24 @@ class HomeHeader extends StatelessWidget {
                               letterSpacing: 0.5,
                             ),
                           ),
-                          Row(
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  'San Francisco, CA',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: isDark
-                                        ? Colors.white
-                                        : TColors.textPrimary,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
+                          Obx(
+                            () {
+                              final controller = Get.find<HomeController>();
+                              final text = controller.locationLabel.value.isEmpty
+                                  ? 'Getting location...'
+                                  : controller.locationLabel.value;
+                              return Text(
+                                text,
+                                style: GoogleFonts.inter(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: isDark
+                                      ? Colors.white
+                                      : TColors.textPrimary,
                                 ),
-                              ),
-                              const Icon(Icons.expand_more, size: 20),
-                            ],
+                                overflow: TextOverflow.ellipsis,
+                              );
+                            },
                           ),
                         ],
                       ),

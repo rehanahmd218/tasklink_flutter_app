@@ -4,7 +4,6 @@ import 'package:tasklink/common/widgets/loaders/empty_state_widget.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/controllers/features/bids/bid_controller.dart';
 import 'package:tasklink/features/bids/bids_tasker_view/widgets/my_bid_card.dart';
-import 'package:tasklink/models/tasks/bid_model.dart';
 import 'package:tasklink/utils/constants/app_colors.dart';
 import 'package:tasklink/routes/routes.dart';
 

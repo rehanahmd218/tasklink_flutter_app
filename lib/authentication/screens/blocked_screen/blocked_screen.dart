@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 
@@ -41,7 +40,6 @@ class BlockedScreen extends StatelessWidget {
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: Implement contact support or allow logout
                 },
                 child: const Text('Contact Support'),
               ),

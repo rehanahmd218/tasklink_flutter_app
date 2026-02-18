@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../utils/constants/colors.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/common/widgets/bottom_nav_bar.dart';
 import 'package:tasklink/controllers/features/ratings_controller.dart';
@@ -14,7 +13,7 @@ class CompleteRatingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(RatingsController());
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    // final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       // backgroundColor: isDark ? TColors.backgroundDark : TColors.backgroundLight,

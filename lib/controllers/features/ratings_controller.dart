@@ -86,7 +86,7 @@ class RatingsController extends GetxController {
       if (star >= 1 && star <= 5) counts[5 - star]++;
     }
     totalReviews.value = list.length;
-    averageRating.value = list.length > 0 ? sum / list.length : 0;
+    averageRating.value = list.isNotEmpty ? sum / list.length : 0;
     final n = list.length.toDouble();
     distribution.value = counts.map((c) => n > 0 ? c / n : 0.0).toList();
   }

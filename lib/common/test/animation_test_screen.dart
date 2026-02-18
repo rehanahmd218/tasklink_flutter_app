@@ -10,7 +10,7 @@ class AnimationTestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    // final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       // backgroundColor: isDark ? TColors.dark : TColors.light,
@@ -176,74 +176,76 @@ class AnimationTestScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildImageCard(String name, String imagePath) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              name,
-              style: GoogleFonts.inter(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              imagePath,
-              style: GoogleFonts.inter(
-                fontSize: 12,
-                color: TColors.textSecondary,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Center(
-              child: Container(
-                height: 200,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  // color: TColors.light.withValues(alpha: 0.5),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.broken_image,
-                            color: TColors.error,
-                            size: 48,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Failed to load image',
-                            style: GoogleFonts.inter(
-                              color: TColors.error,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildImageCard(String name, String imagePath) {
+  //   return Card(
+  //     margin: const EdgeInsets.only(bottom: 16),
+  //     elevation: 2,
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(12),
+  //     ),
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(16),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text(
+  //             name,
+  //             style: GoogleFonts.inter(
+  //               fontSize: 16,
+  //               fontWeight: FontWeight.w600,
+  //             ),
+  //           ),
+  //           const SizedBox(height: 8),
+  //           Text(
+  //             imagePath,
+  //             style: GoogleFonts.inter(
+  //               fontSize: 12,
+  //               color: TColors.textSecondary,
+  //               fontStyle: FontStyle.italic,
+  //             ),
+  //           ),
+  //           const SizedBox(height: 16),
+  //           Center(
+  //             child: Container(
+  //               height: 200,
+  //               width: double.infinity,
+  //               decoration: BoxDecoration(
+  //                 // color: TColors.light.withValues(alpha: 0.5),
+  //                 borderRadius: BorderRadius.circular(8),
+  //               ),
+  //               child: Image.asset(
+  //                 imagePath,
+  //                 fit: BoxFit.contain,
+  //                 errorBuilder: (context, error, stackTrace) {
+  //                   return Center(
+  //                     child: Column(
+  //                       mainAxisAlignment: MainAxisAlignment.center,
+  //                       children: [
+  //                         Icon(
+  //                           Icons.broken_image,
+  //                           color: TColors.error,
+  //                           size: 48,
+  //                         ),
+  //                         const SizedBox(height: 8),
+  //                         Text(
+  //                           'Failed to load image',
+  //                           style: GoogleFonts.inter(
+  //                             color: TColors.error,
+  //                             fontSize: 12,
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   );
+  //                 },
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
+
 }

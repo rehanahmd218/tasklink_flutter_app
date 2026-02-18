@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get/get.dart';
 import 'package:tasklink/common/widgets/buttons/app_button.dart';
 import 'package:tasklink/common/widgets/loaders/empty_state_widget.dart';
 import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';

@@ -1,6 +1,7 @@
 /// Custom API Exceptions
 ///
 /// These exceptions provide structured error handling for different API scenarios.
+library;
 
 /// Server-side error (5xx status codes)
 class ServerException implements Exception {

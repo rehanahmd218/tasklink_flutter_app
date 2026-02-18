@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasklink/authentication/models/auth_response_model.dart';
-import 'package:tasklink/controllers/location/location_controller.dart';
 import 'package:tasklink/controllers/user_controller.dart';
 
 import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';

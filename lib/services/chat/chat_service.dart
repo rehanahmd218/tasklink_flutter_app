@@ -105,7 +105,7 @@ class ChatService {
       }
       _log.w('Upload media failed: ${apiResponse.message}');
       throw ValidationException(
-        apiResponse.message ?? 'Upload failed',
+        apiResponse.message,
         apiResponse.errors ?? {},
       );
     } on DioException catch (e) {

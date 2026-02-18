@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:tasklink/common/widgets/dialogs/status_popup.dart';
 import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
 import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/controllers/user_controller.dart';

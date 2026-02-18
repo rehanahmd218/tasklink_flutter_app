@@ -1,6 +1,7 @@
 /// Form Validators
 ///
 /// Validation functions for form fields. Returns error message or null if valid.
+library;
 
 class FormValidators {
   /// Validate phone number

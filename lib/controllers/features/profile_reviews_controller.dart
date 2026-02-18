@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:tasklink/models/reviews/review_model.dart';
 import 'package:tasklink/services/reviews/review_service.dart';
 
 /// Holds first 2 reviews and total count for the profile screen.

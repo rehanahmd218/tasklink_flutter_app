@@ -1,4 +1,3 @@
-import 'package:tasklink/authentication/models/user_model.dart';
 import 'package:tasklink/models/tasks/task_response_user_model.dart';
 
 /// Bid Model
