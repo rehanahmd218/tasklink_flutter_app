@@ -29,31 +29,42 @@ class ProfileHeader extends StatelessWidget {
           Stack(
             children: [
               Obx(
-                () => Container(
-                  width: 128,
-                  height: 128,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: isDark ? const Color(0xFF2d2c1b) : Colors.white,
-                      width: 4,
-                    ),
-                    image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                        userController
-                                .currentUser
-                                .value
-                                ?.profile
-                                ?.profileImage ??
-                            'https://lh3.googleusercontent.com/aida-public/AB6AXuDaA2akIlN7W67ScIeEypzQdV_kWwE39Mn5BsmZgolULqSXX_MexuXu_eYBYTlXJGveoHCoJt_ZmvibZoiqrJyb52NSA68tZCGWsk8Xs5OQ6v4XTsY2U4oyovg21fbP9f_ZTPuGi_4rdzRx8i70l_7o25J_IWFfTCGgvgmnpbdzgsCij9rYbCDdbdD_c9gHxM9LuKuggH1ATIILhqPO9-82jODnoARiE68GDHVqPZnOgSYwmpGGZXjbFX2GPOf9Pn-0D-351pwyNjXW',
+                () {
+                  final imageUrl = userController
+                      .currentUser.value?.profile?.profileImage;
+                  final hasImage =
+                      imageUrl != null && imageUrl.isNotEmpty;
+                  return Container(
+                    width: 128,
+                    height: 128,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: isDark ? Colors.grey[800] : Colors.grey[200],
+                      border: Border.all(
+                        color: isDark ? const Color(0xFF2d2c1b) : Colors.white,
+                        width: 4,
                       ),
-                      fit: BoxFit.cover,
+                      image: hasImage
+                          ? DecorationImage(
+                              image: CachedNetworkImageProvider(imageUrl!),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
+                      boxShadow: const [
+                        BoxShadow(color: Colors.black12, blurRadius: 8),
+                      ],
                     ),
-                    boxShadow: const [
-                      BoxShadow(color: Colors.black12, blurRadius: 8),
-                    ],
-                  ),
-                ),
+                    child: hasImage
+                        ? null
+                        : Icon(
+                            Icons.person,
+                            size: 64,
+                            color: isDark
+                                ? Colors.grey[500]
+                                : Colors.grey[600],
+                          ),
+                  );
+                },
               ),
               Positioned(
                 bottom: 4,

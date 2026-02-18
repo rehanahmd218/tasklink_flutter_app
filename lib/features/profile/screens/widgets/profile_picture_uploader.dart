@@ -80,12 +80,15 @@ class ProfilePictureUploader extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Text(
-            'Change Profile Photo',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.w600,
-              color: TColors.primary,
-              fontSize: 14,
+          GestureDetector(
+            onTap: onTap,
+            child: Text(
+              'Change Profile Photo',
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w600,
+                color: TColors.primary,
+                fontSize: 14,
+              ),
             ),
           ),
         ],

@@ -138,21 +138,36 @@ class HomeHeader extends StatelessWidget {
                   GestureDetector(
                     onTap: () => Get.to(() => const ProfileScreen()),
                     child: Obx(
-                      () => Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: isDark ? Colors.grey[800] : Colors.grey[200],
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(
-                              currentUser.value?.profile?.profileImage ??
-                                  'https://lh3.googleusercontent.com/aida-public/AB6AXuAr3fJTn31zIPtg9-Tv0QHdbWvknBuARuDIjSA5t5EFgvHq1sUl7D8hfxJjYCwJTGl7DjKXozw1HsXxn1mae5APm3GUtjCmpMDGmOZnFpXlwzEV1gJA7ANhfm4fzxhNq2_cMPrwAWTcg1JH9q1GuNFaSU-OnMMohDyi89ZyiHLMnntVoYptWi7BP2WA__zWMaDvOTbhAJfhUzt_93rSAByT0MWzbfVldfspKBW7MgUbRqogGeYMor8Em4fdWCnWyWgE35LarultZGkR',
-                            ),
-                            fit: BoxFit.cover,
+                      () {
+                        final imageUrl = currentUser.value?.profile?.profileImage;
+                        final hasImage =
+                            imageUrl != null && imageUrl.isNotEmpty;
+                        return Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: isDark ? Colors.grey[800] : Colors.grey[200],
+                            image: hasImage
+                                ? DecorationImage(
+                                    image: CachedNetworkImageProvider(
+                                      imageUrl,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  )
+                                : null,
                           ),
-                        ),
-                      ),
+                          child: hasImage
+                              ? null
+                              : Icon(
+                                  Icons.person,
+                                  size: 24,
+                                  color: isDark
+                                      ? Colors.grey[500]
+                                      : Colors.grey[600],
+                                ),
+                        );
+                      },
                     ),
                   ),
                 ],
