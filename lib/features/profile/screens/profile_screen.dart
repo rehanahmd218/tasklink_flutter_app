@@ -37,9 +37,15 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Column(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await UserController.instance.fetchUserProfile();
+          await Get.find<ProfileReviewsController>().load();
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Column(
           children: [
             // Header
             ProfileHeader(
@@ -207,6 +213,7 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ],
+        ),
         ),
       ),
     );

@@ -12,6 +12,7 @@ class ChatRoomController extends GetxController {
   final ChatService _chatService = ChatService();
   final Rx<String?> roomId = Rx<String?>(null);
   final Rx<String> taskTitle = Rx<String>('');
+  final RxList<ChatRoomActiveTask> activeTasks = <ChatRoomActiveTask>[].obs;
   final Rxn<TaskResponseUserModel> otherUser = Rxn<TaskResponseUserModel>();
   final RxList<ChatMessageModel> messages = <ChatMessageModel>[].obs;
   final Rx<ChatConnectionStatus> connectionStatus =
@@ -24,6 +25,9 @@ class ChatRoomController extends GetxController {
   StreamSubscription? _msgSub;
   StreamSubscription? _statusSub;
   StreamSubscription? _errorSub;
+
+  /// Called when a new message is added (e.g. from WebSocket). Used by UI to scroll to bottom if needed.
+  void Function()? onMessageAdded;
 
   @override
   void onInit() {
@@ -42,6 +46,17 @@ class ChatRoomController extends GetxController {
       otherUser.value =
           TaskResponseUserModel.fromJson(Map<String, dynamic>.from(args['otherUser'] as Map));
     }
+    if (args['activeTasks'] is List) {
+      final list = <ChatRoomActiveTask>[];
+      for (final e in args['activeTasks'] as List) {
+        if (e is ChatRoomActiveTask) {
+          list.add(e);
+        } else if (e is Map) {
+          list.add(ChatRoomActiveTask.fromJson(Map<String, dynamic>.from(e)));
+        }
+      }
+      activeTasks.assignAll(list);
+    }
 
     if (rid == null && taskId != null) {
       isLoading.value = true;
@@ -49,14 +64,15 @@ class ChatRoomController extends GetxController {
         final roomList = await _chatService.getMyRooms();
         ChatRoomModel? match;
         for (final r in roomList) {
-          if (r.taskId == taskId) {
+          if (r.hasTask(taskId)) {
             match = r;
             break;
           }
         }
         if (match != null) {
           rid = match.id;
-          if (taskTitle.value.isEmpty) taskTitle.value = match.taskTitle;
+          if (taskTitle.value.isEmpty) taskTitle.value = match.displayTitle;
+          activeTasks.assignAll(match.activeTasks);
           final currentUserId = UserController.instance.currentUser.value?.id;
           if (currentUserId != null && otherUser.value == null) {
             otherUser.value = match.otherParticipant(currentUserId);
@@ -97,6 +113,7 @@ class ChatRoomController extends GetxController {
     _ws = ChatWebSocketService();
     _msgSub = _ws!.messageStream.listen((msg) {
       messages.add(msg);
+      onMessageAdded?.call();
     });
     _statusSub = _ws!.statusStream.listen((s) {
       connectionStatus.value = s;

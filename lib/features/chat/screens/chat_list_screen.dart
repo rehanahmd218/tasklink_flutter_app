@@ -118,7 +118,7 @@ class ChatListScreen extends StatelessWidget {
                       avatarUrl: other?.profileImage,
                       initials: name.isNotEmpty ? name.substring(0, 1).toUpperCase() : '?',
                       unreadCount: room.unreadCount,
-                      contextLabel: room.taskTitle,
+                      contextLabel: room.displayTitle,
                       contextIcon: Icons.task_alt,
                       isRead: room.unreadCount == 0,
                       onTap: () => controller.openChat(room),

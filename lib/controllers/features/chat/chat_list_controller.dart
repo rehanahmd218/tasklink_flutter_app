@@ -33,8 +33,9 @@ class ChatListController extends GetxController {
       Routes.CHAT_ROOM,
       arguments: {
         'roomId': room.id,
-        'taskTitle': room.taskTitle,
+        'taskTitle': room.displayTitle,
         'taskId': room.taskId,
+        'activeTasks': room.activeTasks,
         'otherUser': other,
       },
     );

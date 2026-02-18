@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasklink/models/tasks/task_model.dart';
 import 'package:tasklink/features/tasks/task_details/widgets/task_detail_card.dart';
+import 'package:tasklink/utils/constants/task_categories.dart';
 import 'package:intl/intl.dart';
 
 /// Task Meta Information Grid
@@ -50,7 +51,7 @@ class TaskMetaGrid extends StatelessWidget {
             child: TaskDetailCard(
               icon: Icons.category,
               label: 'Category',
-              value: task.category,
+              value: TaskCategories.getLabel(task.category),
               color: Colors.orange,
             ),
           ),

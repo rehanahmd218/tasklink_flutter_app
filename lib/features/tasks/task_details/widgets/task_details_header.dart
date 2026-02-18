@@ -32,7 +32,7 @@ class TaskDetailsHeader extends StatelessWidget {
               Icon(Icons.access_time, size: 16, color: Colors.grey[600]),
               const SizedBox(width: 4),
               Text(
-                'Posted ${formatTimeAgo(task.createdAt)}',
+                formatTimeAgo(task.createdAt),
                 style: GoogleFonts.inter(fontSize: 14, color: Colors.grey[600]),
               ),
             ],

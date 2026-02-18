@@ -52,7 +52,7 @@ class PostedTaskActionButtons extends StatelessWidget {
               Expanded(
                 child: SecondaryButton(
                   onPressed: onMessagePoster ?? onMessageTasker,
-                  text: 'Message poster',
+                  text: 'Message',
                   icon: Icons.chat_bubble_outline,
                   height: 40,
                   fontSize: 13,
@@ -98,7 +98,7 @@ class PostedTaskActionButtons extends StatelessWidget {
         if (isTasker) {
           return PrimaryButton(
             onPressed: onMessagePoster ?? onMessageTasker,
-            text: 'Message poster',
+            text: 'Message',
             icon: Icons.chat_bubble_outline,
             height: 40,
             fontSize: 13,

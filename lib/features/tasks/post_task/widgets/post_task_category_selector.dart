@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../../utils/constants/colors.dart';
 import 'package:tasklink/controllers/features/tasks/post_task_controller.dart';
+import 'package:tasklink/utils/constants/colors.dart';
+import 'package:tasklink/utils/constants/task_categories.dart';
 
 class PostTaskCategorySelector extends StatelessWidget {
   final PostTaskController controller;
@@ -29,15 +30,10 @@ class PostTaskCategorySelector extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              _buildCategoryItem('Cleaning', Icons.cleaning_services, isDark),
-              const SizedBox(width: 12),
-              _buildCategoryItem('Delivery', Icons.local_shipping, isDark),
-              const SizedBox(width: 12),
-              _buildCategoryItem('Repair', Icons.handyman, isDark),
-              const SizedBox(width: 12),
-              _buildCategoryItem('Garden', Icons.yard, isDark),
-              const SizedBox(width: 12),
-              _buildCategoryItem('More', Icons.more_horiz, isDark),
+              for (final entry in TaskCategories.all) ...[
+                _buildCategoryItem(entry, isDark),
+                const SizedBox(width: 12),
+              ],
             ],
           ),
         ),
@@ -45,11 +41,11 @@ class PostTaskCategorySelector extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryItem(String label, IconData icon, bool isDark) {
+  Widget _buildCategoryItem(TaskCategoryEntry entry, bool isDark) {
     return Obx(() {
-      final isSelected = controller.selectedCategory.value == label;
+      final isSelected = controller.selectedCategory.value == entry.id;
       return GestureDetector(
-        onTap: () => controller.setCategory(label),
+        onTap: () => controller.setCategory(entry.id),
         child: Container(
           width: 80,
           height: 80,
@@ -69,7 +65,7 @@ class PostTaskCategorySelector extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                icon,
+                entry.icon,
                 size: 28,
                 color: isSelected
                     ? Colors.yellow[800]
@@ -77,12 +73,15 @@ class PostTaskCategorySelector extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                label,
+                entry.label,
                 style: GoogleFonts.inter(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: isDark ? Colors.white : Colors.black,
                 ),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

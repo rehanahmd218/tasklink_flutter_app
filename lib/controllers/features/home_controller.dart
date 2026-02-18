@@ -19,24 +19,17 @@ class HomeController extends GetxController {
   final RxList<TaskModel> nearbyTasks = <TaskModel>[].obs;
   final RxBool isLoading = false.obs;
 
-  // Filter state
-  final RxString currentCategory = 'All'.obs;
+  // Filter state: empty string = "All", otherwise backend category id (e.g. CLEANING, DELIVERY).
+  final RxString currentCategory = ''.obs;
   final RxInt radius = 30.obs;
 
   // Filtered tasks getter
   List<TaskModel> get filteredTasks {
-    if (currentCategory.value == 'All') {
+    if (currentCategory.value.isEmpty) {
       return nearbyTasks;
     }
-    return nearbyTasks.where((task) {
-      // Simple case-insensitive check
-      return task.category.toUpperCase().contains(
-            currentCategory.value.toUpperCase(),
-          ) ||
-          currentCategory.value.toUpperCase().contains(
-            task.category.toUpperCase(),
-          );
-    }).toList();
+    return nearbyTasks.where((task) =>
+        task.category.toUpperCase() == currentCategory.value.toUpperCase()).toList();
   }
 
   @override

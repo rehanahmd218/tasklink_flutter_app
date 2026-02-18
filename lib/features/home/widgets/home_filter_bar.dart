@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/task_categories.dart';
 import '../../../../controllers/features/home_controller.dart';
 
 class HomeFilterBar extends StatelessWidget {
@@ -68,48 +69,21 @@ class HomeFilterBar extends StatelessWidget {
           Obx(
             () => Row(
               children: [
-                _buildFilterChip('All', Icons.apps, controller, isDark),
                 _buildFilterChip(
-                  'Moving',
-                  Icons.widgets_outlined,
-                  controller,
-                  isDark,
+                  categoryId: '',
+                  label: 'All',
+                  icon: Icons.apps,
+                  controller: controller,
+                  isDark: isDark,
                 ),
-                _buildFilterChip(
-                  'Cleaning',
-                  Icons.cleaning_services_outlined,
-                  controller,
-                  isDark,
-                ),
-                _buildFilterChip(
-                  'Gardening',
-                  Icons.yard_outlined,
-                  controller,
-                  isDark,
-                ),
-                _buildFilterChip(
-                  'Assembly',
-                  Icons.build_outlined,
-                  controller,
-                  isDark,
-                ),
-                _buildFilterChip(
-                  'Delivery',
-                  Icons.local_shipping_outlined,
-                  controller,
-                  isDark,
-                ),
-                _buildFilterChip(
-                  'Tech',
-                  Icons.computer_outlined,
-                  controller,
-                  isDark,
-                ),
-                _buildFilterChip(
-                  'Pet Care',
-                  Icons.pets_outlined,
-                  controller,
-                  isDark,
+                ...TaskCategories.all.map(
+                  (e) => _buildFilterChip(
+                    categoryId: e.id,
+                    label: e.label,
+                    icon: e.icon,
+                    controller: controller,
+                    isDark: isDark,
+                  ),
                 ),
               ],
             ),
@@ -210,16 +184,17 @@ class HomeFilterBar extends StatelessWidget {
     });
   }
 
-  Widget _buildFilterChip(
-    String label,
-    IconData icon,
-    HomeController controller,
-    bool isDark,
-  ) {
-    final isActive = controller.currentCategory.value == label;
+  Widget _buildFilterChip({
+    required String categoryId,
+    required String label,
+    required IconData icon,
+    required HomeController controller,
+    required bool isDark,
+  }) {
+    final isActive = controller.currentCategory.value == categoryId;
 
     return GestureDetector(
-      onTap: () => controller.setCategoryFilter(label),
+      onTap: () => controller.setCategoryFilter(categoryId),
       child: Container(
         margin: const EdgeInsets.only(right: 12),
         child: Chip(
