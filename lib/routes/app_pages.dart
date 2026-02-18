@@ -19,7 +19,6 @@ import '../features/tasks/post_task/screens/post_task_screen.dart';
 import '../features/tasks/post_task/screens/post_task_media_screen.dart';
 import '../features/bids/place_bid/screens/place_bid_screen.dart';
 import '../features/tasks/my_posted_tasks/screens/my_posted_tasks_screen.dart';
-import '../features/tasks/my_tasks/screens/my_tasks_screen.dart';
 import '../features/bids/bid_management/screens/bid_management_screen.dart';
 import '../features/chat/screens/chat_list_screen.dart';
 import '../features/chat/screens/chat_room_screen.dart';
@@ -27,9 +26,11 @@ import '../features/disputes/screens/dispute_screen.dart';
 import '../features/notifications/screens/notifications_screen.dart';
 import '../features/payment/screens/payment_screen.dart';
 import '../features/profile/screens/profile_screen.dart';
+import '../features/profile/screens/public_profile_screen.dart';
 import '../features/profile/screens/edit_profile/edit_profile_screen.dart';
 // import '../features/profile/screens/portfolio/portfolio_screen.dart'; // TODO: Check if exists
 import '../features/reviews/screens/write_review_screen.dart';
+import '../features/reviews/screens/all_reviews_screen.dart';
 import '../features/ratings/screens/complete_ratings_screen.dart';
 import '../features/settings/screens/settings_screen.dart';
 import '../features/wallet/screens/wallet_screen.dart';
@@ -92,7 +93,6 @@ class AppPages {
       name: Routes.MY_POSTED_TASKS,
       page: () => const MyPostedTasksScreen(),
     ),
-    GetPage(name: Routes.MY_TASKS, page: () => const MyTasksScreen()),
     GetPage(
       name: Routes.BID_MANAGEMENT,
       page: () => const BidManagementScreen(),
@@ -109,6 +109,10 @@ class AppPages {
     GetPage(name: Routes.PAYMENT, page: () => const PaymentScreen()),
 
     GetPage(name: Routes.PROFILE, page: () => const ProfileScreen()),
+    GetPage(
+      name: Routes.PUBLIC_PROFILE,
+      page: () => const PublicProfileScreen(),
+    ),
     GetPage(name: Routes.EDIT_PROFILE, page: () => const EditProfileScreen()),
 
     // GetPage(name: Routes.PORTFOLIO, page: () => const PortfolioScreen()),
@@ -116,6 +120,10 @@ class AppPages {
     GetPage(
       name: Routes.COMPLETE_RATINGS,
       page: () => const CompleteRatingsScreen(),
+    ),
+    GetPage(
+      name: Routes.ALL_REVIEWS,
+      page: () => const AllReviewsScreen(),
     ),
 
     GetPage(name: Routes.SETTINGS, page: () => const SettingsScreen()),

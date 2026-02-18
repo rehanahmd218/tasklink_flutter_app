@@ -354,16 +354,9 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   void _handleProfileTap(TaskModel task, bool isOwner) {
     if (isOwner) {
-      // Navigate to own profile
       Get.toNamed(Routes.PROFILE);
-    } else {
-      // Navigate to poster's public profile
-      // TODO: Implement public profile view
-      Get.snackbar(
-        'View Profile',
-        'Navigate to ${task.poster!.displayName}\'s profile',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+    } else if (task.poster != null && task.poster!.id.isNotEmpty) {
+      Get.toNamed(Routes.PUBLIC_PROFILE, arguments: {'userId': task.poster!.id});
     }
   }
 

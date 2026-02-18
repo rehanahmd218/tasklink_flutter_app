@@ -28,11 +28,13 @@ class Routes {
   static const PAYMENT = '/payment';
 
   static const PROFILE = '/profile';
+  static const PUBLIC_PROFILE = '/public-profile';
   static const EDIT_PROFILE = '/edit-profile';
   static const PORTFOLIO = '/portfolio';
 
   static const WRITE_REVIEW = '/write-review';
   static const COMPLETE_RATINGS = '/complete-ratings';
+  static const ALL_REVIEWS = '/all-reviews';
 
   static const SETTINGS = '/settings';
 
@@ -66,10 +68,12 @@ class Routes {
     NOTIFICATIONS,
     PAYMENT,
     PROFILE,
+    PUBLIC_PROFILE,
     EDIT_PROFILE,
     PORTFOLIO,
     WRITE_REVIEW,
     COMPLETE_RATINGS,
+    ALL_REVIEWS,
     SETTINGS,
     WALLET,
     TOP_UP,

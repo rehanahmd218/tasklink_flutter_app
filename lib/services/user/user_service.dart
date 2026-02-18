@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:tasklink/authentication/models/user_model.dart';
+import 'package:tasklink/models/user/public_profile_model.dart';
 import 'package:tasklink/utils/http/api_client.dart';
 import 'package:tasklink/utils/http/api_config.dart';
 import 'package:tasklink/utils/http/api_response.dart';
@@ -110,6 +111,30 @@ class UserService {
       }
     } on DioException catch (e) {
       _log.e('Get current user error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
+  /// Get another user's public profile (id, fullName, profileImage, ratingAvg, reviewsCount, role).
+  Future<PublicProfileModel> getPublicProfile(String userId) async {
+    _log.i('Fetching public profile for user: $userId');
+    try {
+      final response = await _dio.get(ApiConfig.userPublicProfileEndpoint(userId));
+      final data = response.data;
+      Map<String, dynamic>? map;
+      if (data is Map<String, dynamic>) {
+        if (data.containsKey('data')) {
+          map = data['data'] as Map<String, dynamic>?;
+        } else {
+          map = data;
+        }
+      }
+      if (map != null) {
+        return PublicProfileModel.fromJson(map);
+      }
+      throw ValidationException('Invalid response format', {});
+    } on DioException catch (e) {
+      _log.e('Get public profile error: ${e.type}');
       _handleDioError(e);
     }
   }

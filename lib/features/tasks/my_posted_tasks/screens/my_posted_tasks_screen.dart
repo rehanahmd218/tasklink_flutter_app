@@ -400,8 +400,17 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
     Get.toNamed(Routes.DASHBOARD, arguments: {'taskId': task.id});
   }
 
-  void _handleMarkCompletion(TaskModel task) {
-    Get.toNamed(Routes.COMPLETE_RATINGS, arguments: {'taskId': task.id});
+  Future<void> _handleMarkCompletion(TaskModel task) async {
+    try {
+      FullScreenLoader.show(text: 'Confirming completion...');
+      await TaskService().confirmTaskCompletion(task.id);
+      FullScreenLoader.hide();
+      Get.find<TasksController>().refreshTasks();
+      StatusSnackbar.showSuccess(message: 'Completion confirmed. Payment released to tasker.');
+    } catch (e) {
+      FullScreenLoader.hide();
+      ErrorHandler.showErrorPopup(e, buttonText: 'OK');
+    }
   }
 
   void _handleGiveFeedback(TaskModel task) {

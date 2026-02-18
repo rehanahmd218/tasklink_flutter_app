@@ -1,51 +1,103 @@
 import 'package:get/get.dart';
+import 'package:tasklink/models/reviews/review_model.dart' as api;
+import 'package:tasklink/services/reviews/review_service.dart';
 
 class RatingsController extends GetxController {
   final RxString selectedRole = 'tasker'.obs; // 'tasker' or 'poster'
 
-  // Mock data
-  final RxDouble averageRating = 4.9.obs;
-  final RxInt totalReviews = 32.obs;
-  
-  // Rating distribution: 5, 4, 3, 2, 1 stars percentages
-  final RxList<double> distribution = <double>[0.83, 0.10, 0.05, 0.02, 0.0].obs;
+  final RxDouble averageRating = 0.0.obs;
+  final RxInt totalReviews = 0.obs;
+  final RxList<double> distribution = <double>[0.0, 0.0, 0.0, 0.0, 0.0].obs;
 
-  final RxList<ReviewModel> reviews = <ReviewModel>[
-    ReviewModel(
-      name: 'Sarah Jenkins',
-      date: 'Oct 24, 2023',
-      rating: 5.0,
-      comment: 'Great work! Arrived on time and fixed the leak quickly. Highly recommend.',
-      taskName: 'Plumbing Fix',
-      taskIcon: 'plumbing', // Material icon name
-      likes: 12,
-      avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAcVGdeCJM4gltaBjZ0C7hs4gcjAR3duxOX0Z2yYbjbtAmWr0fSD4bZHjvbLc6Mhh9nqtP3LOMw5AMqIb8R72tm-BoJDSX69Y3_ALiwf1Z7t3UCdXEnb659wa6cPPdTzM5A98EMLA4MtbIGidSa4tU_zruHTWt-qGuHjqbKRVwnWKOek08n4NIBuzTe0KZOR2kSpiw40U4n37e6pJDGwi1dpIVW2Vn-DA__gHbzWEQqlN6pr08UUJAzFrkZw4wMSh2kIvUzptBAbiWM',
-    ),
-    ReviewModel(
-      name: 'Mike Ross',
-      date: 'Oct 20, 2023',
-      rating: 5.0,
-      comment: 'Excellent communication and very professional. Would hire again.',
-      taskName: 'Furniture Assembly',
-      taskIcon: 'chair',
-      likes: 8,
-      avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAiBm9zEPdh4lxMDtgslgpc916rF_K4G9trdbENzOlHxMFx3JmAIlBGSv3TFcsoTVKBiIlw2CNgI7udBHqJVNdix91fmx8pgTWMZiHy5GaeizI4eEpYUjuwa-BWF8iXzzQu5nZb1KDMcXpNnN-Rm2gQiMKd55fNBySR7etCwPlHOpuwUw54ypF2PLn6N09CN6YxSddwMY4YxURfMnfLJplz0ZjI-1GFLOp5F5OXFDXQgnb4HUzH5wohqzaaj5nC4W_Oek3CvJMBoKfY',
-    ),
-    ReviewModel(
-      name: 'Jessica Pearson',
-      date: 'Sep 15, 2023',
-      rating: 4.0,
-      comment: 'Good job overall, but a bit later than expected.',
-      taskName: 'Lawn Mowing',
-      taskIcon: 'grass',
-      likes: 2,
-      avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB_ZGgNHvfnK16oS1FHWtPoFak0Xvt_pyupEWyRAyuzgcoXaDFyLF1lpZCoWS7_jHaFWC8WQtwInjB2Vg-LxJjeZLKWTTqLddFmJTLGQooV6q48Bws6l1jMfQzZJARb3q_vjHUUixckQA7vdh8PVaa6k3vlmCCXT1SDmEszfUhdiOR7_kGgLgYqpViCoMGxstlVEszYWf4Dh7JbO-GKcG5CVmqC49-mZkByNEOvNit8isJ6agembna3FmcuPcZnT0UPmbR7L9Y7V8dv',
-    ),
-  ].obs;
+  final RxList<ReviewModel> reviews = <ReviewModel>[].obs;
+  final RxBool isLoading = true.obs;
+  final RxString loadError = ''.obs;
+
+  /// If set, reviews are for this user (e.g. from public profile). Otherwise current user's received reviews.
+  String? userId;
+
+  static const String _placeholderAvatar =
+      'https://ui-avatars.com/api/?name=User&size=96';
+
+  List<api.ReviewModel>? _lastFetchedList;
+
+  @override
+  void onInit() {
+    super.onInit();
+    userId = Get.arguments is Map ? Get.arguments['userId']?.toString() : null;
+    loadReviews();
+  }
+
+  Future<void> loadReviews() async {
+    isLoading.value = true;
+    loadError.value = '';
+    try {
+      final List<api.ReviewModel> list = userId != null
+          ? await ReviewService().getReviewsForUser(userId!)
+          : await ReviewService().getMyReviewsReceived();
+      _lastFetchedList = list;
+      _applyList(list);
+    } catch (e) {
+      loadError.value = e.toString();
+      _lastFetchedList = null;
+      reviews.clear();
+      averageRating.value = 0;
+      totalReviews.value = 0;
+      distribution.value = [0.0, 0.0, 0.0, 0.0, 0.0];
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void _applyList(List<api.ReviewModel> list) {
+    final role = selectedRole.value;
+    final filtered = list
+        .where((r) => r.revieweeRole == role)
+        .toList();
+    reviews.value = filtered.map(_toReviewModel).toList();
+    _computeSummary(filtered);
+  }
+
+  ReviewModel _toReviewModel(api.ReviewModel r) {
+    return ReviewModel(
+      name: r.reviewer.fullName.isNotEmpty ? r.reviewer.fullName : 'User',
+      date: r.formattedDate,
+      rating: r.rating.toDouble(),
+      comment: r.comment,
+      taskName: r.taskTitle ?? 'Task',
+      taskIcon: 'work',
+      likes: 0,
+      avatarUrl: r.reviewer.profileImage ?? _placeholderAvatar,
+    );
+  }
+
+  void _computeSummary(List<api.ReviewModel> list) {
+    if (list.isEmpty) {
+      averageRating.value = 0;
+      totalReviews.value = 0;
+      distribution.value = [0.0, 0.0, 0.0, 0.0, 0.0];
+      return;
+    }
+    final counts = [0, 0, 0, 0, 0]; // 5,4,3,2,1 stars
+    double sum = 0;
+    for (final r in list) {
+      final star = r.rating.clamp(1, 5);
+      sum += star;
+      if (star >= 1 && star <= 5) counts[5 - star]++;
+    }
+    totalReviews.value = list.length;
+    averageRating.value = list.length > 0 ? sum / list.length : 0;
+    final n = list.length.toDouble();
+    distribution.value = counts.map((c) => n > 0 ? c / n : 0.0).toList();
+  }
 
   void toggleRole(String role) {
     selectedRole.value = role;
-    // Filter reviews logic here
+    final list = _lastFetchedList;
+    if (list == null) return;
+    final roleFiltered = list.where((r) => r.revieweeRole == role).toList();
+    reviews.value = roleFiltered.map(_toReviewModel).toList();
+    _computeSummary(roleFiltered);
   }
 }
 

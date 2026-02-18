@@ -13,7 +13,7 @@ class ApiConfig {
 
   /// ### Base url for Mobile
   // static const String baseUrl = 'http://192.168.137.247:8000/api/v1/';
-  static const String baseUrl = 'http://10.8.24.58:8000/api/v1/';
+  static const String baseUrl = 'http://10.8.24.129:8000/api/v1/';
 
   /// Timeouts
   static const int connectTimeout = 30;
@@ -46,8 +46,15 @@ class ApiConfig {
 
   static const String bidsEndpoint = 'bids/';
 
+  /// Reviews endpoints
+  static const String reviewsEndpoint = 'reviews/';
+  static String reviewsForUserEndpoint(String userId) => 'reviews/?for_user=$userId';
+
   /// Get task detail by ID
   static String taskDetailEndpoint(String taskId) => 'tasks/$taskId/';
+
+  /// User public profile
+  static String userPublicProfileEndpoint(String userId) => 'users/$userId/public/';
 
   // -------------------------------------------------------------------------
   // Chat endpoints

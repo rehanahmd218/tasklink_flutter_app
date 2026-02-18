@@ -42,7 +42,7 @@ class PostedTaskActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    // final isDark = Theme.of(context).brightness == Brightness.dark;
     switch (task.status) {
       case 'ASSIGNED':
       case 'IN_PROGRESS':

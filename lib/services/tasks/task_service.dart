@@ -365,6 +365,27 @@ class TaskService {
     }
   }
 
+  /// Confirm task completion and release escrow (poster only). Task must be in COMPLETED status.
+  Future<TaskModel> confirmTaskCompletion(String taskId) async {
+    _log.i('Confirming task completion: $taskId');
+    try {
+      final response = await _dio.post(
+        '${ApiConfig.tasksEndpoint}$taskId/confirm_completion/',
+      );
+      final data = response.data;
+      if (data is Map<String, dynamic> && data.containsKey('data')) {
+        return TaskModel.fromJson(data['data'] as Map<String, dynamic>);
+      }
+      if (data is Map<String, dynamic>) {
+        return TaskModel.fromJson(data);
+      }
+      throw ValidationException('Invalid response format', {});
+    } on DioException catch (e) {
+      _log.e('Confirm task completion error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
   /// Delete a task
   Future<void> deleteTask(String taskId) async {
     _log.i('Deleting task: $taskId');
