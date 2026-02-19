@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/utils/constants/colors.dart';
 
 class ThemedChip extends StatelessWidget {
   final String text;
@@ -23,24 +23,24 @@ class ThemedChip extends StatelessWidget {
       selected: selected,
       onSelected: onSelected,
       backgroundColor: isDark
-          ? AppColors.darkContainer
-          : AppColors.lightContainer,
-      selectedColor: AppColors.primary,
-      checkmarkColor: AppColors.black,
+          ? TColors.darkContainer
+          : TColors.lightContainer,
+      selectedColor: TColors.primary,
+      checkmarkColor: TColors.black,
       labelStyle: theme.textTheme.labelLarge?.copyWith(
         color: selected
-            ? AppColors.black
-            : (isDark ? AppColors.white : AppColors.black),
+            ? TColors.black
+            : (isDark ? TColors.white : TColors.black),
         fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
         side: BorderSide(
           color: selected
-              ? AppColors.primary
+              ? TColors.primary
               : (isDark
-                    ? AppColors.darkBorderPrimary
-                    : AppColors.borderPrimary),
+                    ? TColors.darkBorderPrimary
+                    : TColors.borderPrimary),
         ),
       ),
     );

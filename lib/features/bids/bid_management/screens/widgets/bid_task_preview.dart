@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../../../../utils/constants/app_colors.dart';
+import '../../../../../utils/constants/colors.dart';
 
 class BidTaskPreview extends StatelessWidget {
   final String title;
@@ -71,7 +71,7 @@ class BidTaskPreview extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.textPrimary,
+                        color: isDark ? Colors.white : TColors.textPrimary,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -92,7 +92,7 @@ class BidTaskPreview extends StatelessWidget {
               ),
               Icon(
                 Icons.chevron_right,
-                color: isDark ? Colors.white : AppColors.textPrimary,
+                color: isDark ? Colors.white : TColors.textPrimary,
               ),
             ],
           ),

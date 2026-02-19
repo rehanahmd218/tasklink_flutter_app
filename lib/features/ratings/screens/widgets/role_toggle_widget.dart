@@ -44,12 +44,12 @@ class RoleToggleWidget extends StatelessWidget {
         onTap: () => onRoleSelected(value),
         child: Container(
           decoration: BoxDecoration(
-            color: isSelected 
-                ? (isDark ? TColors.darkTextPrimary : Colors.white) 
+            color: isSelected
+                ? (isDark ? TColors.darkTextPrimary : Colors.white)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
-            boxShadow: isSelected 
-                ? [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 2)] 
+            boxShadow: isSelected
+                ? [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 2)]
                 : null,
           ),
           alignment: Alignment.center,
@@ -58,7 +58,7 @@ class RoleToggleWidget extends StatelessWidget {
             style: GoogleFonts.inter(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: isSelected 
+              color: isSelected
                   ? (isDark ? TColors.backgroundDark : TColors.textPrimary)
                   : TColors.textSecondary,
             ),

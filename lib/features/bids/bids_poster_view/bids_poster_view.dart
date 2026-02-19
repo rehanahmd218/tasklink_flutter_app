@@ -7,7 +7,7 @@ import 'package:tasklink/common/widgets/loaders/empty_state_widget.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/controllers/features/bids/bid_controller.dart';
 import 'package:tasklink/models/tasks/bid_model.dart';
-import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/utils/constants/colors.dart';
 import 'package:tasklink/routes/routes.dart';
 import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/common/widgets/buttons/secondary_button.dart';
@@ -83,7 +83,7 @@ class BidsPosterView extends StatelessWidget {
             taskTitle ?? 'Task',
             style: GoogleFonts.inter(
               fontSize: 14,
-              color: isDark ? Colors.grey[400] : AppColors.textSecondary,
+              color: isDark ? Colors.grey[400] : TColors.textSecondary,
             ),
           ),
         ),
@@ -96,7 +96,7 @@ class BidsPosterView extends StatelessWidget {
               style: GoogleFonts.inter(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : AppColors.textPrimary,
+                color: isDark ? Colors.white : TColors.textPrimary,
               ),
             ),
             Material(
@@ -112,7 +112,7 @@ class BidsPosterView extends StatelessWidget {
                       Icon(
                         Icons.sort,
                         size: 20,
-                        color: isDark ? Colors.grey[400] : AppColors.textSecondary,
+                        color: isDark ? Colors.grey[400] : TColors.textSecondary,
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -120,7 +120,7 @@ class BidsPosterView extends StatelessWidget {
                         style: GoogleFonts.inter(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? Colors.grey[400] : AppColors.textSecondary,
+                          color: isDark ? Colors.grey[400] : TColors.textSecondary,
                         ),
                       ),
                     ],
@@ -151,7 +151,7 @@ class BidsPosterView extends StatelessWidget {
                 style: GoogleFonts.inter(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: isDark ? Colors.white : AppColors.textPrimary,
+                  color: isDark ? Colors.white : TColors.textPrimary,
                 ),
               ),
               const SizedBox(height: 12),
@@ -200,7 +200,7 @@ class BidsPosterView extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : AppColors.textPrimary,
+                        color: isDark ? Colors.white : TColors.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -208,7 +208,7 @@ class BidsPosterView extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.star,
-                          color: AppColors.primary,
+                          color: TColors.primary,
                           size: 16,
                         ),
                         const SizedBox(width: 4),
@@ -217,7 +217,7 @@ class BidsPosterView extends StatelessWidget {
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: isDark ? Colors.white : AppColors.black,
+                            color: isDark ? Colors.white : TColors.black,
                           ),
                         ),
                         const SizedBox(width: 4),
@@ -227,7 +227,7 @@ class BidsPosterView extends StatelessWidget {
                             fontSize: 12,
                             color: isDark
                                 ? Colors.grey[400]
-                                : AppColors.textSecondary,
+                                : TColors.textSecondary,
                           ),
                         ),
                       ],
@@ -243,7 +243,7 @@ class BidsPosterView extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : AppColors.black,
+                      color: isDark ? Colors.white : TColors.black,
                     ),
                   ),
                   Text(
@@ -252,7 +252,7 @@ class BidsPosterView extends StatelessWidget {
                       fontSize: 12,
                       color: isDark
                           ? Colors.grey[400]
-                          : AppColors.textSecondary,
+                          : TColors.textSecondary,
                     ),
                   ),
                 ],
@@ -265,7 +265,7 @@ class BidsPosterView extends StatelessWidget {
               bid.message!,
               style: GoogleFonts.inter(
                 fontSize: 14,
-                color: isDark ? Colors.grey[300] : AppColors.textSecondary,
+                color: isDark ? Colors.grey[300] : TColors.textSecondary,
                 height: 1.5,
               ),
               maxLines: 2,
@@ -305,7 +305,7 @@ class BidsPosterView extends StatelessWidget {
                   height: 48,
                   fontSize: 14,
                   borderRadius: 12,
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: TColors.primary,
                   foregroundColor: Colors.black,
                 ),
               ),

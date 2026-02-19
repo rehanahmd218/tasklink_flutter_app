@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/app_card.dart';
 import 'package:tasklink/models/tasks/bid_model.dart';
-import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/utils/constants/colors.dart';
 import 'package:tasklink/routes/routes.dart';
 
 /// Reusable card for a single "my bid" (tasker view). Used in BidsTaskerView and Tasker My Tasks > Bids.
@@ -37,14 +37,14 @@ class MyBidCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.2),
+                  color: TColors.primary.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Center(
                   child: Icon(
                     Icons.handyman_outlined,
                     size: 28,
-                    color: isDark ? AppColors.primary : Colors.black,
+                    color: isDark ? TColors.primary : Colors.black,
                   ),
                 ),
               ),
@@ -61,8 +61,8 @@ class MyBidCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                         color: isDark
-                            ? AppColors.darkTextPrimary
-                            : AppColors.textPrimary,
+                            ? TColors.darkTextPrimary
+                            : TColors.textPrimary,
                         height: 1.2,
                       ),
                     ),
@@ -72,8 +72,8 @@ class MyBidCard extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         color: isDark
-                            ? AppColors.darkTextSecondary
-                            : AppColors.textSecondary,
+                            ? TColors.darkTextSecondary
+                            : TColors.textSecondary,
                       ),
                     ),
                   ],
@@ -90,8 +90,8 @@ class MyBidCard extends StatelessWidget {
               border: Border.symmetric(
                 horizontal: BorderSide(
                   color: isDark
-                      ? AppColors.darkBorderPrimary
-                      : AppColors.borderSecondary,
+                      ? TColors.darkBorderPrimary
+                      : TColors.borderSecondary,
                   width: 1,
                 ),
               ),
@@ -107,7 +107,7 @@ class MyBidCard extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textSecondary,
+                        color: TColors.textSecondary,
                         letterSpacing: 0.5,
                       ),
                     ),
@@ -118,8 +118,8 @@ class MyBidCard extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: isDark
-                            ? AppColors.darkTextPrimary
-                            : AppColors.textPrimary,
+                            ? TColors.darkTextPrimary
+                            : TColors.textPrimary,
                       ),
                     ),
                   ],
@@ -132,7 +132,7 @@ class MyBidCard extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textSecondary,
+                        color: TColors.textSecondary,
                         letterSpacing: 0.5,
                       ),
                     ),
@@ -143,8 +143,8 @@ class MyBidCard extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: isDark
-                            ? AppColors.darkTextSecondary
-                            : AppColors.textSecondary,
+                            ? TColors.darkTextSecondary
+                            : TColors.textSecondary,
                       ),
                     ),
                   ],
@@ -160,8 +160,8 @@ class MyBidCard extends StatelessWidget {
                 Get.toNamed(Routes.TASK_DETAILS, arguments: {'taskId': bid.task});
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: AppColors.black,
+                backgroundColor: TColors.primary,
+                foregroundColor: TColors.black,
                 padding: const EdgeInsets.symmetric(vertical: 12),
               ),
               child: Text(
@@ -185,12 +185,12 @@ class MyBidCard extends StatelessWidget {
                       label: const Text('Edit Bid'),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: isDark
-                            ? AppColors.darkTextPrimary
-                            : AppColors.textSecondary,
+                            ? TColors.darkTextPrimary
+                            : TColors.textSecondary,
                         side: BorderSide(
                           color: isDark
-                              ? AppColors.darkBorderPrimary
-                              : AppColors.borderSecondary,
+                              ? TColors.darkBorderPrimary
+                              : TColors.borderSecondary,
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
@@ -202,17 +202,17 @@ class MyBidCard extends StatelessWidget {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: onDeleteBid,
-                      icon: Icon(Icons.delete_outline, size: 18, color: AppColors.error),
+                      icon: Icon(Icons.delete_outline, size: 18, color: TColors.error),
                       label: Text(
                         'Delete Bid',
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w600,
-                          color: AppColors.error,
+                          color: TColors.error,
                         ),
                       ),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.error,
-                        side: const BorderSide(color: AppColors.error),
+                        foregroundColor: TColors.error,
+                        side: const BorderSide(color: TColors.error),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                     ),
@@ -232,19 +232,19 @@ class MyBidCard extends StatelessWidget {
 
     if (status.toUpperCase() == 'ACTIVE') {
       textColor = isDark
-          ? AppColors.darkTextSecondary
-          : AppColors.textSecondary;
-      bgColor = isDark ? AppColors.darkContainer : AppColors.softGrey;
+          ? TColors.darkTextSecondary
+          : TColors.textSecondary;
+      bgColor = isDark ? TColors.darkContainer : TColors.softGrey;
       label = 'PENDING';
     } else if (status.toUpperCase() == 'ACCEPTED') {
-      textColor = AppColors.success;
-      bgColor = AppColors.success.withValues(alpha: 0.1);
+      textColor = TColors.success;
+      bgColor = TColors.success.withValues(alpha: 0.1);
     } else if (status.toUpperCase() == 'REJECTED') {
-      textColor = AppColors.error;
-      bgColor = AppColors.error.withValues(alpha: 0.1);
+      textColor = TColors.error;
+      bgColor = TColors.error.withValues(alpha: 0.1);
     } else {
-      textColor = AppColors.error;
-      bgColor = AppColors.error.withValues(alpha: 0.1);
+      textColor = TColors.error;
+      bgColor = TColors.error.withValues(alpha: 0.1);
     }
 
     return Container(

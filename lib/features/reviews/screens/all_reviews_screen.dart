@@ -159,10 +159,10 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 64;
+  double get maxExtent => 88;
 
   @override
-  double get minExtent => 64;
+  double get minExtent => 88;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {

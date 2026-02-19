@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class TColors {
   TColors._();
-
+  // Original Backup Colors
   // App Basic Colors
-  static const Color primary = Color(0xFFf9f506);
-  static const Color secondary = Color(0xFFFFE24B); // Example secondary
+  // static const Color primary = Color(0xFFf9f506);
+  // static const Color secondary = Color(0xFFFFE24B);
+  
+   // Example secondary
+  static const Color primary = Color(0xFFE2DD00);   // Slightly lighter yellow
+  static const Color secondary = Color(0xFFE2C94D); // Slightly lighter gold
 
 
   

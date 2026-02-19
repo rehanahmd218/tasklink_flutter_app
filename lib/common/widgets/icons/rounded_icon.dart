@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/utils/constants/colors.dart';
 
 class RoundedIcon extends StatelessWidget {
   final double? width, height;
@@ -33,8 +33,8 @@ class RoundedIcon extends StatelessWidget {
         color:
             backgroundColor ??
             (isDark
-                ? AppColors.black.withValues(alpha: 0.9)
-                : AppColors.white.withValues(alpha: 0.9)),
+                ? TColors.black.withValues(alpha: 0.9)
+                : TColors.white.withValues(alpha: 0.9)),
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: IconButton(

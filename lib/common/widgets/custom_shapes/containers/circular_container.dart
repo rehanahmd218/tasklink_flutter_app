@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/utils/constants/colors.dart';
 
 class CircularContainer extends StatelessWidget {
   final double? width;
@@ -38,9 +38,9 @@ class CircularContainer extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(radius),
           color:
-              backgroundColor ?? (isDark ? AppColors.black : AppColors.white),
+              backgroundColor ?? (isDark ? TColors.black : TColors.white),
           border: showBorder
-              ? Border.all(color: borderColor ?? AppColors.borderPrimary)
+              ? Border.all(color: borderColor ?? TColors.borderPrimary)
               : null,
         ),
         child: child,

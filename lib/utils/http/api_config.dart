@@ -15,6 +15,8 @@ class ApiConfig {
   // static const String baseUrl = 'http://192.168.137.247:8000/api/v1/';
   static const String baseUrl = 'http://10.8.24.129:8000/api/v1/';
 
+  // static const String baseUrl = 'https://taskonnect.me/api/v1/';
+
   /// Timeouts
   static const int connectTimeout = 30;
   static const int receiveTimeout = 30;

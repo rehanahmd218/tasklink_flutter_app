@@ -6,7 +6,7 @@ import 'package:tasklink/controllers/features/bids/bid_controller.dart';
 import 'package:tasklink/models/tasks/bid_model.dart';
 import 'package:tasklink/models/tasks/task_model.dart';
 import 'package:tasklink/routes/routes.dart';
-import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/utils/constants/colors.dart';
 import 'package:tasklink/utils/formatters/date_formatter.dart';
 
 import 'package:tasklink/common/widgets/buttons/secondary_button.dart';
@@ -204,7 +204,7 @@ class BidManagementScreen extends StatelessWidget {
               }
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
+              backgroundColor: TColors.primary,
               foregroundColor: Colors.black,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
@@ -246,7 +246,7 @@ class BidManagementScreen extends StatelessWidget {
           icon: Icons.chat_bubble_outline,
           height: 48,
           borderRadius: 30,
-          foregroundColor: isDark ? Colors.white : AppColors.textPrimary,
+          foregroundColor: isDark ? Colors.white : TColors.textPrimary,
           borderColor: isDark ? Colors.grey[600] : Colors.grey[300],
         ),
         const SizedBox(height: 12),

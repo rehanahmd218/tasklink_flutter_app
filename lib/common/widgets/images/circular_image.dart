@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/utils/constants/colors.dart';
 
 class CircularImage extends StatelessWidget {
   final double width, height, padding;
@@ -31,7 +31,7 @@ class CircularImage extends StatelessWidget {
       height: height,
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: backgroundColor ?? (isDark ? AppColors.black : AppColors.white),
+        color: backgroundColor ?? (isDark ? TColors.black : TColors.white),
         borderRadius: BorderRadius.circular(100),
       ),
       child: ClipRRect(

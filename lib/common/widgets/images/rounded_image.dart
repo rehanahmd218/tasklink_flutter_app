@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/utils/constants/colors.dart';
 
 class RoundedImage extends StatelessWidget {
   final double? width, height;
@@ -44,8 +44,8 @@ class RoundedImage extends StatelessWidget {
           color:
               backgroundColor ??
               (isDark
-                  ? AppColors.backgroundDark
-                  : AppColors.backgroundLight), // Fallback
+                  ? TColors.backgroundDark
+                  : TColors.backgroundLight), // Fallback
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: ClipRRect(

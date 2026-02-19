@@ -4,7 +4,7 @@ import 'package:tasklink/common/widgets/loaders/empty_state_widget.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/controllers/features/bids/bid_controller.dart';
 import 'package:tasklink/features/bids/bids_tasker_view/widgets/my_bid_card.dart';
-import 'package:tasklink/utils/constants/app_colors.dart';
+import 'package:tasklink/utils/constants/colors.dart';
 import 'package:tasklink/routes/routes.dart';
 
 class BidsTaskerView extends StatelessWidget {
@@ -22,8 +22,8 @@ class BidsTaskerView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDark
-          ? AppColors.backgroundDark
-          : AppColors.backgroundLight,
+          ? TColors.backgroundDark
+          : TColors.backgroundLight,
       appBar: PrimaryAppBar(
         title: 'My Bids',
         showBackButton: true,
@@ -32,7 +32,7 @@ class BidsTaskerView extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.filter_list,
-              color: isDark ? AppColors.white : AppColors.black,
+              color: isDark ? TColors.white : TColors.black,
             ),
             onPressed: () {},
           ),
@@ -42,7 +42,7 @@ class BidsTaskerView extends StatelessWidget {
         // ... (body content remains)
         if (controller.isLoadingBids.value) {
           return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
+            child: CircularProgressIndicator(color: TColors.primary),
           );
         }
 
