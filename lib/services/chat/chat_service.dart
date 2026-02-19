@@ -13,6 +13,33 @@ class ChatService {
   static final Logger _log = Logger(printer: PrettyPrinter(methodCount: 0));
   final Dio _dio = ApiClient.instance.dio;
 
+  /// Get or create the chat room for a task (poster + assigned tasker). Use when opening chat from a task card.
+  Future<ChatRoomModel> getOrCreateChatRoomForTask(String taskId) async {
+    _log.i('Get or create chat room for task: $taskId');
+    try {
+      final response = await _dio.post(
+        ApiConfig.taskGetOrCreateChatRoomEndpoint(taskId),
+      );
+      final apiResponse = ApiResponse<ChatRoomModel>.fromJson(
+        response.data,
+        (data) => ChatRoomModel.fromJson(
+          data is Map<String, dynamic> ? data : Map<String, dynamic>.from(data as Map),
+        ),
+      );
+      if (apiResponse.isSuccess && apiResponse.data != null) {
+        _log.i('Chat room ready: ${apiResponse.data!.id}');
+        return apiResponse.data!;
+      }
+      throw ValidationException(
+        apiResponse.message,
+        apiResponse.errors ?? {},
+      );
+    } on DioException catch (e) {
+      _log.e('Get or create chat room error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
   /// Fetch all chat rooms for current user (backend returns sorted by latest message first).
   Future<List<ChatRoomModel>> getMyRooms() async {
     _log.i('Fetching chat rooms');

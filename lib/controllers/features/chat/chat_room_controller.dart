@@ -20,6 +20,7 @@ class ChatRoomController extends GetxController {
       Rx<ChatConnectionStatus>(ChatConnectionStatus.disconnected);
   final RxBool isLoading = true.obs;
   final RxBool isSending = false.obs;
+  final RxBool isUploadingMedia = false.obs;
   final RxList<String> pendingMediaIds = <String>[].obs;
 
   ChatWebSocketService? _ws;
@@ -69,6 +70,10 @@ class ChatRoomController extends GetxController {
             match = r;
             break;
           }
+        }
+        if (match == null) {
+          // Room may not exist yet (e.g. opened from task card after assign). Get or create it.
+          match = await _chatService.getOrCreateChatRoomForTask(taskId);
         }
         if (match != null) {
           rid = match.id;
@@ -142,10 +147,13 @@ class ChatRoomController extends GetxController {
     final rid = roomId.value;
     if (rid == null) return;
     try {
+      isUploadingMedia.value = true;
       final id = await _chatService.uploadMessageMedia(rid, file, mediaType: mediaType);
       pendingMediaIds.add(id);
     } catch (e) {
       StatusSnackbar.showError(message: 'Failed to upload media: $e');
+    } finally {
+      isUploadingMedia.value = false;
     }
   }
 

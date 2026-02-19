@@ -28,7 +28,7 @@ class TaskDetailsTaskerController extends GetxController {
 
   // State
   final RxBool hasBid = false.obs;
-  final RxString currentBid = '\$65.00'.obs;
+  final RxString currentBid = 'Rs 65.00'.obs;
 
   void placeBid() {
     // Logic to place bid

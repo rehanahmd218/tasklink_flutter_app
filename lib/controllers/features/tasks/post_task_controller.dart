@@ -12,6 +12,7 @@ import 'package:tasklink/utils/helpers/error_handler.dart';
 import 'package:tasklink/models/location/location_search_result.dart';
 import 'package:tasklink/services/location/geocoding_service.dart';
 import 'package:tasklink/controllers/features/navigation_controller.dart';
+import 'package:tasklink/controllers/features/tasks/tasks_controller.dart';
 import 'package:tasklink/routes/routes.dart';
 
 /// One existing task media item (edit mode): backend id and file URL for display.
@@ -210,6 +211,9 @@ class PostTaskController extends GetxController {
     try {
       FullScreenLoader.show(text: 'Deleting task...');
       await _taskService.deleteTask(id);
+      if (Get.isRegistered<TasksController>()) {
+        Get.find<TasksController>().removeTaskById(id);
+      }
       FullScreenLoader.hide();
 
       if (popAfter) Get.back(result: true);
@@ -260,19 +264,20 @@ class PostTaskController extends GetxController {
         expiresAt: dueDate.value,
       );
 
+      TaskModel? updatedOrCreated;
       if (isEdit.value && taskId != null) {
         // Update task; send new images and/or deleted media IDs
         final newFiles = images.map((x) => File(x.path)).toList();
         final deletedIds = deletedMediaIds.toList();
         if (newFiles.isNotEmpty || deletedIds.isNotEmpty) {
-          await _taskService.updateTaskWithMedia(
+          updatedOrCreated = await _taskService.updateTaskWithMedia(
             taskId!,
             request,
             newFiles,
             deletedMediaIds: deletedIds,
           );
         } else {
-          await _taskService.updateTask(taskId!, request);
+          updatedOrCreated = await _taskService.updateTask(taskId!, request);
         }
       } else {
         // Create Task
@@ -280,7 +285,16 @@ class PostTaskController extends GetxController {
         for (var xfile in images) {
           mediaFiles.add(File(xfile.path));
         }
-        await _taskService.createTask(request, mediaFiles);
+        updatedOrCreated = await _taskService.createTask(request, mediaFiles);
+      }
+
+      if (Get.isRegistered<TasksController>() && updatedOrCreated != null) {
+        final tasksController = Get.find<TasksController>();
+        if (isEdit.value) {
+          tasksController.updateTaskInList(updatedOrCreated!);
+        } else {
+          tasksController.allTasks.insert(0, updatedOrCreated!);
+        }
       }
 
       FullScreenLoader.hide();

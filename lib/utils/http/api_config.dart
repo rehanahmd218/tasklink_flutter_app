@@ -73,6 +73,9 @@ class ApiConfig {
 
   /// Get task detail by ID
   static String taskDetailEndpoint(String taskId) => 'tasks/$taskId/';
+  /// Get or create chat room for a task (poster + assigned tasker)
+  static String taskGetOrCreateChatRoomEndpoint(String taskId) =>
+      'tasks/$taskId/get_or_create_chat_room/';
 
   /// User public profile
   static String userPublicProfileEndpoint(String userId) => 'users/$userId/public/';

@@ -166,8 +166,8 @@ class FormValidators {
       return 'Please explain why you are the best fit';
     }
 
-    if (value.trim().length < 50) {
-      return 'Pitch must be at least 50 characters';
+    if (value.trim().length < 20) {
+      return 'Pitch must be at least 20 characters';
     }
 
     return null;

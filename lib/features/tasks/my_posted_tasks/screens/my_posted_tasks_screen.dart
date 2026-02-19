@@ -305,11 +305,10 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
       radius: 0,
       createdAt: bid.createdAt,
     );
-    final result = await Get.toNamed(
+    await Get.toNamed(
       Routes.PLACE_BID,
       arguments: {'task': task, 'bid': bid},
     );
-    if (result == true) Get.find<BidController>().fetchMyBids();
   }
 
   void _handleDeleteBid(BidModel bid) {
@@ -325,7 +324,6 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
             onPressed: () async {
               Get.back();
               await Get.find<BidController>().withdrawBid(bid.id, popAfter: false);
-              Get.find<BidController>().fetchMyBids();
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Delete'),
@@ -388,9 +386,9 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
     if (confirm != true) return;
     try {
       FullScreenLoader.show(text: 'Marking complete...');
-      await TaskService().markTaskCompleted(task.id);
+      final updated = await TaskService().markTaskCompleted(task.id);
+      Get.find<TasksController>().updateTaskInList(updated);
       FullScreenLoader.hide();
-      Get.find<TasksController>().refreshTasks();
       StatusSnackbar.showSuccess(message: 'Task marked as complete');
     } catch (e) {
       FullScreenLoader.hide();
@@ -405,9 +403,9 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
   Future<void> _handleMarkCompletion(TaskModel task) async {
     try {
       FullScreenLoader.show(text: 'Confirming completion...');
-      await TaskService().confirmTaskCompletion(task.id);
+      final updated = await TaskService().confirmTaskCompletion(task.id);
+      Get.find<TasksController>().updateTaskInList(updated);
       FullScreenLoader.hide();
-      Get.find<TasksController>().refreshTasks();
       StatusSnackbar.showSuccess(message: 'Completion confirmed. Payment released to tasker.');
     } catch (e) {
       FullScreenLoader.hide();
@@ -453,7 +451,6 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
             onPressed: () async {
               Get.back(); // Close dialog
               await Get.put(PostTaskController()).deleteTask(task.id, popAfter: false);
-              Get.find<TasksController>().refreshTasks();
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Delete'),

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
+import 'package:tasklink/controllers/features/tasks/tasks_controller.dart';
 import 'package:tasklink/controllers/user_controller.dart';
 import 'package:tasklink/models/tasks/task_model.dart';
 import 'package:tasklink/services/tasks/task_service.dart';
@@ -42,6 +43,36 @@ class TaskDetailsController extends GetxController {
   void setTask(TaskModel task) {
     currentTask.value = task;
     _determineRole();
+  }
+
+  /// Mark task as delivered (tasker). Updates [currentTask] from API response so UI rebuilds.
+  Future<void> markDelivered(String taskId) async {
+    try {
+      final updated = await _taskService.markTaskCompleted(taskId);
+      currentTask.value = updated;
+      _determineRole();
+      if (Get.isRegistered<TasksController>()) {
+        Get.find<TasksController>().updateTaskInList(updated);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Cancel task as tasker. API returns void, so we refetch task to update [currentTask].
+  Future<void> cancelTaskAsTasker(String taskId) async {
+    try {
+      await _taskService.cancelTask(taskId);
+      await fetchTaskById(taskId);
+      if (Get.isRegistered<TasksController>()) {
+        final task = currentTask.value;
+        if (task != null) {
+          Get.find<TasksController>().updateTaskInList(task);
+        }
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   /// Manually set role (for demo purposes)

@@ -173,4 +173,18 @@ class TasksController extends GetxController {
     }
     return allTasks.where((task) => task.status == status.toUpperCase()).length;
   }
+
+  /// Update a task in [allTasks] by id. Keeps reactive list in sync after mutations.
+  void updateTaskInList(TaskModel updated) {
+    final i = allTasks.indexWhere((t) => t.id == updated.id);
+    if (i >= 0) {
+      allTasks.removeAt(i);
+      allTasks.insert(i, updated);
+    }
+  }
+
+  /// Remove a task from [allTasks] by id. Keeps reactive list in sync after delete.
+  void removeTaskById(String taskId) {
+    allTasks.removeWhere((t) => t.id == taskId);
+  }
 }

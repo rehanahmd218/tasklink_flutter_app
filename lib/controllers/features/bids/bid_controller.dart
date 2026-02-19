@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
 import 'package:tasklink/common/widgets/loaders/full_screen_loader_with_button.dart';
 import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
+import 'package:tasklink/controllers/features/navigation_controller.dart';
+import 'package:tasklink/controllers/features/tasks/my_posted_tasks_controller.dart';
 import 'package:tasklink/controllers/user_controller.dart';
 import 'package:tasklink/services/bids/bid_service.dart';
 import 'package:tasklink/utils/helpers/error_handler.dart';
@@ -60,6 +62,26 @@ class BidController extends GetxController {
     rxBidAmount.value = bid.amount;
   }
 
+  /// Update a bid in both myBids and taskBids by id (keeps reactive lists in sync).
+  void _updateBidInLists(BidModel updated) {
+    final iMy = myBids.indexWhere((b) => b.id == updated.id);
+    if (iMy >= 0) {
+      myBids.removeAt(iMy);
+      myBids.insert(iMy, updated);
+    }
+    final iTask = taskBids.indexWhere((b) => b.id == updated.id);
+    if (iTask >= 0) {
+      taskBids.removeAt(iTask);
+      taskBids.insert(iTask, updated);
+    }
+  }
+
+  /// Remove a bid from both myBids and taskBids by id.
+  void _removeBidFromLists(String id) {
+    myBids.removeWhere((b) => b.id == id);
+    taskBids.removeWhere((b) => b.id == id);
+  }
+
   /// Submit a bid (Place or Update)
   Future<void> submitBid(String taskId) async {
     // Validate form
@@ -88,22 +110,27 @@ class BidController extends GetxController {
       final message = messageController.text.trim();
 
       if (isEdit.value && bidId != null) {
-        await _bidService.updateBid(
+        final updated = await _bidService.updateBid(
           bidId: bidId!,
           amount: amount,
           message: message.isNotEmpty ? message : null,
         );
+        _updateBidInLists(updated);
       } else {
-        await _bidService.placeBid(
+        final created = await _bidService.placeBid(
           taskId: taskId,
           amount: amount,
           message: message.isNotEmpty ? message : null,
         );
+        myBids.add(created);
+        if (taskBids.any((b) => b.task == taskId)) {
+          taskBids.add(created);
+        }
       }
 
       FullScreenLoader.hide();
 
-      // Show success
+      // Show success; on "Back to Task" go to My Posted Tasks (place → Active bids, edit → same tab)
       FullScreenLoaderWithButton.show(
         text: isEdit.value
             ? 'Bid Updated Successfully!'
@@ -111,7 +138,21 @@ class BidController extends GetxController {
         buttonText: 'Back to Task',
         onButtonPressed: () {
           FullScreenLoaderWithButton.hide();
-          Get.back(result: true); // Return true to refresh previous screen
+          Get.back(result: true);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Get.until((r) => r.isFirst);
+            if (Get.isRegistered<NavigationController>()) {
+              Get.find<NavigationController>().selectedIndex.value = 1;
+              if (!isEdit.value) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (Get.isRegistered<MyPostedTasksController>()) {
+                    Get.find<MyPostedTasksController>().setTaskerSection(false);
+                    Get.find<MyPostedTasksController>().setBidsSubTab('Active');
+                  }
+                });
+              }
+            }
+          });
         },
       );
     } catch (e) {
@@ -127,6 +168,7 @@ class BidController extends GetxController {
     try {
       FullScreenLoader.show(text: 'Withdrawing bid...');
       await _bidService.deleteBid(bidId);
+      _removeBidFromLists(bidId);
       FullScreenLoader.hide();
       if (popAfter) Get.back(result: true);
       StatusSnackbar.showSuccess(message: 'Bid withdrawn successfully');
@@ -141,12 +183,18 @@ class BidController extends GetxController {
     try {
       FullScreenLoader.show(text: 'Accepting Bid...');
       isLoading.value = true;
-      await _bidService.acceptBid(bidId);
+      final updated = await _bidService.acceptBid(bidId);
+      _updateBidInLists(updated);
       FullScreenLoader.hide();
 
-      // Navigate back or show success
       Get.back(result: true);
       ErrorHandler.showSuccess('Bid accepted successfully!');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.until((r) => r.isFirst);
+        if (Get.isRegistered<NavigationController>()) {
+          Get.find<NavigationController>().selectedIndex.value = 1;
+        }
+      });
     } catch (e) {
       FullScreenLoader.hide();
       isLoading.value = false;
@@ -159,7 +207,8 @@ class BidController extends GetxController {
     try {
       FullScreenLoader.show(text: 'Rejecting bid...');
       isLoading.value = true;
-      await _bidService.rejectBid(bidId);
+      final updated = await _bidService.rejectBid(bidId);
+      _updateBidInLists(updated);
       FullScreenLoader.hide();
 
       Get.back(result: true);

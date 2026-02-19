@@ -4,14 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:tasklink/controllers/features/chat/chat_room_controller.dart';
 import 'package:tasklink/controllers/user_controller.dart';
-import 'package:tasklink/features/chat/screens/widgets/chat_image_bubble.dart';
 import 'package:tasklink/features/chat/screens/widgets/chat_input_area.dart';
+import 'package:tasklink/features/chat/screens/widgets/chat_media_bubble.dart';
 import 'package:tasklink/features/chat/screens/widgets/chat_message_bubble.dart';
 import 'package:tasklink/features/chat/screens/widgets/chat_task_header.dart';
-import 'package:tasklink/services/chat/chat_websocket_service.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/utils/constants/colors.dart';
-import 'package:tasklink/utils/http/api_config.dart';
 
 class ChatRoomScreen extends StatefulWidget {
   const ChatRoomScreen({super.key});
@@ -90,50 +88,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         titleWidget: Obx(() {
           final other = controller.otherUser.value;
           final name = other?.displayName ?? 'Chat';
-          final status = controller.connectionStatus.value;
-          return Column(
-            children: [
-              Text(
-                name,
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: isDark ? Colors.white : Colors.black,
-                ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: status == ChatConnectionStatus.connected
-                          ? Colors.green
-                          : status == ChatConnectionStatus.connecting
-                              ? Colors.orange
-                              : Colors.grey,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    status == ChatConnectionStatus.connected
-                        ? 'Online'
-                        : status == ChatConnectionStatus.connecting
-                            ? 'Connecting...'
-                            : 'Offline',
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      color: status == ChatConnectionStatus.connected
-                          ? Colors.green
-                          : Colors.grey,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          return Text(
+            name,
+            style: GoogleFonts.inter(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: isDark ? Colors.white : Colors.black,
+            ),
           );
         }),
         actions: [
@@ -142,13 +103,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
             onPressed: () {},
           ),
         ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: Obx(() => ChatTaskHeader(
-                taskName: controller.taskTitle.value,
-                activeTasks: controller.activeTasks.toList(),
-              )),
-        ),
       ),
       body: Obx(() {
         if (controller.roomId.value == null && !controller.isLoading.value) {
@@ -168,6 +122,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
           children: [
             Column(
               children: [
+                Obx(() => ChatTaskHeader(
+                      taskName: controller.taskTitle.value,
+                      activeTasks: controller.activeTasks.toList(),
+                    )),
                 Expanded(
                   child: ListView.builder(
                     controller: _scrollController,
@@ -179,17 +137,14 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                       final time = _formatMessageTime(msg.createdAt);
                       final avatarUrl = msg.sender.profileImage;
                       if (msg.media.isNotEmpty) {
-                        final imageMedia = msg.media.where((m) => m.isImage).toList();
-                        if (imageMedia.isNotEmpty) {
-                          final firstImage = imageMedia.first;
-                          final imageUrl = ApiConfig.mediaFileUrl(firstImage.file);
-                          return ChatImageBubble(
-                            imageUrl: imageUrl,
-                            time: time,
-                            isMe: isMe,
-                            isRead: msg.isRead,
-                          );
-                        }
+                        return ChatMediaBubble(
+                          media: msg.media,
+                          messageText: msg.messageText,
+                          time: time,
+                          isMe: isMe,
+                          avatarUrl: avatarUrl,
+                          isRead: msg.isRead,
+                        );
                       }
                       return ChatMessageBubble(
                         message: msg.messageText,
@@ -209,6 +164,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   },
                   onAttach: controller.attachFile,
                   isSending: controller.isSending.value,
+                  pendingMediaIds: controller.pendingMediaIds.toList(),
+                  isUploadingMedia: controller.isUploadingMedia.value,
+                  onRemovePending: controller.removePendingMedia,
                 ),
               ],
             ),

@@ -53,7 +53,7 @@ class BidPitchInput extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
-              'Min 50 characters',
+              'Min 20 characters',
               style: GoogleFonts.inter(fontSize: 12, color: Colors.grey[400]),
             ),
           ),

@@ -3,6 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
 import 'package:tasklink/common/widgets/loaders/full_screen_loader_with_button.dart';
 import 'package:tasklink/controllers/features/tasks/tasks_controller.dart';
+import 'package:tasklink/models/tasks/task_model.dart';
 import 'package:tasklink/services/payment/payment_service.dart';
 import 'package:tasklink/utils/helpers/error_handler.dart';
 
@@ -36,9 +37,20 @@ class PaymentController extends GetxController {
 
       FullScreenLoader.hide();
 
-      // Refresh tasks to update status in UI
+      // Update task in list from response so UI rebuilds without full refetch
       if (Get.isRegistered<TasksController>()) {
-        Get.find<TasksController>().fetchTasks();
+        final tasksController = Get.find<TasksController>();
+        final taskData = result['task'];
+        if (taskData is Map<String, dynamic>) {
+          try {
+            final updatedTask = TaskModel.fromJson(taskData);
+            tasksController.updateTaskInList(updatedTask);
+          } catch (_) {
+            tasksController.fetchTasks();
+          }
+        } else {
+          tasksController.fetchTasks();
+        }
       }
 
       // Show success and instructions

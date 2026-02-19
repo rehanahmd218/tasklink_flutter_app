@@ -17,7 +17,6 @@ import 'package:tasklink/features/tasks/task_details/widgets/task_details_place_
 import 'package:tasklink/features/tasks/task_details/widgets/task_details_edit_delete_footer.dart';
 import 'package:tasklink/features/tasks/task_details/widgets/task_details_tasker_assigned_footer.dart';
 import 'package:tasklink/routes/routes.dart';
-import 'package:tasklink/services/tasks/task_service.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 import 'package:tasklink/utils/helpers/error_handler.dart';
 import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
@@ -331,9 +330,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   Future<void> _handleDeliver(TaskModel task) async {
     try {
       FullScreenLoader.show(text: 'Marking as delivered...');
-      await TaskService().markTaskCompleted(task.id);
+      await controller.markDelivered(task.id);
       FullScreenLoader.hide();
-      controller.fetchTaskById(task.id);
       StatusSnackbar.showSuccess(message: 'Task marked as delivered');
     } catch (e) {
       FullScreenLoader.hide();
@@ -344,13 +342,11 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   Future<void> _handleTaskerCancel(TaskModel task) async {
     try {
       FullScreenLoader.show(text: 'Cancelling...');
-      await TaskService().cancelTask(task.id);
+      await controller.cancelTaskAsTasker(task.id);
       FullScreenLoader.hide();
-      controller.fetchTaskById(task.id);
       StatusSnackbar.showSuccess(message: 'Task cancelled successfully');
     } catch (e) {
       FullScreenLoader.hide();
-      // Backend may return 403 for tasker; show message
       ErrorHandler.showErrorPopup(e, buttonText: 'OK');
     }
   }
