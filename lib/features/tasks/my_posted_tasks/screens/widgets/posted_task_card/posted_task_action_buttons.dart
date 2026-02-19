@@ -95,13 +95,32 @@ class PostedTaskActionButtons extends StatelessWidget {
           ],
         );
       case 'COMPLETED':
+        // Delivered: tasker can Message + Raise Dispute; poster can Complete + Dispute
         if (isTasker) {
-          return PrimaryButton(
-            onPressed: onMessagePoster ?? onMessageTasker,
-            text: 'Message',
-            icon: Icons.chat_bubble_outline,
-            height: 40,
-            fontSize: 13,
+          return Row(
+            children: [
+              Expanded(
+                child: SecondaryButton(
+                  onPressed: onMessagePoster ?? onMessageTasker,
+                  text: 'Message',
+                  icon: Icons.chat_bubble_outline,
+                  height: 40,
+                  fontSize: 13,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: PrimaryButton(
+                  onPressed: onViewDispute,
+                  text: 'Raise Dispute',
+                  icon: Icons.warning_amber_rounded,
+                  height: 40,
+                  fontSize: 13,
+                  backgroundColor: Colors.orange[700],
+                  foregroundColor: Colors.white,
+                ),
+              ),
+            ],
           );
         }
         return Row(
@@ -118,9 +137,9 @@ class PostedTaskActionButtons extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: SecondaryButton(
-                onPressed: onMessageTasker ?? () {},
-                text: 'Chat',
-                icon: Icons.chat_bubble_outline,
+                onPressed: onViewDispute,
+                text: 'Dispute',
+                icon: Icons.warning_amber_rounded,
                 height: 40,
                 fontSize: 13,
               ),
@@ -136,14 +155,31 @@ class PostedTaskActionButtons extends StatelessWidget {
           fontSize: 13,
         );
       case 'DISPUTED':
-        return PrimaryButton(
-          onPressed: onViewDispute,
-          text: 'View Dispute',
-          icon: Icons.warning_amber_rounded,
-          height: 40,
-          fontSize: 13,
-          backgroundColor: Colors.red[100],
-          foregroundColor: Colors.red[900],
+        // Both poster and tasker: View Dispute + Chat
+        return Row(
+          children: [
+            Expanded(
+              child: PrimaryButton(
+                onPressed: onViewDispute,
+                text: 'View Dispute',
+                icon: Icons.warning_amber_rounded,
+                height: 40,
+                fontSize: 13,
+                backgroundColor: Colors.red[100],
+                foregroundColor: Colors.red[900],
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: SecondaryButton(
+                onPressed: onMessagePoster ?? onMessageTasker,
+                text: 'Chat',
+                icon: Icons.chat_bubble_outline,
+                height: 40,
+                fontSize: 13,
+              ),
+            ),
+          ],
         );
       default:
         return const SizedBox.shrink();

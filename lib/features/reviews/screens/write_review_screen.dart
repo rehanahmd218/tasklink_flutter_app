@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/common/widgets/buttons/primary_button.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/controllers/user_controller.dart';
 import 'package:tasklink/features/reviews/screens/widgets/review_rating_section.dart';
 import 'package:tasklink/features/reviews/screens/widgets/review_tasker_info.dart';
@@ -98,7 +99,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
             : _reviewController.text.trim(),
       );
       Get.back(result: true);
-      Get.snackbar('Success', 'Your review was submitted.');
+      StatusSnackbar.showSuccess(message: 'Review submitted successfully');
     } catch (e) {
       String message = 'Could not submit review.';
       if (e is ValidationException) message = e.message;

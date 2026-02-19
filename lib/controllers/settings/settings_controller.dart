@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
 import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
+import 'package:tasklink/controllers/features/bids/bid_controller.dart';
+import 'package:tasklink/controllers/features/tasks/my_posted_tasks_controller.dart';
+import 'package:tasklink/controllers/features/tasks/tasks_controller.dart';
 import 'package:tasklink/controllers/user_controller.dart';
 import 'package:tasklink/services/user/user_service.dart';
 import 'package:tasklink/utils/helpers/error_handler.dart';
@@ -23,6 +26,17 @@ class SettingsController extends GetxController {
 
       // Update global user state
       _userController.setUser(updatedUser);
+
+      // Invalidate tasks-screen controllers so My Tasks re-initializes with new role and fresh data
+      if (Get.isRegistered<MyPostedTasksController>()) {
+        Get.delete<MyPostedTasksController>();
+      }
+      if (Get.isRegistered<TasksController>()) {
+        Get.delete<TasksController>();
+      }
+      if (Get.isRegistered<BidController>()) {
+        Get.delete<BidController>();
+      }
 
       FullScreenLoader.hide();
 

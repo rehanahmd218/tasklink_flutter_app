@@ -16,6 +16,7 @@ import 'package:tasklink/features/tasks/my_posted_tasks/screens/widgets/tasks_em
 import 'package:tasklink/models/tasks/bid_model.dart';
 import 'package:tasklink/models/tasks/task_model.dart';
 import 'package:tasklink/routes/routes.dart';
+import 'package:tasklink/services/disputes/dispute_service.dart';
 import 'package:tasklink/services/tasks/task_service.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 import 'package:tasklink/utils/helpers/error_handler.dart';
@@ -33,16 +34,21 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
   @override
   void initState() {
     super.initState();
-    Get.put(TasksController());
-    Get.put(BidController());
-    Get.put(MyPostedTasksController());
+    // Reuse existing controllers when returning to this screen so filter/tab state is preserved
+    if (!Get.isRegistered<TasksController>()) {
+      Get.put(TasksController());
+    }
+    if (!Get.isRegistered<BidController>()) {
+      Get.put(BidController());
+    }
+    if (!Get.isRegistered<MyPostedTasksController>()) {
+      Get.put(MyPostedTasksController());
+    }
   }
 
   @override
   void dispose() {
-    Get.delete<MyPostedTasksController>();
-    Get.delete<TasksController>();
-    Get.delete<BidController>();
+    // Do not delete controllers on dispose so filter/tab state is preserved when switching screens
     super.dispose();
   }
 
@@ -416,8 +422,17 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
     );
   }
 
-  void _handleViewDispute(TaskModel task) {
-    Get.toNamed(Routes.DISPUTE, arguments: {'taskId': task.id});
+  Future<void> _handleViewDispute(TaskModel task) async {
+    try {
+      final existing = await DisputeService().getDisputeByTask(task.id);
+      if (existing != null) {
+        Get.toNamed(Routes.DISPUTE_STATUS, arguments: {'disputeId': existing.id});
+      } else {
+        Get.toNamed(Routes.DISPUTE, arguments: {'taskId': task.id});
+      }
+    } catch (_) {
+      Get.toNamed(Routes.DISPUTE, arguments: {'taskId': task.id});
+    }
   }
 
   void _handleEditTask(TaskModel task) {

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
+import 'package:tasklink/models/chat/chat_room_model.dart';
 import 'package:tasklink/models/tasks/bid_model.dart';
 import 'package:tasklink/utils/http/api_client.dart';
 import 'package:tasklink/utils/http/api_config.dart';
@@ -73,6 +74,34 @@ class BidService {
       }
     } on DioException catch (e) {
       _log.e('Accept bid error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
+  /// Get or create chat room for this bid (poster or tasker). Returns the room so you can navigate with roomId.
+  Future<ChatRoomModel> initiateChat(String bidId) async {
+    _log.i('Initiating chat for bid: $bidId');
+
+    try {
+      final response = await _dio.post(
+        '${ApiConfig.bidsEndpoint}$bidId/initiate_chat/',
+      );
+
+      final apiResponse = ApiResponse<ChatRoomModel>.fromJson(
+        response.data as Map<String, dynamic>,
+        (data) => ChatRoomModel.fromJson(data as Map<String, dynamic>),
+      );
+
+      if (apiResponse.isSuccess && apiResponse.data != null) {
+        _log.i('Chat room obtained: ${apiResponse.data!.id}');
+        return apiResponse.data!;
+      }
+      throw ValidationException(
+        apiResponse.message,
+        apiResponse.errors ?? {},
+      );
+    } on DioException catch (e) {
+      _log.e('Initiate chat error: ${e.type}');
       _handleDioError(e);
     }
   }

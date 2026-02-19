@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 
 class InProgressDashboardController extends GetxController {
   // Mock data for now, replace with actual Task model later
@@ -25,7 +26,7 @@ class InProgressDashboardController extends GetxController {
             onPressed: () {
               Get.back();
               // Implement completion logic
-              Get.snackbar('Success', 'Task marked as completed');
+              StatusSnackbar.showInfo(message: 'Task marked as completed. Awaiting review.');
             },
             child: const Text('Confirm'),
           ),
@@ -35,7 +36,7 @@ class InProgressDashboardController extends GetxController {
   }
 
   void reportIssue() {
-    Get.snackbar('Report Issue', 'Reporting feature coming soon');
+    StatusSnackbar.showInfo(message: 'Reporting feature coming soon');
   }
 
   void openChat() {

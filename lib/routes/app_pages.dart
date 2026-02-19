@@ -23,6 +23,7 @@ import '../features/bids/bid_management/screens/bid_management_screen.dart';
 import '../features/chat/screens/chat_list_screen.dart';
 import '../features/chat/screens/chat_room_screen.dart';
 import '../features/disputes/screens/dispute_screen.dart';
+import '../features/disputes/screens/dispute_status_screen.dart';
 import '../features/notifications/screens/notifications_screen.dart';
 import '../features/payment/screens/payment_screen.dart';
 import '../features/profile/screens/profile_screen.dart';
@@ -102,6 +103,14 @@ class AppPages {
     GetPage(name: Routes.CHAT_ROOM, page: () => const ChatRoomScreen()),
 
     GetPage(name: Routes.DISPUTE, page: () => const DisputeScreen()),
+    GetPage(
+      name: Routes.DISPUTE_STATUS,
+      page: () {
+        final args = Get.arguments as Map<String, dynamic>?;
+        final disputeId = args?['disputeId'] as String? ?? '';
+        return DisputeStatusScreen(disputeId: disputeId);
+      },
+    ),
     GetPage(
       name: Routes.NOTIFICATIONS,
       page: () => const NotificationsScreen(),

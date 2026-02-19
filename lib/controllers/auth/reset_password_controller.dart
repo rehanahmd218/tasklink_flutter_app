@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/routes/routes.dart';
 import 'package:tasklink/services/authentication/auth_service.dart';
 import 'package:tasklink/utils/constants/animation_strings.dart';
@@ -50,17 +51,17 @@ class ResetPasswordController extends GetxController {
 
     final otp = otpCode;
     if (otp.length < 6) {
-      Get.snackbar('Error', 'Please enter complete 6-digit OTP');
+      StatusSnackbar.showError(message: 'Please enter the 6-digit OTP code');
       return;
     }
 
     if (newPassword.text != confirmPassword.text) {
-      Get.snackbar('Error', 'Passwords do not match');
+      StatusSnackbar.showError(message: 'Passwords do not match');
       return;
     }
 
     if (identifier.value.isEmpty) {
-      Get.snackbar('Error', 'Missing user identifier. Please try again.');
+      StatusSnackbar.showError(message: 'Missing user identifier. Please try again.');
       return;
     }
 
@@ -80,13 +81,13 @@ class ResetPasswordController extends GetxController {
 
       FullScreenLoader.hide();
 
-      Get.snackbar('Success', 'Password reset successfully. Please login.');
+      StatusSnackbar.showSuccess(message: 'Password reset successfully. Please login.');
       Get.offAllNamed(
         Routes.LOGIN,
       ); // Using route name assuming it's standard, or redirect to LoginScreen()
     } catch (e) {
       FullScreenLoader.hide();
-      Get.snackbar('Error', e.toString());
+      StatusSnackbar.showError(message: e.toString());
     }
   }
 

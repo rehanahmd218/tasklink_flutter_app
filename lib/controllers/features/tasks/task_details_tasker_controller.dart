@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 
 class TaskDetailsTaskerController extends GetxController {
   final RxString taskId = '123'.obs;
@@ -32,7 +33,7 @@ class TaskDetailsTaskerController extends GetxController {
   void placeBid() {
     // Logic to place bid
     hasBid.value = true;
-    Get.snackbar('Success', 'Bid placed successfully!');
+    StatusSnackbar.showSuccess(message: 'Bid placed successfully');
   }
 
   void cancelBid() {

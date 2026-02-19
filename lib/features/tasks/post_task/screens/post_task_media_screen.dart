@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/common/widgets/buttons/primary_button.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/controllers/features/tasks/post_task_controller.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 
@@ -161,7 +162,7 @@ class PostTaskMediaScreen extends StatelessWidget {
                 // Logic to actually post the task would go here
                 print('Post Task Clicked');
                 Get.back(); // Temporary behavior until actual post logic is integrated
-                Get.snackbar('Success', 'Task Posted Successfully (Mock)');
+                StatusSnackbar.showSuccess(message: 'Task posted successfully (placeholder)'); // Placeholder success message            
               },
               text: 'Post Task',
               icon: Icons.check,

@@ -46,7 +46,7 @@ class ProfileHeader extends StatelessWidget {
                       ),
                       image: hasImage
                           ? DecorationImage(
-                              image: CachedNetworkImageProvider(imageUrl!),
+                              image: CachedNetworkImageProvider(imageUrl),
                               fit: BoxFit.cover,
                             )
                           : null,

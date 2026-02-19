@@ -173,7 +173,7 @@ class PostTaskController extends GetxController {
 
   Future<void> pickImages() async {
     if (images.length >= 3) {
-      Get.snackbar('Limit Reached', 'You can only add up to 3 images.');
+      StatusSnackbar.showWarning(message: 'You can only add up to 3 images');
       return;
     }
 
@@ -191,14 +191,11 @@ class PostTaskController extends GetxController {
 
         // Show message if user selected more than we could add
         if (pickedFiles.length > remainingSlots) {
-          Get.snackbar(
-            'Limit Reached',
-            'Only $remainingSlots image(s) added. Maximum is 3 images.',
-          );
+          StatusSnackbar.showWarning(message: 'Only $remainingSlots image(s) added. Maximum is 3 images.');
         }
       }
     } catch (e) {
-      Get.snackbar('Error', 'Failed to pick images: $e');
+      StatusSnackbar.showError(message: 'Failed to pick images: $e');
     }
   }
 

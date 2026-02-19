@@ -104,7 +104,7 @@ class RatingSummary extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       SizedBox(
-                        width: 32,
+                        width: 36,
                         child: Text(
                           '${(percentage * 100).toInt()}%',
                           style: GoogleFonts.inter(

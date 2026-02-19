@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/controllers/user_controller.dart';
+import 'package:tasklink/controllers/features/notifications/notifications_controller.dart';
 import 'package:tasklink/features/notifications/screens/notifications_screen.dart';
 import 'package:tasklink/features/profile/screens/profile_screen.dart';
 import '../../../../utils/constants/colors.dart';
@@ -85,55 +86,7 @@ class HomeHeader extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: isDark ? Colors.grey[800] : Colors.grey[100],
-                          border: Border.all(
-                            color: isDark
-                                ? Colors.grey[700]!
-                                : Colors.transparent,
-                            width: 0.5,
-                          ),
-                        ),
-                        child: Center(
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.notifications_outlined,
-                              color: isDark ? Colors.white : Colors.black87,
-                              size: 20,
-                            ),
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(),
-                            onPressed: () =>
-                                Get.to(() => const NotificationsScreen()),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 10,
-                        right: 10,
-                        child: Container(
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: isDark
-                                  ? TColors.backgroundDark
-                                  : Colors.white,
-                              width: 1.5,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  _NotificationIcon(isDark: isDark),
                   const SizedBox(width: 12),
                   GestureDetector(
                     onTap: () => Get.to(() => const ProfileScreen()),
@@ -184,5 +137,72 @@ class HomeHeader extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _NotificationIcon extends StatelessWidget {
+  final bool isDark;
+
+  const _NotificationIcon({required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    if (!Get.isRegistered<NotificationsController>()) {
+      Get.put(NotificationsController());
+    }
+    final ctrl = Get.find<NotificationsController>();
+    return Obx(() {
+      final hasUnread = ctrl.unreadCount.value > 0;
+      return Stack(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isDark ? Colors.grey[800] : Colors.grey[100],
+              border: Border.all(
+                color: isDark
+                    ? Colors.grey[700]!
+                    : Colors.transparent,
+                width: 0.5,
+              ),
+            ),
+            child: Center(
+              child: IconButton(
+                icon: Icon(
+                  Icons.notifications_outlined,
+                  color: isDark ? Colors.white : Colors.black87,
+                  size: 20,
+                ),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () =>
+                    Get.to(() => const NotificationsScreen()),
+              ),
+            ),
+          ),
+          if (hasUnread)
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isDark
+                        ? TColors.backgroundDark
+                        : Colors.white,
+                    width: 1.5,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      );
+    });
   }
 }

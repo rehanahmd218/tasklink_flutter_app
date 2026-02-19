@@ -4,13 +4,16 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/app_card.dart';
 import 'package:tasklink/common/widgets/loaders/empty_state_widget.dart';
+import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/controllers/features/bids/bid_controller.dart';
 import 'package:tasklink/models/tasks/bid_model.dart';
+import 'package:tasklink/services/bids/bid_service.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 import 'package:tasklink/routes/routes.dart';
 import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/common/widgets/buttons/secondary_button.dart';
+import 'package:tasklink/utils/helpers/error_handler.dart';
 
 class BidsPosterView extends StatelessWidget {
   final String taskId;
@@ -132,6 +135,26 @@ class BidsPosterView extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> _openChatForBid(BidModel bid, String? taskTitle) async {
+    if (bid.tasker == null) return;
+    try {
+      FullScreenLoader.show(text: 'Opening chat...');
+      final room = await BidService().initiateChat(bid.id);
+      FullScreenLoader.hide();
+      Get.toNamed(
+        Routes.CHAT_ROOM,
+        arguments: {
+          'roomId': room.id,
+          'otherUser': bid.tasker,
+          'taskTitle': taskTitle ?? room.displayTitle,
+        },
+      );
+    } catch (e) {
+      FullScreenLoader.hide();
+      ErrorHandler.showErrorPopup(e, buttonText: 'OK');
+    }
   }
 
   void _showSortOptions(BuildContext context, BidController controller, bool isDark) {
@@ -277,9 +300,7 @@ class BidsPosterView extends StatelessWidget {
             children: [
               Expanded(
                 child: SecondaryButton(
-                  onPressed: () {
-                    // Chat logic placeholder or navigation
-                  },
+                  onPressed: () => _openChatForBid(bid, taskTitle),
                   text: 'Chat',
                   icon: Icons.chat_bubble_outline,
                   height: 48,

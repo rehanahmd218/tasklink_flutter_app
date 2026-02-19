@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/controllers/user_controller.dart';
 import 'package:tasklink/models/tasks/task_model.dart';
 import 'package:tasklink/services/tasks/task_service.dart';
@@ -31,11 +32,7 @@ class TaskDetailsController extends GetxController {
     } catch (e) {
       _log.e('Error fetching task: $e');
       errorMessage.value = e.toString();
-      Get.snackbar(
-        'Error',
-        'Failed to load task details: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      StatusSnackbar.showError(message: 'Failed to load task details: $e');
     } finally {
       isLoading.value = false;
     }

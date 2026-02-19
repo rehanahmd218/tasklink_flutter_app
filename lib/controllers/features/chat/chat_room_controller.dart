@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/models/chat/chat_message_model.dart';
 import 'package:tasklink/models/chat/chat_room_model.dart';
 import 'package:tasklink/models/tasks/task_response_user_model.dart';
@@ -79,7 +80,7 @@ class ChatRoomController extends GetxController {
           }
         }
       } catch (e) {
-        Get.snackbar('Error', 'Could not load chat: $e');
+        StatusSnackbar.showError(message: 'Failed to find or create chat room: $e');
       }
       isLoading.value = false;
     }
@@ -101,7 +102,8 @@ class ChatRoomController extends GetxController {
       final list = await _chatService.getMessages(rid);
       messages.assignAll(list);
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load messages: $e');
+      StatusSnackbar.showError(message: 'Failed to load messages: $e');
+      
     }
     isLoading.value = false;
   }
@@ -119,14 +121,14 @@ class ChatRoomController extends GetxController {
       connectionStatus.value = s;
     });
     _errorSub = _ws!.errorStream.listen((err) {
-      Get.snackbar('Chat', err);
+      StatusSnackbar.showError(message: err);
     });
     _ws!.connect(rid);
   }
 
   void sendMessage(String text, {List<String>? mediaIds}) {
     if (_ws == null || !_ws!.isConnected) {
-      Get.snackbar('Chat', 'Not connected');
+      StatusSnackbar.showWarning(message: 'Not connected');
       return;
     }
     final ids = mediaIds ?? (pendingMediaIds.isNotEmpty ? pendingMediaIds.toList() : null);
@@ -143,7 +145,7 @@ class ChatRoomController extends GetxController {
       final id = await _chatService.uploadMessageMedia(rid, file, mediaType: mediaType);
       pendingMediaIds.add(id);
     } catch (e) {
-      Get.snackbar('Upload failed', e.toString());
+      StatusSnackbar.showError(message: 'Failed to upload media: $e');
     }
   }
 

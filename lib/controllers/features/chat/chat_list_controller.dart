@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/models/chat/chat_room_model.dart';
 import 'package:tasklink/services/chat/chat_service.dart';
 import 'package:tasklink/controllers/user_controller.dart';
@@ -21,7 +22,7 @@ class ChatListController extends GetxController {
       final list = await _chatService.getMyRooms();
       rooms.assignAll(list);
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load chats: $e');
+      StatusSnackbar.showError(message: 'Failed to load chat rooms: $e');
     }
     isLoading.value = false;
   }

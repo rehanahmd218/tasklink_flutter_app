@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/controllers/features/bids/bid_controller.dart';
 import 'package:tasklink/models/tasks/bid_model.dart';
 import 'package:tasklink/models/tasks/task_model.dart';
 import 'package:tasklink/routes/routes.dart';
+import 'package:tasklink/services/bids/bid_service.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 import 'package:tasklink/utils/formatters/date_formatter.dart';
 
@@ -100,7 +102,7 @@ class BidManagementScreen extends StatelessWidget {
                     const SizedBox(height: 32),
                     Divider(color: Colors.grey[200]),
                     const SizedBox(height: 16),
-                    _buildPosterActions(context, bid, controller),
+                    _buildPosterActions(context, bid, controller, taskTitle),
                   ] else ...[
                     const SizedBox(height: 32),
                     if (bid.status == 'ACTIVE')
@@ -115,23 +117,22 @@ class BidManagementScreen extends StatelessWidget {
                               Get.back(result: true); // Refresh
                             }
                           } else {
-                            Get.snackbar('Error', 'Task details missing');
+                            StatusSnackbar.showError(message: 'Cannot edit: Task details missing');
                           }
                         },
                         onContact: () {
-                          if (task != null && task.poster != null) {
+                          // Only poster can initiate/create room; tasker opens existing room by user.
+                          if (task?.poster != null) {
                             Get.toNamed(
                               Routes.CHAT_ROOM,
                               arguments: {
+                                'otherUser': task!.poster,
                                 'taskId': bid.task,
-                                'otherUser': task.poster,
+                                'taskTitle': taskTitle,
                               },
                             );
                           } else {
-                            Get.snackbar(
-                              'Error',
-                              'Cannot chat: Task details missing',
-                            );
+                            StatusSnackbar.showError(message: 'Cannot open chat: Task poster info missing');
                           }
                         },
                         onWithdraw: () {
@@ -177,10 +178,34 @@ class BidManagementScreen extends StatelessWidget {
     );
   }
 
+  Future<void> _openChatFromBid(
+    BidModel bid, {
+    required dynamic otherUser,
+    required String taskTitle,
+  }) async {
+    try {
+      FullScreenLoader.show(text: 'Opening chat...');
+      final room = await BidService().initiateChat(bid.id);
+      FullScreenLoader.hide();
+      Get.toNamed(
+        Routes.CHAT_ROOM,
+        arguments: {
+          'roomId': room.id,
+          'otherUser': otherUser ?? room.poster ?? room.tasker,
+          'taskTitle': taskTitle,
+        },
+      );
+    } catch (e) {
+      FullScreenLoader.hide();
+      ErrorHandler.showErrorPopup(e, buttonText: 'OK');
+    }
+  }
+
   Widget _buildPosterActions(
     BuildContext context,
     BidModel bid,
     BidController controller,
+    String taskTitle,
   ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
@@ -234,14 +259,11 @@ class BidManagementScreen extends StatelessWidget {
         const SizedBox(height: 12),
         // Chat with Tasker (secondary – styled like design)
         SecondaryButton(
-          onPressed: () {
-            if (bid.tasker != null) {
-              Get.toNamed(
-                Routes.CHAT_ROOM,
-                arguments: {'taskId': bid.task, 'otherUser': bid.tasker},
-              );
-            }
-          },
+          onPressed: () => _openChatFromBid(
+            bid,
+            otherUser: bid.tasker,
+            taskTitle: taskTitle,
+          ),
           text: 'Chat with Tasker',
           icon: Icons.chat_bubble_outline,
           height: 48,

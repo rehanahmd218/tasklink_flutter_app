@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
+import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/controllers/features/tasks/post_task_controller.dart';
 import 'package:tasklink/controllers/features/tasks/task_details_controller.dart';
 import 'package:tasklink/models/tasks/task_model.dart';
@@ -40,6 +41,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
 
   @override
   void initState() {
+
     super.initState();
     controller = Get.put(TaskDetailsController());
 
@@ -60,6 +62,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         title: 'Task Details',
         actions: [
           Obx(() {
+
             // Show edit icon only if user is poster and owns the task
             if (controller.canEditDelete) {
               return IconButton(
@@ -67,11 +70,12 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                 icon: const Icon(Icons.edit),
               );
             }
-            // Show share icon for others
-            return IconButton(
-              onPressed: _handleShare,
-              icon: const Icon(Icons.share),
-            );
+            return const SizedBox.shrink();
+            // // Show share icon for others
+            // return IconButton(
+            //   onPressed: _handleShare,
+            //   icon: const Icon(Icons.share),
+            // );
           }),
         ],
       ),
@@ -330,8 +334,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       await TaskService().markTaskCompleted(task.id);
       FullScreenLoader.hide();
       controller.fetchTaskById(task.id);
-      Get.snackbar('Success', 'Task marked as delivered. Waiting for poster confirmation.',
-          snackPosition: SnackPosition.BOTTOM);
+      StatusSnackbar.showSuccess(message: 'Task marked as delivered');
     } catch (e) {
       FullScreenLoader.hide();
       ErrorHandler.showErrorPopup(e, buttonText: 'OK');
@@ -344,7 +347,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       await TaskService().cancelTask(task.id);
       FullScreenLoader.hide();
       controller.fetchTaskById(task.id);
-      Get.snackbar('Success', 'Task cancelled.', snackPosition: SnackPosition.BOTTOM);
+      StatusSnackbar.showSuccess(message: 'Task cancelled successfully');
     } catch (e) {
       FullScreenLoader.hide();
       // Backend may return 403 for tasker; show message
@@ -399,12 +402,12 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     );
   }
 
-  void _handleShare() {
-    // TODO: Implement share functionality
-    Get.snackbar(
-      'Share',
-      'Share functionality will be implemented',
-      snackPosition: SnackPosition.BOTTOM,
-    );
-  }
+  // void _handleShare() {
+  //   // TODO: Implement share functionality
+  //   Get.snackbar(
+  //     'Share',
+  //     'Share functionality will be implemented',
+  //     snackPosition: SnackPosition.BOTTOM,
+  //   );
+  // }
 }

@@ -13,9 +13,9 @@ class ApiConfig {
 
   /// ### Base url for Mobile
   // static const String baseUrl = 'http://192.168.137.247:8000/api/v1/';
-  // static const String baseUrl = 'http://10.8.24.129:8000/api/v1/';
+  static const String baseUrl = 'http://10.8.25.134:8000/api/v1/';
 
-  static const String baseUrl = 'https://taskonnect.me/api/v1/';
+  // static const String baseUrl = 'https://taskonnect.me/api/v1/';
 
   /// Timeouts
   static const int connectTimeout = 30;
@@ -47,6 +47,23 @@ class ApiConfig {
   static const String tasksNearbyEndpoint = 'tasks/nearby/';
 
   static const String bidsEndpoint = 'bids/';
+
+  // -------------------------------------------------------------------------
+  // Notifications endpoints (unread-only by default: ?is_read=false)
+  // -------------------------------------------------------------------------
+  static const String notificationsEndpoint = 'notifications/';
+  static String notificationDetailEndpoint(String id) => 'notifications/$id/';
+  static const String notificationsUnreadCountEndpoint = 'notifications/unread_count/';
+  static const String notificationsMarkAllReadEndpoint = 'notifications/mark_all_read/';
+  static String notificationMarkReadEndpoint(String id) => 'notifications/$id/mark_read/';
+
+  // -------------------------------------------------------------------------
+  // Disputes endpoints
+  // -------------------------------------------------------------------------
+  static const String disputesEndpoint = 'disputes/';
+  static String disputeDetailEndpoint(String id) => 'disputes/$id/';
+  static String disputeResolveEndpoint(String id) => 'disputes/$id/resolve/';
+  static const String disputeMediaEndpoint = 'dispute-media/';
 
   /// Reviews endpoints
   static const String reviewsEndpoint = 'reviews/';

@@ -54,7 +54,10 @@ class ReviewTaskerInfo extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        Text('How was your work with $taskerName?', style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF1c1c0d))),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text('How was your work with $taskerName?', style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF1c1c0d))),
+        ),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),

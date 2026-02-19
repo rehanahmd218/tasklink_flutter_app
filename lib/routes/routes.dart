@@ -24,6 +24,7 @@ class Routes {
   static const CHAT_ROOM = '/chat-room';
 
   static const DISPUTE = '/dispute';
+  static const DISPUTE_STATUS = '/dispute-status';
   static const NOTIFICATIONS = '/notifications';
   static const PAYMENT = '/payment';
 
