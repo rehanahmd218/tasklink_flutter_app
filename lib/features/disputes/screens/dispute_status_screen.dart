@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/features/disputes/screens/widgets/dispute_description_view.dart';
 import 'package:tasklink/features/disputes/screens/widgets/dispute_info_table.dart';
 import 'package:tasklink/features/disputes/screens/widgets/dispute_status_banner.dart';
@@ -8,6 +9,8 @@ import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/models/disputes/dispute_model.dart';
 import 'package:tasklink/services/disputes/dispute_service.dart';
+import 'package:tasklink/utils/constants/colors.dart';
+import 'package:tasklink/utils/http/api_config.dart';
 
 class DisputeStatusScreen extends StatefulWidget {
   final String disputeId;
@@ -136,6 +139,60 @@ class _DisputeStatusScreenState extends State<DisputeStatusScreen> {
                   'Outcome': d.resolutionOutcome == 'FAVOR_TASKER' ? 'Favor Tasker' : 'Favor Poster',
               },
             ),
+            if (d.media.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: isDark ? const Color(0xFF2c2b14) : Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 4)],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'EVIDENCE UPLOADED',
+                      style: GoogleFonts.inter(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[500],
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: d.media.length,
+                        separatorBuilder: (_, __) => const SizedBox(width: 12),
+                        itemBuilder: (context, i) {
+                          final m = d.media[i];
+                          final url = ApiConfig.mediaFileUrl(m.fileUrl ?? '');
+                          if (url.isEmpty) return const SizedBox.shrink();
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              url,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => Container(
+                                width: 100,
+                                height: 100,
+                                color: Colors.grey[300],
+                                child: const Icon(Icons.broken_image_outlined),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
             const SizedBox(height: 24),
             DisputeDescriptionView(description: d.reason),
             const SizedBox(height: 32),

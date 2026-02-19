@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:tasklink/models/disputes/dispute_model.dart';
@@ -8,6 +10,30 @@ import 'package:tasklink/utils/exceptions/api_exceptions.dart';
 class DisputeService {
   static final Logger _log = Logger(printer: PrettyPrinter(methodCount: 0));
   final Dio _dio = ApiClient.instance.dio;
+
+  /// Get reason choices for dispute creation. [raiser] is 'poster' or 'tasker'.
+  Future<List<String>> getReasonChoices({String raiser = 'poster'}) async {
+    _log.i('Fetching dispute reason choices for raiser: $raiser');
+    try {
+      final response = await _dio.get(
+        ApiConfig.disputeReasonChoicesEndpoint(raiser: raiser),
+      );
+      final data = response.data;
+      List<String> list = [];
+      if (data is Map<String, dynamic>) {
+        final d = data['data'];
+        if (d is List) {
+          for (final e in d) {
+            if (e != null) list.add(e.toString());
+          }
+        }
+      }
+      return list;
+    } on DioException catch (e) {
+      _log.e('Get reason choices error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
 
   /// Create a dispute for a task.
   Future<DisputeModel> createDispute({
@@ -51,6 +77,32 @@ class DisputeService {
       throw NotFoundException('Dispute not found');
     } on DioException catch (e) {
       _log.e('Get dispute error: ${e.type}');
+      _handleDioError(e);
+    }
+  }
+
+  /// Upload a media file for a dispute (max 3 per dispute). Call after creating the dispute.
+  Future<void> uploadDisputeMedia(String disputeId, File file) async {
+    _log.i('Uploading dispute media for dispute: $disputeId');
+    try {
+      final formData = FormData.fromMap({
+        'dispute': disputeId,
+        'file': await MultipartFile.fromFile(
+          file.path,
+          filename: file.path.split(RegExp(r'[/\\]')).last,
+        ),
+      });
+      await _dio.post(
+        ApiConfig.disputeMediaEndpoint,
+        data: formData,
+        options: Options(
+          contentType: 'multipart/form-data',
+          sendTimeout: const Duration(seconds: 60),
+          receiveTimeout: const Duration(seconds: 60),
+        ),
+      );
+    } on DioException catch (e) {
+      _log.e('Upload dispute media error: ${e.type}');
       _handleDioError(e);
     }
   }

@@ -235,7 +235,7 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
                 onTrackStatus: () => _handleTrackStatus(task),
                 onMarkCompletion: () => _handleMarkCompletion(task),
                 onGiveFeedback: () => _handleGiveFeedback(task),
-                onViewDispute: () => _handleViewDispute(task),
+                onViewDispute: () => _handleViewDispute(task, isPoster: false),
                 onEdit: () => _handleEditTask(task),
                 onDelete: () => _handleDeleteTask(task),
                 onTap: () => _handleTaskTap(task),
@@ -279,7 +279,7 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
               onTrackStatus: () => _handleTrackStatus(task),
               onMarkCompletion: () => _handleMarkCompletion(task),
               onGiveFeedback: () => _handleGiveFeedback(task),
-              onViewDispute: () => _handleViewDispute(task),
+              onViewDispute: () => _handleViewDispute(task, isPoster: true),
               onEdit: () => _handleEditTask(task),
               onDelete: () => _handleDeleteTask(task),
               onTap: () => _handleTaskTap(task),
@@ -422,16 +422,16 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
     );
   }
 
-  Future<void> _handleViewDispute(TaskModel task) async {
+  Future<void> _handleViewDispute(TaskModel task, {required bool isPoster}) async {
     try {
       final existing = await DisputeService().getDisputeByTask(task.id);
       if (existing != null) {
         Get.toNamed(Routes.DISPUTE_STATUS, arguments: {'disputeId': existing.id});
       } else {
-        Get.toNamed(Routes.DISPUTE, arguments: {'taskId': task.id});
+        Get.toNamed(Routes.DISPUTE, arguments: {'taskId': task.id, 'isPoster': isPoster});
       }
     } catch (_) {
-      Get.toNamed(Routes.DISPUTE, arguments: {'taskId': task.id});
+      Get.toNamed(Routes.DISPUTE, arguments: {'taskId': task.id, 'isPoster': isPoster});
     }
   }
 

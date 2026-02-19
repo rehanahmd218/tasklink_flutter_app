@@ -159,7 +159,8 @@ class PostedTaskActionButtons extends StatelessWidget {
         return Row(
           children: [
             Expanded(
-              child: PrimaryButton(
+              child: SecondaryButton(
+                showBorder: false,
                 onPressed: onViewDispute,
                 text: 'View Dispute',
                 icon: Icons.warning_amber_rounded,

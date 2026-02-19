@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
+import 'package:tasklink/common/widgets/media_picker_section.dart';
 import 'package:tasklink/features/disputes/screens/widgets/dispute_creation_task_card.dart';
 import 'package:tasklink/features/disputes/screens/widgets/dispute_description_input.dart';
 import 'package:tasklink/features/disputes/screens/widgets/dispute_reason_dropdown.dart';
@@ -24,18 +28,30 @@ class _DisputeScreenState extends State<DisputeScreen> {
   final TextEditingController _detailsController = TextEditingController();
   final TaskService _taskService = TaskService();
   final DisputeService _disputeService = DisputeService();
+  final ImagePicker _picker = ImagePicker();
 
   TaskModel? _task;
   bool _loading = true;
   String _error = '';
   bool _submitting = false;
+  bool _isPoster = true;
+  List<String> _reasons = [];
+  final List<XFile> _mediaFiles = [];
 
-  final List<String> _reasons = [
+  static const List<String> _reasonsPosterFallback = [
     'Tasker did not show up',
     'Poor quality of work',
     'Task incomplete',
     'Property damage',
     'Safety concern',
+    'Other',
+  ];
+  static const List<String> _reasonsTaskerFallback = [
+    'Poster did not provide access',
+    'Payment or scope dispute',
+    'Unfair cancellation',
+    'Safety concern',
+    'Other',
   ];
 
   @override
@@ -53,6 +69,7 @@ class _DisputeScreenState extends State<DisputeScreen> {
   Future<void> _loadTask() async {
     final args = Get.arguments as Map<String, dynamic>?;
     final taskId = args?['taskId']?.toString();
+    _isPoster = args?['isPoster'] as bool? ?? true;
     if (taskId == null || taskId.isEmpty) {
       setState(() {
         _error = 'No task specified';
@@ -66,8 +83,15 @@ class _DisputeScreenState extends State<DisputeScreen> {
     });
     try {
       final task = await _taskService.getTaskById(taskId);
+      final raiser = _isPoster ? 'poster' : 'tasker';
+      List<String> reasons = _isPoster ? _reasonsPosterFallback : _reasonsTaskerFallback;
+      try {
+        reasons = await _disputeService.getReasonChoices(raiser: raiser);
+        if (reasons.isEmpty) reasons = _isPoster ? _reasonsPosterFallback : _reasonsTaskerFallback;
+      } catch (_) {}
       setState(() {
         _task = task;
+        _reasons = reasons;
         _loading = false;
       });
     } catch (e) {
@@ -75,6 +99,25 @@ class _DisputeScreenState extends State<DisputeScreen> {
         _error = e.toString().replaceFirst('Exception: ', '');
         _loading = false;
       });
+    }
+  }
+
+  Future<void> _pickMedia() async {
+    if (_mediaFiles.length >= 3) {
+      StatusSnackbar.showWarning(message: 'You can add up to 3 photos.');
+      return;
+    }
+    try {
+      final picked = await _picker.pickMultiImage();
+      if (picked.isEmpty) return;
+      final remaining = 3 - _mediaFiles.length;
+      final toAdd = picked.take(remaining).toList();
+      setState(() => _mediaFiles.addAll(toAdd));
+      if (picked.length > remaining) {
+        StatusSnackbar.showWarning(message: 'Only $remaining photo(s) added. Maximum is 3.');
+      }
+    } catch (e) {
+      StatusSnackbar.showError(message: 'Failed to pick images: $e');
     }
   }
 
@@ -103,6 +146,9 @@ class _DisputeScreenState extends State<DisputeScreen> {
     setState(() => _submitting = true);
     try {
       final dispute = await _disputeService.createDispute(taskId: _task!.id, reason: reason);
+      for (final x in _mediaFiles) {
+        await _disputeService.uploadDisputeMedia(dispute.id, File(x.path));
+      }
       setState(() => _submitting = false);
       Get.offNamed(Routes.DISPUTE_STATUS, arguments: {'disputeId': dispute.id});
       StatusSnackbar.showSuccess(message: 'Dispute submitted successfully');
@@ -183,6 +229,15 @@ class _DisputeScreenState extends State<DisputeScreen> {
                 ),
                 const SizedBox(height: 24),
                 DisputeDescriptionInput(controller: _detailsController),
+                const SizedBox(height: 24),
+                MediaPickerSection(
+                  title: 'Evidence (optional)',
+                  subtitle: 'Add up to 3 photos to support your dispute.',
+                  images: _mediaFiles,
+                  maxFiles: 3,
+                  onAddRequest: _pickMedia,
+                  onRemove: (index) => setState(() => _mediaFiles.removeAt(index)),
+                ),
                 const SizedBox(height: 24),
               ],
             ),

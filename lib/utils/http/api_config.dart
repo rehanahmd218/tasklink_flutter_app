@@ -63,6 +63,8 @@ class ApiConfig {
   static const String disputesEndpoint = 'disputes/';
   static String disputeDetailEndpoint(String id) => 'disputes/$id/';
   static String disputeResolveEndpoint(String id) => 'disputes/$id/resolve/';
+  static String disputeReasonChoicesEndpoint({String raiser = 'poster'}) =>
+      'disputes/reason-choices/?raiser=$raiser';
   static const String disputeMediaEndpoint = 'dispute-media/';
 
   /// Reviews endpoints

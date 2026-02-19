@@ -13,6 +13,7 @@ class SecondaryButton extends StatelessWidget {
   final Color? borderColor;
   final double? fontSize;
   final EdgeInsetsGeometry? padding;
+  final bool showBorder;
   const SecondaryButton({
     super.key,
     required this.onPressed,
@@ -26,6 +27,7 @@ class SecondaryButton extends StatelessWidget {
     this.borderColor,
     this.fontSize,
     this.padding,
+    this.showBorder = true,
   });
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class SecondaryButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           foregroundColor: foregroundColor ?? defaultFg,
           backgroundColor: backgroundColor ?? Colors.transparent,
-          side: BorderSide(color: borderColor ?? defaultBorder),
+          side: showBorder ? BorderSide(color: borderColor ?? defaultBorder) : BorderSide.none,
           padding:
               padding ??
               EdgeInsets.symmetric(vertical: (height - 24) / 2, horizontal: 12),

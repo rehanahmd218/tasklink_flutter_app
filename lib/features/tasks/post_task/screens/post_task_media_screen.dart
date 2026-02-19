@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
+import 'package:tasklink/common/widgets/media_picker_section.dart';
 import 'package:tasklink/controllers/features/tasks/post_task_controller.dart';
 import 'package:tasklink/utils/constants/colors.dart';
 
@@ -41,106 +41,16 @@ class PostTaskMediaScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Add Photos',
-                    style: GoogleFonts.inter(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Help Taskers understand your task better by adding up to 3 photos.',
-                    style: GoogleFonts.inter(
-                      fontSize: 14,
-                      color: Colors.grey[500],
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Media Upload Section
                   Obx(
-                    () => Row(
-                      children: [
-                        // Add Button
-                        if (controller.images.length < 3)
-                          GestureDetector(
-                            onTap: controller.pickImages,
-                            child: Container(
-                              width: 80,
-                              height: 80,
-                              margin: const EdgeInsets.only(right: 12),
-                              decoration: BoxDecoration(
-                                color: isDark
-                                    ? const Color(0xFF27272A)
-                                    : Colors.grey[100],
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: isDark
-                                      ? Colors.grey[700]!
-                                      : Colors.grey[300]!,
-                                  style: BorderStyle.solid,
-                                ),
-                              ),
-                              child: Icon(
-                                Icons.add_photo_alternate_outlined,
-                                color: Colors.grey[500],
-                              ),
-                            ),
-                          ),
-
-                        // Image List
-                        ...controller.images.asMap().entries.map((entry) {
-                          return Stack(
-                            alignment: Alignment.topRight,
-                            children: [
-                              Container(
-                                width: 80,
-                                height: 80,
-                                margin: const EdgeInsets.only(right: 12),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: DecorationImage(
-                                    image: FileImage(File(entry.value.path)),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () => controller.removeImage(entry.key),
-                                child: Container(
-                                  margin: const EdgeInsets.all(4),
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.black54,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(
-                                    Icons.close,
-                                    size: 12,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        }),
-                      ],
+                    () => MediaPickerSection(
+                      title: 'Add Photos',
+                      subtitle: 'Help Taskers understand your task better by adding up to 3 photos.',
+                      images: controller.images,
+                      maxFiles: 3,
+                      onAddRequest: controller.pickImages,
+                      onRemove: controller.removeImage,
                     ),
                   ),
-
-                  if (controller.images.isEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        'No photos added yet.',
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          color: Colors.grey[500],
-                        ),
-                      ),
-                    ),
                 ],
               ),
             ),
