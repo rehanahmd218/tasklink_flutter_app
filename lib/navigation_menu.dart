@@ -76,7 +76,7 @@ class NavigationBarAndToolbar extends StatelessWidget {
             _buildNavItem(3, Icons.account_balance_wallet_rounded, "Wallet"),
             _buildNavItem(
               4,
-              Icons.person_outline_rounded,
+              Icons.person_rounded,
               "Profile",
             ), // Changed Bids to Profile and moved Wallet
           ],
