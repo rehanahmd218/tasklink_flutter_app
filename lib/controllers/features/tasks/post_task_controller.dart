@@ -87,10 +87,9 @@ class PostTaskController extends GetxController {
     budget.text = task.budget.toString();
     radius.text = task.radius.toString();
 
-    // Category Normalization (e.g. "CLEANING" -> "Cleaning")
+    // Use backend id (e.g. CLEANING) so PostTaskCategorySelector selection matches
     if (task.category.isNotEmpty) {
-      final cat = task.category.toLowerCase();
-      selectedCategory.value = cat[0].toUpperCase() + cat.substring(1);
+      selectedCategory.value = task.category.toUpperCase();
     }
 
     // Populate existing media (id + file URL for display and delete tracking)

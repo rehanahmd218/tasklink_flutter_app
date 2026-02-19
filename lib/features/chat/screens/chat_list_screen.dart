@@ -89,10 +89,21 @@ class ChatListScreen extends StatelessWidget {
                 return const Center(child: CircularProgressIndicator(color: TColors.primary));
               }
               if (controller.rooms.isEmpty) {
-                return Center(
-                  child: Text(
-                    'No chats yet',
-                    style: GoogleFonts.inter(color: Colors.grey),
+                return RefreshIndicator(
+                  onRefresh: controller.fetchRooms,
+                  color: TColors.primary,
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      child: Center(
+                        child: Text(
+                          'No chats yet. Pull down to refresh.',
+                          style: GoogleFonts.inter(color: Colors.grey),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
                   ),
                 );
               }

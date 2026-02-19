@@ -22,13 +22,16 @@ class TasksController extends GetxController {
   // Current filter (default: Active = tasks in progress, i.e. not CONFIRMED)
   final RxString currentFilter = 'Active'.obs;
 
-  // Filtered tasks based on current filter
+  // Filtered tasks based on current filter.
+  // 'All' and 'Active' are handled in fetchTasks (allTasks is already the right list).
+  // 'Active' = all statuses except CONFIRMED; backend has no single 'ACTIVE' status.
   List<TaskModel> get filteredTasks {
-    if (currentFilter.value == 'All') {
+    final filter = currentFilter.value;
+    if (filter == 'All' || filter == 'Active') {
       return allTasks;
     }
     return allTasks
-        .where((task) => task.status == currentFilter.value.toUpperCase())
+        .where((task) => task.status == filter.toUpperCase())
         .toList();
   }
 

@@ -57,15 +57,11 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
       final userRole = userController.currentUser.value?.role;
       final isPoster = userRole == 'POSTER';
       final screenTitle = isPoster ? 'Posted Tasks' : 'Assigned Tasks';
+      // Only track role for UI; do not auto-refresh when switching tabs.
+      // Data loads from TasksController.onInit and manual pull-to-refresh only.
       if (uiController.shouldReloadForRole(userRole)) {
         uiController.markRoleLoaded(userRole);
         controller.setFilter('Active');
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          controller.refreshTasks();
-          if (userRole == 'TASKER' || userRole == 'BOTH') {
-            Get.find<BidController>().fetchMyBids();
-          }
-        });
       }
 
       return Scaffold(
@@ -207,7 +203,7 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
             child: CircularProgressIndicator(color: TColors.primary),
           );
         }
-        final tasks = controller.allTasks;
+        final tasks = controller.filteredTasks;
         final filterLabel = controller.currentFilter.value;
         if (tasks.isEmpty) {
           return TasksEmptyStateWithRefresh(
@@ -251,7 +247,7 @@ class _MyPostedTasksScreenState extends State<MyPostedTasksScreen> {
           child: CircularProgressIndicator(color: TColors.primary),
         );
       }
-      final tasks = controller.allTasks;
+      final tasks = controller.filteredTasks;
       final filterLabel = controller.currentFilter.value;
       if (tasks.isEmpty) {
         return TasksEmptyStateWithRefresh(

@@ -28,7 +28,7 @@ class TaskFilterBar extends StatelessWidget {
           onTap: () => TaskStatusFilterSheet.show(
             context: context,
             selectedFilter: filter,
-            taskCount: controller.allTasks.length,
+            taskCount: controller.filteredTasks.length,
             onApply: (selected) async {
               await controller.applyFilter(selected);
             },
@@ -51,7 +51,7 @@ class TaskFilterBar extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                '(${controller.allTasks.length})',
+                '(${controller.filteredTasks.length})',
                 style: TextStyle(
                   fontSize: 13,
                   color: isDark ? Colors.grey[400] : TColors.textSecondary,
