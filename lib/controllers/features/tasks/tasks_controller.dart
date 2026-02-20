@@ -77,7 +77,7 @@ class TasksController extends GetxController {
             'IN_PROGRESS',
             'COMPLETED',
             'CANCELLED',
-            'DISPUTED',
+            // 'DISPUTED',
           ];
           break;
         case 'Bidding':
