@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
@@ -15,27 +8,31 @@ import 'package:tasklink/utils/constants/colors.dart';
 // / Full screen loader with Lottie animation
 // / Non-dismissible, used for important operations
 class FullScreenLoader {
-  /// Show full screen loader
-  static void show({
-    String text = 'Loading...',
-    String? animation,
-  }) {
+  static bool _isLoaderVisible = false;
+
+  /// Show full screen loader.
+  /// Closes any existing loader first so we never stack two.
+  static void show({String text = 'Loading...', String? animation}) {
+    _isLoaderVisible = true;
     Get.dialog(
       PopScope(
-        canPop: false, // Prevents back button
+        canPop: false,
         child: _FullScreenLoaderWidget(
           text: text,
           animation: animation ?? TAnimations.docerAnimation,
         ),
       ),
-      barrierDismissible: false, // Prevents tap outside to dismiss
+      barrierDismissible: false,
     );
   }
 
-  /// Hide the current loader
+  /// Hide the current loader.
+  /// Uses an internal flag instead of Get.isDialogOpen because GetX's dialog
+  /// tracking can desync after Get.offAllNamed() rebuilds the navigation stack.
   static void hide() {
-    if (Get.isDialogOpen ?? false) {
-      Get.back();
+    if (_isLoaderVisible) {
+      Navigator.of(Get.overlayContext!).pop();
+      _isLoaderVisible = false;
     }
   }
 }
@@ -45,10 +42,7 @@ class _FullScreenLoaderWidget extends StatelessWidget {
   final String text;
   final String animation;
 
-  const _FullScreenLoaderWidget({
-    required this.text,
-    required this.animation,
-  });
+  const _FullScreenLoaderWidget({required this.text, required this.animation});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +66,7 @@ class _FullScreenLoaderWidget extends StatelessWidget {
             },
           ),
           const SizedBox(height: 24),
-          
+
           // Loading Text
           Text(
             text,

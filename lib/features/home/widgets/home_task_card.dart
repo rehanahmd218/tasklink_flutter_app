@@ -67,7 +67,7 @@ class HomeTaskCard extends StatelessWidget {
                         backgroundColor: TColors.primary,
                         radius: 20,
                         child: Text(
-                          '\$${task.budget.toStringAsFixed(0)}',
+                          'Rs ${task.budget.toStringAsFixed(0)}',
                           style: GoogleFonts.inter(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

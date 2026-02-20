@@ -7,8 +7,8 @@ class UserModel {
   final String id;
   final String phoneNumber;
   final String email;
-  final bool isPhoneVerified;
-  final bool isEmailVerified;
+  bool isPhoneVerified;
+  bool isEmailVerified;
   final String role; // 'POSTER', 'TASKER', 'BOTH'
   final double ratingAvg;
   final int reviewsCount;

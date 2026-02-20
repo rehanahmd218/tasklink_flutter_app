@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
+import 'package:tasklink/common/widgets/loaders/full_screen_loader_with_button.dart';
 import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/controllers/user_controller.dart';
 import 'package:tasklink/services/authentication/auth_service.dart';
@@ -24,6 +25,7 @@ class VerificationController extends GetxController {
 
   final AuthService _authService = AuthService();
   final isLoading = false.obs;
+  bool _isSendingOtp = false;
 
   @override
   void onInit() {
@@ -82,6 +84,8 @@ class VerificationController extends GetxController {
 
   /// Send OTP
   Future<void> sendOtp() async {
+    if (_isSendingOtp) return;
+    _isSendingOtp = true;
     try {
       FullScreenLoader.show(
         text: 'Sending Code...',
@@ -92,7 +96,6 @@ class VerificationController extends GetxController {
       await _authService.sendOtp(
         type: type == VerificationType.EMAIL ? 'email' : 'phone',
       );
-
       FullScreenLoader.hide();
       StatusSnackbar.showSuccess(message: 'OTP sent successfully to $target');
 
@@ -100,9 +103,9 @@ class VerificationController extends GetxController {
       startTimer();
     } catch (e) {
       FullScreenLoader.hide();
-      // Stop timer on error? Or keep it running to prevent spam?
-      // Let's keep it running to prevent spam.
       ErrorHandler.showErrorPopup(e);
+    } finally {
+      _isSendingOtp = false;
     }
   }
 
@@ -123,20 +126,30 @@ class VerificationController extends GetxController {
       );
 
       isLoading.value = false;
-      StatusSnackbar.showSuccess(message: 'Verification successful!');
 
-      try {
-        // Refresh user profile
-        await UserController.instance.fetchUserProfile();
-        // Redirect
-        UserController.instance.redirectBasedOnStatus();
-      } catch (e) {
-        // If profile fetch fails, try redirected anyway or just stay?
-        // Redirecting is safer
-        UserController.instance.redirectBasedOnStatus();
+      // Update local user state instead of making a redundant API call
+      final currentUser = UserController.instance.currentUser.value;
+      if (currentUser != null) {
+        if (type == VerificationType.EMAIL) {
+          currentUser.isEmailVerified = true;
+        } else {
+          currentUser.isPhoneVerified = true;
+        }
+        UserController.instance.currentUser.refresh();
       }
+      
+      FullScreenLoaderWithButton.show(
+        text: 'OTP verified successfully!',
+        animation: TAnimations.greenTickAnimation2,
+        buttonText: 'Continue',
+        onButtonPressed: () {
+          FullScreenLoaderWithButton.hide();
+          UserController.instance.redirectBasedOnStatus();
+        },
+      );
     } catch (e) {
       isLoading.value = false;
+      FullScreenLoaderWithButton.hide();
       ErrorHandler.showErrorPopup(e, buttonText: 'Try Again');
     }
   }

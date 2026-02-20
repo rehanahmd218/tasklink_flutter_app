@@ -4,7 +4,6 @@ import 'package:tasklink/common/widgets/loaders/full_screen_loader.dart';
 import 'package:tasklink/common/widgets/loaders/full_screen_loader_with_button.dart';
 import 'package:tasklink/common/widgets/snackbars/status_snackbar.dart';
 import 'package:tasklink/controllers/features/navigation_controller.dart';
-import 'package:tasklink/controllers/features/tasks/my_posted_tasks_controller.dart';
 import 'package:tasklink/controllers/user_controller.dart';
 import 'package:tasklink/services/bids/bid_service.dart';
 import 'package:tasklink/utils/helpers/error_handler.dart';
@@ -130,7 +129,7 @@ class BidController extends GetxController {
 
       FullScreenLoader.hide();
 
-      // Show success; on "Back to Task" go to My Posted Tasks (place → Active bids, edit → same tab)
+      // Show success; on "Back to Task" go to home screen
       FullScreenLoaderWithButton.show(
         text: isEdit.value
             ? 'Bid Updated Successfully!'
@@ -142,15 +141,7 @@ class BidController extends GetxController {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Get.until((r) => r.isFirst);
             if (Get.isRegistered<NavigationController>()) {
-              Get.find<NavigationController>().selectedIndex.value = 1;
-              if (!isEdit.value) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (Get.isRegistered<MyPostedTasksController>()) {
-                    Get.find<MyPostedTasksController>().setTaskerSection(false);
-                    Get.find<MyPostedTasksController>().setBidsSubTab('Active');
-                  }
-                });
-              }
+              Get.find<NavigationController>().selectedIndex.value = 0;
             }
           });
         },

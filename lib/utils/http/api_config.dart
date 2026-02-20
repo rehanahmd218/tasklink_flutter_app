@@ -9,13 +9,14 @@ class ApiConfig {
   /// - Production: Use your deployed server URL
 
   /// ### Base url for Emulator
-  // static const String baseUrl = 'http://172.30.80.1:8000/api/v1/';
+  static const String baseUrl = 'http://172.30.80.1:8000/api/v1/';
 
   /// ### Base url for Mobile
   // static const String baseUrl = 'http://192.168.137.247:8000/api/v1/';
-  static const String baseUrl = 'http://10.8.25.134:8000/api/v1/';
+  // static const String baseUrl = 'http://10.8.160.28:8000/api/v1/';
 
   // static const String baseUrl = 'https://taskonnect.me/api/v1/';
+
 
   /// Timeouts
   static const int connectTimeout = 30;

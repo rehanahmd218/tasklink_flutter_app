@@ -9,8 +9,10 @@ import 'package:tasklink/utils/constants/colors.dart';
 /// Full screen loader with Lottie animation, text, and action button
 /// Used for operations that need user acknowledgment
 class FullScreenLoaderWithButton {
+  static bool _isLoaderVisible = false;
   /// Show full screen loader with button
   static void show({
+    
     String text = 'Operation Complete',
     String? animation,
     String buttonText = 'OK',
@@ -32,11 +34,13 @@ class FullScreenLoaderWithButton {
 
   /// Hide the current loader
   static void hide() {
-    if (Get.isDialogOpen ?? false) {
-      Get.back();
+    if (_isLoaderVisible) {
+      Navigator.of(Get.overlayContext!).pop();
+      _isLoaderVisible = false;
     }
   }
 }
+
 
 /// Internal widget for full screen loader with button
 class _FullScreenLoaderWithButtonWidget extends StatelessWidget {
