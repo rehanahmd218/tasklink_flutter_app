@@ -9,7 +9,6 @@ import 'package:tasklink/common/widgets/primary_app_bar.dart';
 import 'package:tasklink/common/widgets/buttons/primary_button.dart';
 import 'package:tasklink/models/disputes/dispute_model.dart';
 import 'package:tasklink/services/disputes/dispute_service.dart';
-import 'package:tasklink/utils/constants/colors.dart';
 import 'package:tasklink/utils/http/api_config.dart';
 
 class DisputeStatusScreen extends StatefulWidget {

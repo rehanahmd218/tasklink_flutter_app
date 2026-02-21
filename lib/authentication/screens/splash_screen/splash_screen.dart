@@ -16,6 +16,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final controller = Get.put(SplashScreenController());
     return Scaffold(
       backgroundColor: TColors.primary,

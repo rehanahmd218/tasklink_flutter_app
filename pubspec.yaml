@@ -1,5 +1,5 @@
 name: tasklink
-description: "A new Flutter project."
+description: "A HyperLocal Marketplace for Everyday Tasks"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -46,6 +46,7 @@ dependencies:
   http: ^1.2.2
   timeago: ^3.7.1
   web_socket_channel: ^3.0.2
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -58,3 +59,13 @@ flutter:
   assets:
     - assets/images/
     - assets/animations/
+    - assets/icons/AppIcon.png
+
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/AppIcon.png"
+  # Optional: Settings for Android Adaptive Icons
+  adaptive_icon_background: "#0D47A1" # A dark blue background
+  adaptive_icon_foreground: "assets/icons/AppIcon.png"

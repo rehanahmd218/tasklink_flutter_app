@@ -288,12 +288,12 @@ class PostTaskController extends GetxController {
         updatedOrCreated = await _taskService.createTask(request, mediaFiles);
       }
 
-      if (Get.isRegistered<TasksController>() && updatedOrCreated != null) {
+      if (Get.isRegistered<TasksController>()) {
         final tasksController = Get.find<TasksController>();
         if (isEdit.value) {
-          tasksController.updateTaskInList(updatedOrCreated!);
+          tasksController.updateTaskInList(updatedOrCreated);
         } else {
-          tasksController.allTasks.insert(0, updatedOrCreated!);
+          tasksController.allTasks.insert(0, updatedOrCreated);
         }
       }
 

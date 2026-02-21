@@ -71,20 +71,15 @@ class ChatRoomController extends GetxController {
             break;
           }
         }
-        if (match == null) {
-          // Room may not exist yet (e.g. opened from task card after assign). Get or create it.
-          match = await _chatService.getOrCreateChatRoomForTask(taskId);
+        match ??= await _chatService.getOrCreateChatRoomForTask(taskId);
+        rid = match.id;
+        if (taskTitle.value.isEmpty) taskTitle.value = match.displayTitle;
+        activeTasks.assignAll(match.activeTasks);
+        final currentUserId = UserController.instance.currentUser.value?.id;
+        if (currentUserId != null && otherUser.value == null) {
+          otherUser.value = match.otherParticipant(currentUserId);
         }
-        if (match != null) {
-          rid = match.id;
-          if (taskTitle.value.isEmpty) taskTitle.value = match.displayTitle;
-          activeTasks.assignAll(match.activeTasks);
-          final currentUserId = UserController.instance.currentUser.value?.id;
-          if (currentUserId != null && otherUser.value == null) {
-            otherUser.value = match.otherParticipant(currentUserId);
-          }
-        }
-      } catch (e) {
+            } catch (e) {
         StatusSnackbar.showError(message: 'Failed to find or create chat room: $e');
       }
       isLoading.value = false;

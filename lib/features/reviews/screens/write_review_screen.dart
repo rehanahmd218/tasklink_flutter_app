@@ -101,8 +101,8 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       Get.back(result: true);
       StatusSnackbar.showSuccess(message: 'Review submitted successfully');
     } catch (e) {
-      String message = 'Could not submit review.';
-      if (e is ValidationException) message = e.message;
+      // String message = 'Could not submit review.';
+      // if (e is ValidationException) message = e.message;
       ErrorHandler.showErrorPopup(e, buttonText: 'OK');
     } finally {
       if (mounted) setState(() => _submitting = false);
